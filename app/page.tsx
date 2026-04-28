@@ -23,6 +23,7 @@ export default function Page() {
   const [exportCode, setExportCode] = useState<ExportedCode | null>(null);
   const [deviceMode, setDeviceMode] = useState<DeviceMode>('desktop');
   const [buttonColor, setButtonColor] = useState('#6366f1');
+  const [pageBackgroundColor, setPageBackgroundColor] = useState('');
 
   const selectedModule = modules.find((m) => m.id === selectedId) ?? null;
 
@@ -68,12 +69,12 @@ export default function Page() {
 
   const handleExport = () => {
     const html = generatePageHTML(modules);
-    const css = generatePageCSS({ buttonColor });
+    const css = generatePageCSS({ buttonColor, pageBackgroundColor });
     setExportCode({ html, css });
   };
 
   return (
-    <GlobalSettingsContext.Provider value={{ buttonColor, setButtonColor }}>
+    <GlobalSettingsContext.Provider value={{ buttonColor, setButtonColor, pageBackgroundColor, setPageBackgroundColor }}>
       <div className="flex flex-col h-screen overflow-hidden bg-slate-950">
         {/* Top bar */}
         <header className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-slate-900 border-b border-slate-800 z-20">

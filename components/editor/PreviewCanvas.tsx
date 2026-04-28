@@ -20,6 +20,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, Trash2, Copy, LayoutTemplate, Monitor, Smartphone } from 'lucide-react';
+import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 
 interface SortableModuleProps {
   module: PageModule;
@@ -119,6 +120,7 @@ interface Props {
 }
 
 export function PreviewCanvas({ modules, selectedId, deviceMode, onDeviceChange, onSelect, onDelete, onDuplicate, onReorder }: Props) {
+  const { pageBackgroundColor } = useGlobalSettings();
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
@@ -201,7 +203,10 @@ export function PreviewCanvas({ modules, selectedId, deviceMode, onDeviceChange,
 
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                   <SortableContext items={modules.map((m) => m.id)} strategy={verticalListSortingStrategy}>
-                    <div className="divide-y divide-slate-800/50">
+                    <div
+                      className="divide-y divide-slate-800/50"
+                      style={pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}}
+                    >
                       {modules.map((module) => (
                         <SortableModule
                           key={module.id}
