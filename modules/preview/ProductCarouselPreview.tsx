@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ProductCarouselData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -10,22 +10,49 @@ const PLACEHOLDER = 'https://placehold.co/400x400/e0e0f0/9090c0?text=Product';
 export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) {
   const { isMobile } = useDevice();
   const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
   const visible = isMobile ? 2 : 4;
   const gap = isMobile ? 12 : 20;
   const max = Math.max(0, data.products.length - visible);
-  // item deduction: total gap spread across all items = (visible-1)*gap/visible
-  const itemDeduction = ((visible - 1) * gap) / visible;
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
+
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => setContainerWidth(entry.contentRect.width));
+    ro.observe(el);
+    setContainerWidth(el.getBoundingClientRect().width);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     setCurrent((c) => Math.min(c, max));
   }, [max]);
 
+  // auto-play: loop back to start after reaching the last page
+  useEffect(() => {
+    if (max === 0 || paused) return;
+    const id = setInterval(() => {
+      setCurrent((c) => (c >= max ? 0 : c + 1));
+    }, 3000);
+    return () => clearInterval(id);
+  }, [max, paused]);
+
+  const itemWidth = containerWidth > 0 ? (containerWidth - (visible - 1) * gap) / visible : 0;
+  const offset = current * (itemWidth + gap);
+
   const prev = () => setCurrent((c) => Math.max(0, c - 1));
   const next = () => setCurrent((c) => Math.min(max, c + 1));
 
   return (
-    <section style={{ background: data.backgroundColor || '#f8f8fc', padding: isMobile ? '48px 16px' : '72px 0', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section
+      style={{ background: data.backgroundColor || '#f8f8fc', padding: isMobile ? '48px 16px' : '72px 0', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '0' : '0 24px', position: 'relative' }}>
         {/* Prev button */}
         <button
@@ -46,12 +73,12 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
         </button>
 
         {/* Track */}
-        <div style={{ overflow: 'hidden' }}>
-          <div style={{ display: 'flex', gap: `${gap}px`, transform: `translateX(calc(-${current} * (100% + ${gap}px) / ${visible}))`, transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)' }}>
+        <div ref={viewportRef} style={{ overflow: 'hidden' }}>
+          <div style={{ display: 'flex', gap: `${gap}px`, transform: `translateX(-${offset}px)`, transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)' }}>
             {data.products.map((product) => (
               <div
                 key={product.id}
-                style={{ flex: `0 0 calc(${100 / visible}% - ${itemDeduction}px)`, minWidth: 0 }}
+                style={{ flex: `0 0 ${itemWidth}px`, minWidth: 0 }}
               >
                 <div style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                   <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f0f0f8' }}>
