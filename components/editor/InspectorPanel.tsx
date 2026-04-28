@@ -1,0 +1,74 @@
+'use client';
+
+import { PageModule } from '@/types/modules';
+import { FormRenderer } from '@/modules/forms/FormRenderer';
+import { MousePointerClick } from 'lucide-react';
+
+const moduleLabels: Record<string, string> = {
+  'title': '標題區塊',
+  'hero': 'Hero',
+  'split-section': 'Split Content',
+  'product-grid': 'Product Grid',
+  'banner-products': 'Banner + Products',
+  'product-banner': 'Product Banner',
+  'product-carousel': 'Product Carousel',
+  'logo-wall': 'Logo Wall',
+  'cta': 'CTA Banner',
+  'faq': 'FAQ',
+  'sticky-sidebar': 'Sticky Bar',
+};
+
+const moduleColors: Record<string, string> = {
+  'title': 'bg-slate-600/20 text-slate-400 border-slate-600/30',
+  'hero': 'bg-violet-600/20 text-violet-400 border-violet-600/30',
+  'split-section': 'bg-blue-600/20 text-blue-400 border-blue-600/30',
+  'product-grid': 'bg-emerald-600/20 text-emerald-400 border-emerald-600/30',
+  'banner-products': 'bg-teal-600/20 text-teal-400 border-teal-600/30',
+  'product-banner': 'bg-orange-600/20 text-orange-400 border-orange-600/30',
+  'product-carousel': 'bg-green-600/20 text-green-400 border-green-600/30',
+  'logo-wall': 'bg-amber-600/20 text-amber-400 border-amber-600/30',
+  'cta': 'bg-rose-600/20 text-rose-400 border-rose-600/30',
+  'faq': 'bg-cyan-600/20 text-cyan-400 border-cyan-600/30',
+  'sticky-sidebar': 'bg-purple-600/20 text-purple-400 border-purple-600/30',
+};
+
+interface Props {
+  module: PageModule | null;
+  onChange: (data: PageModule['data']) => void;
+}
+
+export function InspectorPanel({ module, onChange }: Props) {
+  if (!module) {
+    return (
+      <aside className="w-72 flex-shrink-0 bg-slate-900 border-l border-slate-800 flex items-center justify-center">
+        <div className="text-center px-6 space-y-3">
+          <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center mx-auto">
+            <MousePointerClick size={18} className="text-slate-500" />
+          </div>
+          <div>
+            <p className="text-slate-400 text-sm font-medium">Nothing selected</p>
+            <p className="text-slate-600 text-xs mt-1">Click a module to edit its content</p>
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
+  const label = moduleLabels[module.type] ?? module.type;
+  const colorClass = moduleColors[module.type] ?? 'bg-slate-700 text-slate-300 border-slate-600';
+
+  return (
+    <aside className="w-72 flex-shrink-0 bg-slate-900 border-l border-slate-800 flex flex-col overflow-hidden">
+      <div className="px-4 py-4 border-b border-slate-800 flex items-center gap-3">
+        <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold border ${colorClass}`}>
+          {label}
+        </span>
+        <span className="text-xs text-slate-500">Properties</span>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-4 py-4">
+        <FormRenderer module={module} onChange={onChange} />
+      </div>
+    </aside>
+  );
+}
