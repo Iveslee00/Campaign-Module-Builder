@@ -277,6 +277,50 @@ export const moduleSchemas: ModuleSchemaItem[] = [
     },
   },
 
+  // ── Article ───────────────────────────────────────────────────────────────
+  {
+    type: 'article-text',
+    key: 'article-text',
+    label: '文章欄位（純文字）',
+    description: 'Article block with title, content, author — no image',
+    icon: 'file-text',
+    category: 'Content',
+    defaultData: {
+      eyebrow: '品牌故事',
+      title: '文章標題',
+      subtitle: '這是文章的副標題或摘要，簡短說明文章重點。',
+      content: '在這裡輸入文章的正文內容。你可以撰寫完整的段落、品牌故事、活動說明或任何你想與讀者分享的內容。\n\n第二段落的內容可以繼續在這裡展開，讓讀者深入了解你的故事。',
+      author: '作者姓名',
+      date: '2024-01-01',
+      alignment: 'left',
+      backgroundColor: '',
+      titleColor: '',
+      textColor: '',
+    },
+  },
+  {
+    type: 'article-image',
+    key: 'article-image',
+    label: '文章欄位（帶圖片）',
+    description: 'Article block with hero image, title, and content',
+    icon: 'file-image',
+    category: 'Content',
+    defaultData: {
+      eyebrow: '品牌故事',
+      title: '文章標題',
+      subtitle: '這是文章的副標題或摘要，簡短說明文章重點。',
+      content: '在這裡輸入文章的正文內容。你可以撰寫完整的段落、品牌故事、活動說明或任何你想與讀者分享的內容。\n\n第二段落的內容可以繼續在這裡展開，讓讀者深入了解你的故事。',
+      author: '作者姓名',
+      date: '2024-01-01',
+      image: 'https://placehold.co/800x500/e8e8f8/6366f1?text=Article+Image',
+      imagePosition: 'top',
+      alignment: 'left',
+      backgroundColor: '',
+      titleColor: '',
+      textColor: '',
+    },
+  },
+
   // ── Float ─────────────────────────────────────────────────────────────────
   {
     type: 'sticky-sidebar',

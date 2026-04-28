@@ -9,7 +9,9 @@ export type ModuleType =
   | 'logo-wall'
   | 'cta'
   | 'faq'
-  | 'sticky-sidebar';
+  | 'sticky-sidebar'
+  | 'article-text'
+  | 'article-image';
 
 export interface BaseModule {
   id: string;
@@ -237,6 +239,46 @@ export interface StickySidebarModule extends BaseModule {
   data: StickySidebarData;
 }
 
+// ── Article Text ──────────────────────────────────────────────────────────────
+export interface ArticleTextData {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  content: string;
+  author: string;
+  date: string;
+  alignment: 'left' | 'center';
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ArticleTextModule extends BaseModule {
+  type: 'article-text';
+  data: ArticleTextData;
+}
+
+// ── Article Image ─────────────────────────────────────────────────────────────
+export interface ArticleImageData {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  content: string;
+  author: string;
+  date: string;
+  image: string;
+  imagePosition: 'top' | 'left' | 'right';
+  alignment: 'left' | 'center';
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ArticleImageModule extends BaseModule {
+  type: 'article-image';
+  data: ArticleImageData;
+}
+
 // ── Union & Export ────────────────────────────────────────────────────────────
 export type PageModule =
   | TitleModule
@@ -249,7 +291,9 @@ export type PageModule =
   | LogoWallModule
   | CtaModule
   | FaqModule
-  | StickySidebarModule;
+  | StickySidebarModule
+  | ArticleTextModule
+  | ArticleImageModule;
 
 export interface ExportedCode {
   html: string;

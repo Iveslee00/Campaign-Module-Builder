@@ -14,7 +14,7 @@ export function FaqPreview({ data }: { data: FaqData }) {
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
 
   return (
-    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '48px 16px' : '72px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '48px 16px' : '72px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {data.items.map((item) => {

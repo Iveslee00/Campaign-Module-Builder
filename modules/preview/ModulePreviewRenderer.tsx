@@ -12,6 +12,8 @@ import { LogoWallPreview } from './LogoWallPreview';
 import { CtaPreview } from './CtaPreview';
 import { FaqPreview } from './FaqPreview';
 import { StickySidebarPreview } from './StickySidebarPreview';
+import { ArticleTextPreview } from './ArticleTextPreview';
+import { ArticleImagePreview } from './ArticleImagePreview';
 
 export function ModulePreviewRenderer({ module }: { module: PageModule }) {
   switch (module.type) {
@@ -26,6 +28,8 @@ export function ModulePreviewRenderer({ module }: { module: PageModule }) {
     case 'cta':              return <CtaPreview data={module.data} />;
     case 'faq':              return <FaqPreview data={module.data} />;
     case 'sticky-sidebar':   return <StickySidebarPreview data={module.data} />;
+    case 'article-text':     return <ArticleTextPreview data={module.data} />;
+    case 'article-image':    return <ArticleImagePreview data={module.data} />;
     default:                 return null;
   }
 }

@@ -118,12 +118,10 @@ export function ExportModal({ code, onClose }: Props) {
         </div>
 
         {/* Code area */}
-        <div className="flex-1 overflow-hidden">
-          <div className="h-full overflow-y-auto bg-slate-950 rounded-b-2xl">
-            <pre className="p-5 text-xs leading-relaxed text-slate-300 font-mono whitespace-pre overflow-x-auto">
-              <code>{activeCode}</code>
-            </pre>
-          </div>
+        <div className="flex-1 min-h-0 overflow-y-auto bg-slate-950 rounded-b-2xl">
+          <pre className="p-5 text-xs leading-relaxed text-slate-300 font-mono whitespace-pre overflow-x-auto">
+            <code>{activeCode}</code>
+          </pre>
         </div>
       </div>
     </div>

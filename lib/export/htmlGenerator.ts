@@ -10,6 +10,8 @@ import { generateLogoWallHTML } from '@/modules/exporters/logoWallExporter';
 import { generateCtaHTML } from '@/modules/exporters/ctaExporter';
 import { generateFaqHTML } from '@/modules/exporters/faqExporter';
 import { generateStickySidebarHTML } from '@/modules/exporters/stickySidebarExporter';
+import { generateArticleTextHTML } from '@/modules/exporters/articleTextExporter';
+import { generateArticleImageHTML } from '@/modules/exporters/articleImageExporter';
 import { generateCarouselScript } from '@/lib/export/cssGenerator';
 
 function renderModuleHTML(module: PageModule): string {
@@ -25,6 +27,8 @@ function renderModuleHTML(module: PageModule): string {
     case 'cta':             return generateCtaHTML(module.data);
     case 'faq':             return generateFaqHTML(module.data);
     case 'sticky-sidebar':  return generateStickySidebarHTML(module.data);
+    case 'article-text':    return generateArticleTextHTML(module.data);
+    case 'article-image':   return generateArticleImageHTML(module.data);
     default:                return '';
   }
 }

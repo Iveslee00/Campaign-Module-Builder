@@ -304,6 +304,43 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-btn { padding: 12px 24px; font-size: 15px; }
 }
 
+/* ------------------------------------------------------------
+   16. ARTICLE TEXT MODULE
+   ------------------------------------------------------------ */
+.cb-article__inner { max-width: 800px; margin-left: auto; margin-right: auto; }
+.cb-article--center .cb-article__inner { text-align: center; }
+.cb-article--left .cb-article__inner { text-align: left; }
+.cb-article__eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #9090b0; margin-bottom: 12px; }
+.cb-article__title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #1a1a2e; margin: 0 0 16px; }
+.cb-article__subtitle { font-size: 1.1rem; line-height: 1.65; color: #4a4a6a; margin: 0 0 28px; opacity: 0.85; }
+.cb-article__content { font-size: 15px; line-height: 1.85; color: #4a4a6a; text-align: left; }
+.cb-article__meta { margin-top: 32px; padding-top: 20px; border-top: 1px solid #e8e8f4; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.cb-article--center .cb-article__meta { justify-content: center; }
+.cb-article__author { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+.cb-article__date { font-size: 13px; color: #9090b0; }
+
+/* ------------------------------------------------------------
+   17. ARTICLE IMAGE MODULE
+   ------------------------------------------------------------ */
+.cb-article-img__img { width: 100%; height: auto; display: block; object-fit: cover; }
+.cb-article-img--top .cb-article-img__media--top { border-radius: 12px; overflow: hidden; margin-bottom: 36px; }
+.cb-article-img--top .cb-article-img__media--top img { max-height: 480px; width: 100%; }
+.cb-article-img__layout { display: grid; gap: 48px; align-items: flex-start; }
+.cb-article-img__layout--left { grid-template-columns: 45% 1fr; }
+.cb-article-img__layout--right { grid-template-columns: 1fr 45%; }
+.cb-article-img__layout--right .cb-article-img__media { order: 2; }
+.cb-article-img__layout--right .cb-article__inner { order: 1; }
+.cb-article-img__layout .cb-article-img__media { border-radius: 12px; overflow: hidden; }
+.cb-article-img__layout .cb-article-img__media img { min-height: 320px; }
+
+@media (max-width: 768px) {
+  .cb-article-img__layout--left,
+  .cb-article-img__layout--right { grid-template-columns: 1fr; }
+  .cb-article-img__layout--right .cb-article-img__media { order: 0; margin-bottom: 28px; }
+  .cb-article-img__layout--right .cb-article__inner { order: 0; }
+  .cb-article-img__layout .cb-article-img__media img { min-height: auto; height: 220px; }
+}
+
 /* Carousel JS (auto-injected) */
 `;
 }
@@ -325,25 +362,30 @@ export function generateCarouselScript(): string {
   return `<script>
 (function(){
   document.querySelectorAll('.cb-carousel').forEach(function(el){
+    var outer = el.querySelector('.cb-carousel__track-outer');
     var track = el.querySelector('.cb-carousel__track');
     var items = el.querySelectorAll('.cb-carousel__item');
     var prevBtn = el.querySelector('.cb-carousel__btn--prev');
     var nextBtn = el.querySelector('.cb-carousel__btn--next');
     var cur = 0;
+    var GAP = 20;
     function pp(){ return window.innerWidth < 768 ? 2 : window.innerWidth < 1024 ? 3 : 4; }
+    function iw(p){ return (outer.offsetWidth - (p - 1) * GAP) / p; }
+    function maxIdx(p){ return Math.max(0, items.length - p); }
     function upd(){
       var p = pp();
-      var w = (100 / p);
-      track.style.transform = 'translateX(-' + (cur * w) + '%)';
-      track.style.width = (items.length * w) + '%';
-      Array.prototype.forEach.call(items, function(it){ it.style.width = (100 / items.length) + '%'; });
+      var w = iw(p);
+      var m = maxIdx(p);
+      if(cur > m) cur = m;
+      Array.prototype.forEach.call(items, function(it){ it.style.flex = '0 0 ' + w + 'px'; });
+      track.style.transform = 'translateX(-' + (cur * (w + GAP)) + 'px)';
       if(prevBtn) prevBtn.disabled = cur === 0;
-      if(nextBtn) nextBtn.disabled = cur >= items.length - p;
+      if(nextBtn) nextBtn.disabled = cur >= m;
     }
     if(prevBtn) prevBtn.addEventListener('click', function(){ if(cur>0){cur--;upd();} });
-    if(nextBtn) nextBtn.addEventListener('click', function(){ if(cur<items.length-pp()){cur++;upd();} });
+    if(nextBtn) nextBtn.addEventListener('click', function(){ if(cur<maxIdx(pp())){cur++;upd();} });
     upd();
-    window.addEventListener('resize', function(){ if(cur>items.length-pp()) cur=Math.max(0,items.length-pp()); upd(); });
+    window.addEventListener('resize', upd);
   });
 })();
 </script>`;

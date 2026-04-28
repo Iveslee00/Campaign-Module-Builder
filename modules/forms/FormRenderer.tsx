@@ -12,6 +12,8 @@ import { LogoWallForm } from './LogoWallForm';
 import { CtaForm } from './CtaForm';
 import { FaqForm } from './FaqForm';
 import { StickySidebarForm } from './StickySidebarForm';
+import { ArticleTextForm } from './ArticleTextForm';
+import { ArticleImageForm } from './ArticleImageForm';
 
 interface Props {
   module: PageModule;
@@ -42,6 +44,10 @@ export function FormRenderer({ module, onChange }: Props) {
       return <FaqForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
     case 'sticky-sidebar':
       return <StickySidebarForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+    case 'article-text':
+      return <ArticleTextForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+    case 'article-image':
+      return <ArticleImageForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
     default:
       return null;
   }
