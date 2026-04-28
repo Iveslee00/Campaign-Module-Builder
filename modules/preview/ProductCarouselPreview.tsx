@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ProductCarouselData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -11,8 +11,15 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
   const { isMobile } = useDevice();
   const [current, setCurrent] = useState(0);
   const visible = isMobile ? 2 : 4;
+  const gap = isMobile ? 12 : 20;
   const max = Math.max(0, data.products.length - visible);
+  // item deduction: total gap spread across all items = (visible-1)*gap/visible
+  const itemDeduction = ((visible - 1) * gap) / visible;
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
+
+  useEffect(() => {
+    setCurrent((c) => Math.min(c, max));
+  }, [max]);
 
   const prev = () => setCurrent((c) => Math.max(0, c - 1));
   const next = () => setCurrent((c) => Math.min(max, c + 1));
@@ -40,11 +47,11 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
 
         {/* Track */}
         <div style={{ overflow: 'hidden' }}>
-          <div style={{ display: 'flex', gap: isMobile ? '12px' : '20px', transform: `translateX(calc(-${current} * (${100 / visible}% + ${isMobile ? '12px' : '20px'})))`, transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)' }}>
+          <div style={{ display: 'flex', gap: `${gap}px`, transform: `translateX(calc(-${current} * (100% + ${gap}px) / ${visible}))`, transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)' }}>
             {data.products.map((product) => (
               <div
                 key={product.id}
-                style={{ flex: `0 0 calc(${100 / visible}% - ${isMobile ? '9px' : '15px'})`, minWidth: 0 }}
+                style={{ flex: `0 0 calc(${100 / visible}% - ${itemDeduction}px)`, minWidth: 0 }}
               >
                 <div style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                   <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f0f0f8' }}>
