@@ -6,7 +6,7 @@ export function StickySidebarPreview({ data }: { data: StickySidebarData }) {
   const isRight = data.position !== 'left';
 
   return (
-    <div style={{ background: '#f8f8fc', padding: '24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', minHeight: '120px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: isRight ? 'flex-end' : 'flex-start' }}>
+    <div style={{ background: 'transparent', padding: '24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', minHeight: '100px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: isRight ? 'flex-end' : 'flex-start' }}>
       <div style={{ position: 'absolute', top: '8px', left: '50%', transform: 'translateX(-50%)', fontSize: '10px', color: '#9090b0', whiteSpace: 'nowrap', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
         Fixed sidebar · {isRight ? 'right' : 'left'} side
       </div>

@@ -7,7 +7,7 @@ import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 const PLACEHOLDER = 'https://placehold.co/700x600/e0e0f0/9090c0?text=Product';
 
 const bgMap: Record<string, React.CSSProperties> = {
-  light: { background: '#f8f8fc', color: '#1a1a2e' },
+  light: { background: 'transparent', color: '#1a1a2e' },
   dark: { background: '#1a1a2e', color: '#ffffff' },
   gradient: { background: 'linear-gradient(135deg, #1a1a2e 0%, #2d2d4e 100%)', color: '#ffffff' },
 };
@@ -91,7 +91,7 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
   );
 
   return (
-    <section style={{ ...bg, padding: isMobile ? '48px 16px' : '72px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ ...bg, padding: isMobile ? '40px 16px' : '56px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '32px' : '56px', alignItems: 'center' }}>
           {data.reverse ? <>{media}{content}</> : <>{content}{media}</>}

@@ -7,7 +7,7 @@ import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 const PLACEHOLDER = 'https://placehold.co/800x500/e0e0f0/9090c0?text=Image';
 
 const bgMap: Record<string, React.CSSProperties> = {
-  light: { background: '#f8f8fc', color: '#1a1a2e' },
+  light: { background: 'transparent', color: '#1a1a2e' },
   dark: { background: '#1a1a2e', color: '#ffffff' },
   gradient: { background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: '#ffffff' },
 };
@@ -30,7 +30,7 @@ export function HeroPreview({ data }: { data: HeroData }) {
 
   if (isCentered) {
     return (
-      <section style={{ ...bg, padding: isMobile ? '56px 16px' : '80px 24px', textAlign: 'center', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+      <section style={{ ...bg, padding: isMobile ? '44px 16px' : '64px 24px', textAlign: 'center', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {data.kicker && <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.65, marginBottom: '14px', display: 'block', ...textStyle }}>{data.kicker}</span>}
           <h1 style={{ fontSize: isMobile ? '2rem' : '3rem', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: '20px', maxWidth: '700px', ...titleStyle }}>{data.title || 'Hero Title'}</h1>
@@ -47,7 +47,7 @@ export function HeroPreview({ data }: { data: HeroData }) {
   }
 
   return (
-    <section style={{ ...bg, padding: isMobile ? '48px 16px' : '72px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ ...bg, padding: isMobile ? '40px 16px' : '56px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '32px' : '56px', alignItems: 'center' }}>
         <div>
           {data.kicker && <span style={{ display: 'block', fontSize: '12px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.65, marginBottom: '14px', ...textStyle }}>{data.kicker}</span>}

@@ -5,7 +5,7 @@ import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 
 const bgMap: Record<string, React.CSSProperties> = {
-  light: { background: '#f8f8fc', color: '#1a1a2e' },
+  light: { background: 'transparent', color: '#1a1a2e' },
   dark: { background: '#1a1a2e', color: '#ffffff' },
   gradient: { background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)', color: '#ffffff' },
 };
@@ -37,7 +37,7 @@ export function CtaPreview({ data }: { data: CtaData }) {
   };
 
   return (
-    <section style={{ ...bg, padding: isMobile ? '56px 16px' : '80px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ ...bg, padding: isMobile ? '44px 16px' : '60px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', ...align }}>
           <h2 style={{ fontSize: isMobile ? '1.75rem' : '2.5rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.03em', margin: 0, ...titleStyle }}>

@@ -17,7 +17,7 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
     ? { background: '#1a1a2e' }
     : data.backgroundStyle === 'gradient'
     ? { background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }
-    : { background: '#f8f8fc' };
+    : {};
 
   const gridCols = isMobile
     ? '1fr 1fr'
@@ -28,7 +28,7 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
     : '2fr 1fr 1fr';
 
   return (
-    <section style={{ ...bgStyle, padding: isMobile ? '40px 16px' : '64px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ ...bgStyle, padding: isMobile ? '32px 16px' : '48px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? '12px' : '20px', alignItems: 'stretch' }}>
           {/* Banner */}
