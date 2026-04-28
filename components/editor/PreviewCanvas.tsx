@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { PageModule } from '@/types/modules';
 import { ModulePreviewRenderer } from '@/modules/preview/ModulePreviewRenderer';
 import { DeviceContext } from '@/contexts/DeviceContext';
@@ -48,6 +49,7 @@ const moduleLabels: Record<string, string> = {
 
 function SortableModule({ module, isSelected, onSelect, onDelete, onDuplicate }: SortableModuleProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: module.id });
+  const [hovered, setHovered] = React.useState(false);
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -56,15 +58,20 @@ function SortableModule({ module, isSelected, onSelect, onDelete, onDuplicate }:
     zIndex: isDragging ? 50 : undefined,
   };
 
+  const shadow = isSelected
+    ? 'inset 0 0 0 2px #6366f1'
+    : hovered
+    ? 'inset 0 0 0 1px rgba(99,102,241,0.45), 0 1px 0 0 rgba(0,0,0,0.06)'
+    : '0 0 0 1px rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.05)';
+
   return (
     <div ref={setNodeRef} style={style} className="relative group">
       <div
         onClick={onSelect}
-        className={`relative cursor-pointer rounded-sm transition-all ${
-          isSelected
-            ? 'ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-950'
-            : 'hover:ring-2 hover:ring-slate-600 hover:ring-offset-2 hover:ring-offset-slate-950'
-        }`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="relative cursor-pointer transition-shadow"
+        style={{ boxShadow: shadow }}
       >
         {/* Module badge */}
         <div className={`absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-xs font-medium transition-opacity pointer-events-none ${
