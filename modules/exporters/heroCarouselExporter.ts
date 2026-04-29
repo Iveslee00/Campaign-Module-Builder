@@ -7,26 +7,27 @@ export function generateHeroCarouselHTML(data: HeroCarouselData): string {
 
   const slides = data.slides
     .map((s) => {
-      const overlay = `rgba(0,0,0,${((s.overlayOpacity ?? 40) / 100).toFixed(2)})`;
+      const overlay = s.overlayOpacity ? `rgba(0,0,0,${(s.overlayOpacity / 100).toFixed(2)})` : null;
       const titleStyle = s.titleColor ? ` style="color: ${escapeHtml(s.titleColor)}"` : '';
       const textStyle = s.textColor ? ` style="color: ${escapeHtml(s.textColor)}"` : '';
-      const align = s.alignment ?? 'center';
+      const textBgStyle = s.textBgColor ? ` style="background-color: ${escapeHtml(s.textBgColor)}"` : '';
+      const align = s.alignment ?? 'left';
 
-      const title = s.title ? `        <h2 class="cb-kv__title"${titleStyle}>${escapeHtml(s.title)}</h2>` : '';
-      const subtitle = s.subtitle ? `        <p class="cb-kv__subtitle"${textStyle}>${escapeHtml(s.subtitle)}</p>` : '';
+      const title = s.title ? `          <h2 class="cb-kv__title"${titleStyle}>${escapeHtml(s.title)}</h2>` : '';
+      const subtitle = s.subtitle ? `          <p class="cb-kv__subtitle"${textStyle}>${escapeHtml(s.subtitle)}</p>` : '';
       const btn = s.buttonText
-        ? `        <a href="${escapeHtml(s.buttonLink || '#')}" class="cb-btn cb-kv__btn">${escapeHtml(s.buttonText)}</a>`
+        ? `          <a href="${escapeHtml(s.buttonLink || '#')}" class="cb-btn cb-kv__btn">${escapeHtml(s.buttonText)}</a>`
         : '';
+      const overlayEl = overlay ? `\n        <div class="cb-kv__overlay" style="background: ${overlay}"></div>` : '';
+      const imgEl = s.image ? `\n        <img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title || '')}" class="cb-kv__bg">` : '';
 
       return `    <div class="cb-kv__slide">
-      ${s.image ? `<img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title || '')}" class="cb-kv__bg">` : ''}
-      <div class="cb-kv__overlay" style="background: ${overlay}"></div>
-      <div class="cb-kv__content cb-kv__content--${align}">
-        <div class="cb-container">
+      <div class="cb-kv__text cb-kv__text--${align}"${textBgStyle}>
 ${title}
 ${subtitle}
 ${btn}
-        </div>
+      </div>
+      <div class="cb-kv__img">${imgEl}${overlayEl}
       </div>
     </div>`;
     })
@@ -43,7 +44,7 @@ ${data.slides.map((_, i) => `    <button class="cb-kv__dot${i === 0 ? ' cb-kv__d
   <button class="cb-kv__nav cb-kv__nav--next" aria-label="Next">&#8594;</button>`
     : '';
 
-  return `<section class="cb-kv cb-section ${heightClass}"${bgOverride}>
+  return `<section class="cb-kv ${heightClass}"${bgOverride}>
   <div class="cb-kv__track">
 ${slides}
   </div>

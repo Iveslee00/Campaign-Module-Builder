@@ -25,8 +25,9 @@ export function HeroCarouselForm({ data, onChange }: Props) {
       buttonLink: '#',
       titleColor: '#ffffff',
       textColor: 'rgba(255,255,255,0.85)',
-      overlayOpacity: 40,
-      alignment: 'center',
+      textBgColor: '#1a1a2e',
+      overlayOpacity: 0,
+      alignment: 'left',
     };
     onChange({ ...data, slides: [...data.slides, newSlide] });
     setExpanded(newSlide.id);
@@ -93,6 +94,7 @@ export function HeroCarouselForm({ data, onChange }: Props) {
                     type="text"
                     placeholder="0–100"
                   />
+                  <ColorField label="文字區塊底色" value={slide.textBgColor} onChange={(v) => updateSlide(slide.id, 'textBgColor', v)} placeholder="#1a1a2e" />
                   <div className="grid grid-cols-2 gap-3">
                     <ColorField label="標題色" value={slide.titleColor} onChange={(v) => updateSlide(slide.id, 'titleColor', v)} placeholder="#ffffff" />
                     <ColorField label="文字色" value={slide.textColor} onChange={(v) => updateSlide(slide.id, 'textColor', v)} placeholder="rgba(255,255,255,0.85)" />

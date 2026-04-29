@@ -291,6 +291,7 @@ export interface KvSlide {
   buttonLink: string;
   titleColor: string;
   textColor: string;
+  textBgColor: string;
   overlayOpacity: number;
   alignment: 'left' | 'center' | 'right';
 }
