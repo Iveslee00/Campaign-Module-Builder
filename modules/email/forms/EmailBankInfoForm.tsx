@@ -28,6 +28,26 @@ export function EmailBankInfoForm({ data, onChange }: Props) {
     <div className="space-y-4">
       <FormField label="標題" value={data.title} onChange={(v) => onChange({ ...data, title: v })} />
       <FormField label="副標題" value={data.subtitle} onChange={(v) => onChange({ ...data, subtitle: v })} />
+      <div className="space-y-1">
+        <p className="text-xs text-slate-500">欄數</p>
+        <div className="flex gap-1">
+          {([1, 2, 3] as const).map((n) => (
+            <button key={n} onClick={() => onChange({ ...data, columns: n })} className={`flex-1 py-1.5 text-xs rounded border transition-colors ${(data.columns ?? 2) === n ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200'}`}>
+              {n}欄
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-1">
+        <p className="text-xs text-slate-500">對齊</p>
+        <div className="flex gap-1">
+          {(['left', 'center', 'right'] as const).map((a) => (
+            <button key={a} onClick={() => onChange({ ...data, alignment: a })} className={`flex-1 py-1.5 text-xs rounded border transition-colors ${(data.alignment || 'center') === a ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200'}`}>
+              {a === 'left' ? '靠左' : a === 'center' ? '置中' : '靠右'}
+            </button>
+          ))}
+        </div>
+      </div>
       <div className="h-px bg-slate-700/60" />
       <div className="space-y-2">
         <div className="flex items-center justify-between">

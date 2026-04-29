@@ -38,7 +38,7 @@ const campaignLabels: Record<string, string> = {
 };
 
 const emailLabels: Record<string, string> = {
-  'email-title': '標題', 'email-image': '純圖片',
+  'email-title': '標題', 'email-image': '純圖片', 'email-promo': '活動區塊',
   'email-kv': 'KV 主視覺', 'email-products': '商品',
   'email-image-products': '圖片帶商品', 'email-bank-info': '銀行資訊',
   'email-article': '文章', 'email-coupon': '折價券',
@@ -209,7 +209,7 @@ export function PreviewCanvas({
   emailModules, selectedEmailId,
   onEmailSelect, onEmailDelete, onEmailDuplicate, onEmailReorder,
 }: Props) {
-  const { pageBackgroundColor } = useGlobalSettings();
+  const { pageBackgroundColor, pageBackgroundImage } = useGlobalSettings();
   const emailSettings = useEmailSettings();
 
   const sensors = useSensors(
@@ -383,7 +383,10 @@ export function PreviewCanvas({
                     <SortableContext items={modules.map((m) => m.id)} strategy={verticalListSortingStrategy}>
                       <div
                         className="divide-y divide-slate-800/50"
-                        style={pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}}
+                        style={{
+                          ...(pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}),
+                          ...(pageBackgroundImage ? { backgroundImage: `url("${pageBackgroundImage}")`, backgroundRepeat: 'repeat-y', backgroundSize: '100% auto' } : {}),
+                        }}
                       >
                         {modules.map((module) => (
                           <SortableModule

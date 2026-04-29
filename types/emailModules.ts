@@ -1,6 +1,7 @@
 export type EmailModuleType =
   | 'email-title'
   | 'email-image'
+  | 'email-promo'
   | 'email-kv'
   | 'email-products'
   | 'email-image-products'
@@ -32,6 +33,23 @@ export interface EmailImageData {
   backgroundColor: string;
 }
 export interface EmailImageModule extends EmailBaseModule { type: 'email-image'; data: EmailImageData; }
+
+// ── Promo Boxes ───────────────────────────────────────────────────────────────
+export interface EmailPromoBox {
+  id: string;
+  title: string;
+  description: string;
+  accentColor: string;
+  image: string;
+}
+export interface EmailPromoData {
+  sectionTitle: string;
+  columns: 1 | 2 | 3 | 4;
+  boxes: EmailPromoBox[];
+  backgroundColor: string;
+  boxBgColor: string;
+}
+export interface EmailPromoModule extends EmailBaseModule { type: 'email-promo'; data: EmailPromoData; }
 
 // ── KV Banner ─────────────────────────────────────────────────────────────────
 export interface EmailKvData {
@@ -72,6 +90,7 @@ export interface EmailImageProductsData {
   bannerLink: string;
   bannerTitle: string;
   bannerSubtitle: string;
+  imagePosition: 'left' | 'right';
   products: EmailProductItem[];
   buttonText: string;
   backgroundColor: string;
@@ -92,6 +111,8 @@ export interface EmailBankInfoData {
   title: string;
   subtitle: string;
   items: EmailBankItem[];
+  columns: 1 | 2 | 3;
+  alignment: 'left' | 'center' | 'right';
   disclaimer: string;
   linkText: string;
   linkUrl: string;
@@ -131,6 +152,7 @@ export interface EmailCouponModule extends EmailBaseModule { type: 'email-coupon
 export type EmailPageModule =
   | EmailTitleModule
   | EmailImageModule
+  | EmailPromoModule
   | EmailKvModule
   | EmailProductsModule
   | EmailImageProductsModule

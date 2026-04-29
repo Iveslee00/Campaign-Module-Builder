@@ -28,6 +28,13 @@ export function EmailImageProductsForm({ data, onChange }: Props) {
     <div className="space-y-4">
       <FormField label="Banner 圖片 URL" value={data.bannerImage} onChange={(v) => onChange({ ...data, bannerImage: v })} type="url" placeholder="https://…" />
       <FormField label="Banner 連結" value={data.bannerLink} onChange={(v) => onChange({ ...data, bannerLink: v })} type="url" placeholder="#" />
+      <div className="space-y-1">
+        <p className="text-xs text-slate-500">圖片位置</p>
+        <div className="flex gap-1">
+          <button onClick={() => onChange({ ...data, imagePosition: 'left' })} className={`flex-1 py-1.5 text-xs rounded border transition-colors ${(data.imagePosition || 'left') === 'left' ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200'}`}>圖左文右</button>
+          <button onClick={() => onChange({ ...data, imagePosition: 'right' })} className={`flex-1 py-1.5 text-xs rounded border transition-colors ${data.imagePosition === 'right' ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200'}`}>文左圖右</button>
+        </div>
+      </div>
       <FormField label="按鈕文字" value={data.buttonText} onChange={(v) => onChange({ ...data, buttonText: v })} placeholder="選購" />
       <div className="h-px bg-slate-700/60" />
       <div className="space-y-2">

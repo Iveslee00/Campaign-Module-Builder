@@ -49,6 +49,26 @@ export const emailModuleSchemas: EmailModuleSchemaItem[] = [
     },
   },
 
+  // ── 活動區塊 ──────────────────────────────────────────────────────────────
+  {
+    type: 'email-promo',
+    key: 'email-promo',
+    label: '活動區塊',
+    description: '多格活動方框，可選欄數',
+    icon: 'layout',
+    category: '活動',
+    defaultData: {
+      sectionTitle: '精選活動',
+      columns: 2,
+      backgroundColor: '#ffffff',
+      boxBgColor: '#f8f8fc',
+      boxes: [
+        { id: generateId(), title: '活動一', description: '活動說明文字，可填寫折扣或活動內容', accentColor: '#6366f1', image: '' },
+        { id: generateId(), title: '活動二', description: '活動說明文字，可填寫折扣或活動內容', accentColor: '#e53e3e', image: '' },
+      ],
+    },
+  },
+
   // ── KV ────────────────────────────────────────────────────────────────────
   {
     type: 'email-kv',
@@ -166,6 +186,7 @@ export const emailModuleSchemas: EmailModuleSchemaItem[] = [
       bannerLink: '#',
       bannerTitle: '',
       bannerSubtitle: '',
+      imagePosition: 'left',
       buttonText: '選購',
       backgroundColor: '#ffffff',
       products: [
@@ -186,6 +207,8 @@ export const emailModuleSchemas: EmailModuleSchemaItem[] = [
     defaultData: {
       title: '信用卡優惠說明',
       subtitle: '活動期間：即日起至 2024/12/31',
+      columns: 2,
+      alignment: 'center',
       disclaimer: '謹慎理財 信用至上',
       linkText: '查看更多 ›',
       linkUrl: '#',

@@ -30,6 +30,7 @@ export default function Page() {
   const [deviceMode, setDeviceMode] = useState<DeviceMode>('desktop');
   const [buttonColor, setButtonColor] = useState('#6366f1');
   const [pageBackgroundColor, setPageBackgroundColor] = useState('');
+  const [pageBackgroundImage, setPageBackgroundImage] = useState('');
 
   // Email state
   const [emailModules, setEmailModules] = useState<EmailPageModule[]>([]);
@@ -124,14 +125,14 @@ export default function Page() {
 
   const exportedCode: ExportedCode = {
     html: generatePageHTML(modules),
-    css: generatePageCSS({ buttonColor, pageBackgroundColor }),
+    css: generatePageCSS({ buttonColor, pageBackgroundColor, pageBackgroundImage }),
   };
   const exportedEmail = generateEmailHTML(emailModules, emailSettings);
 
   const canExport = pageMode === 'campaign' ? modules.length > 0 : emailModules.length > 0;
 
   return (
-    <GlobalSettingsContext.Provider value={{ buttonColor, setButtonColor, pageBackgroundColor, setPageBackgroundColor }}>
+    <GlobalSettingsContext.Provider value={{ buttonColor, setButtonColor, pageBackgroundColor, setPageBackgroundColor, pageBackgroundImage, setPageBackgroundImage }}>
       <EmailSettingsContext.Provider value={{ ...emailSettings, update: updateEmailSettings }}>
         <div className="flex flex-col h-screen overflow-hidden bg-slate-950">
           {/* Top bar */}

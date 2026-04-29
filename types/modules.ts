@@ -364,6 +364,7 @@ export interface ExportedCode {
 export interface GlobalSettings {
   buttonColor: string;
   pageBackgroundColor: string;
+  pageBackgroundImage: string;
 }
 
 export interface ModuleSchemaItem {

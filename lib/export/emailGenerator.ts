@@ -2,6 +2,7 @@ import { EmailPageModule, EmailSettings } from '@/types/emailModules';
 import { escapeHtml } from '@/lib/utils';
 import { generateEmailTitleHTML } from '@/modules/email/exporters/emailTitleExporter';
 import { generateEmailImageHTML } from '@/modules/email/exporters/emailImageExporter';
+import { generateEmailPromoHTML } from '@/modules/email/exporters/emailPromoExporter';
 import { generateEmailKvHTML } from '@/modules/email/exporters/emailKvExporter';
 import { generateEmailProductsHTML } from '@/modules/email/exporters/emailProductsExporter';
 import { generateEmailImageProductsHTML } from '@/modules/email/exporters/emailImageProductsExporter';
@@ -24,6 +25,8 @@ function renderModule(module: EmailPageModule, settings: EmailSettings): string 
       return generateEmailTitleHTML(module.data);
     case 'email-image':
       return generateEmailImageHTML(module.data, utm(module.data.link));
+    case 'email-promo':
+      return generateEmailPromoHTML(module.data);
     case 'email-kv':
       return generateEmailKvHTML(module.data, utm(module.data.link));
     case 'email-products':

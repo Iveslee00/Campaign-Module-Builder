@@ -4,6 +4,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   const btnColor = settings?.buttonColor || '#6366f1';
   const btnHover = settings?.buttonColor ? darken(settings.buttonColor) : '#4f46e5';
   const pageBg = settings?.pageBackgroundColor || '';
+  const pageBgImg = settings?.pageBackgroundImage || '';
 
   return `/* ============================================================
    Campaign Builder — Generated Stylesheet
@@ -19,7 +20,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-page {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 16px; line-height: 1.6; color: #1a1a2e;
-  -webkit-font-smoothing: antialiased;${pageBg ? `\n  background-color: ${pageBg};` : ''}
+  -webkit-font-smoothing: antialiased;${pageBg ? `\n  background-color: ${pageBg};` : ''}${pageBgImg ? `\n  background-image: url("${pageBgImg}");\n  background-repeat: repeat-y;\n  background-size: 100% auto;` : ''}
 }
 .cb-page img { max-width: 100%; height: auto; display: block; }
 .cb-page a { color: inherit; text-decoration: none; }

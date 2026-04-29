@@ -4,6 +4,7 @@ import { escapeHtml } from '@/lib/utils';
 export function generateEmailImageProductsHTML(data: EmailImageProductsData, primaryColor: string): string {
   const bg = data.backgroundColor || '#ffffff';
   const btn = primaryColor;
+  const imgRight = data.imagePosition === 'right';
 
   const productRows = data.products.map((p) => `    <tr>
       <td style="padding-bottom:10px;">
@@ -24,19 +25,22 @@ export function generateEmailImageProductsHTML(data: EmailImageProductsData, pri
       </td>
     </tr>`).join('\n');
 
-  return `<div style="background-color:${bg};padding:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-    <tr>
-      <td width="220" valign="top" style="padding-right:14px;">
+  const bannerTd = `<td width="220" valign="top" style="${imgRight ? 'padding-left:14px;' : 'padding-right:14px;'}">
         <a href="${escapeHtml(data.bannerLink || '#')}" target="_blank" style="display:block;line-height:0;">
           <img src="${escapeHtml(data.bannerImage)}" alt="${escapeHtml(data.bannerTitle || '')}" width="220" style="width:220px;height:auto;display:block;border-radius:8px;">
         </a>
-      </td>
-      <td valign="top">
+      </td>`;
+
+  const productsTd = `<td valign="top">
         <table width="100%" cellpadding="0" cellspacing="0" border="0">
 ${productRows}
         </table>
-      </td>
+      </td>`;
+
+  return `<div style="background-color:${bg};padding:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      ${imgRight ? `${productsTd}\n      ${bannerTd}` : `${bannerTd}\n      ${productsTd}`}
     </tr>
   </table>
 </div>`;

@@ -37,7 +37,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 const campaignCategories = ['Layout', 'Content', 'Commerce', 'Brand', 'Conversion', 'Float'];
-const emailCategories = ['標題', '圖片', 'KV', '商品', '圖片帶商品', '銀行資訊', '文章', '折價券'];
+const emailCategories = ['標題', '圖片', 'KV', '商品', '圖片帶商品', '活動', '銀行資訊', '文章', '折價券'];
 
 // ── Color picker ─────────────────────────────────────────────────────────────
 function ColorPicker({ label, value, onChange, allowEmpty, onReset }: {
@@ -90,7 +90,7 @@ interface Props {
 }
 
 export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
-  const { buttonColor, setButtonColor, pageBackgroundColor, setPageBackgroundColor } = useGlobalSettings();
+  const { buttonColor, setButtonColor, pageBackgroundColor, setPageBackgroundColor, pageBackgroundImage, setPageBackgroundImage } = useGlobalSettings();
   const emailSettings = useEmailSettings();
 
   const isEmail = pageMode === 'email';
@@ -194,6 +194,19 @@ export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
           <>
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">全站設定</p>
             <ColorPicker label="底色" value={pageBackgroundColor} onChange={setPageBackgroundColor} allowEmpty />
+            <div className="space-y-1">
+              <p className="text-xs text-slate-500">背景圖（repeat-y）</p>
+              <input
+                type="text"
+                value={pageBackgroundImage}
+                onChange={(e) => setPageBackgroundImage(e.target.value)}
+                placeholder="https://… (圖片網址)"
+                className="w-full bg-slate-800 border border-slate-700 rounded-md px-2 py-1 text-xs text-slate-300 focus:outline-none focus:border-indigo-500 placeholder-slate-600"
+              />
+              {pageBackgroundImage && (
+                <button onClick={() => setPageBackgroundImage('')} className="text-xs text-slate-500 hover:text-slate-300">✕ 清除</button>
+              )}
+            </div>
             <ColorPicker label="按鈕色" value={buttonColor} onChange={setButtonColor} onReset={() => setButtonColor('#6366f1')} />
           </>
         )}

@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props) {
-  const { pageBackgroundColor } = useGlobalSettings();
+  const { pageBackgroundColor, pageBackgroundImage } = useGlobalSettings();
   const emailSettings = useEmailSettings();
   const [deviceMode, setDeviceMode] = useState<DeviceMode>('desktop');
   const [capturing, setCapturing] = useState(false);
@@ -132,7 +132,10 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
                 </div>
               </div>
             ) : (
-              <div ref={contentRef} style={pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}}>
+              <div ref={contentRef} style={{
+                ...(pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}),
+                ...(pageBackgroundImage ? { backgroundImage: `url("${pageBackgroundImage}")`, backgroundRepeat: 'repeat-y', backgroundSize: '100% auto' } : {}),
+              }}>
                 {modules.map((module) => (
                   <ModulePreviewRenderer key={module.id} module={module} />
                 ))}
