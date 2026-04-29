@@ -16,8 +16,9 @@ import { ModuleLibrary } from '@/components/editor/ModuleLibrary';
 import { PreviewCanvas } from '@/components/editor/PreviewCanvas';
 import { InspectorPanel } from '@/components/editor/InspectorPanel';
 import { ExportModal } from '@/components/editor/ExportModal';
+import { PreviewModal } from '@/components/editor/PreviewModal';
 
-import { Download, Layers } from 'lucide-react';
+import { Download, Layers, Eye } from 'lucide-react';
 
 export type PageMode = 'campaign' | 'email';
 type DeviceMode = 'desktop' | 'mobile';
@@ -37,9 +38,7 @@ export default function Page() {
     backgroundColor: '#f4f4f4',
     contentBgColor: '#ffffff',
     primaryColor: '#6366f1',
-    utmSource: 'email',
-    utmMedium: 'newsletter',
-    utmCampaign: '',
+    utmString: '',
     trackingPixel: '',
     previewText: '',
   });
@@ -47,6 +46,7 @@ export default function Page() {
   // Shared
   const [pageMode, setPageMode] = useState<PageMode>('campaign');
   const [exportOpen, setExportOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   // ── Campaign operations ───────────────────────────────────────────────────
   const selectedModule = modules.find((m) => m.id === selectedId) ?? null;
@@ -142,14 +142,24 @@ export default function Page() {
               </div>
               <span className="text-slate-100 font-semibold text-sm tracking-tight">Campaign Builder</span>
             </div>
-            <button
-              onClick={() => setExportOpen(true)}
-              disabled={!canExport}
-              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors"
-            >
-              <Download size={14} />
-              Export Code
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPreviewOpen(true)}
+                disabled={!canExport}
+                className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-slate-200 text-sm font-semibold rounded-lg transition-colors"
+              >
+                <Eye size={14} />
+                預覽
+              </button>
+              <button
+                onClick={() => setExportOpen(true)}
+                disabled={!canExport}
+                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors"
+              >
+                <Download size={14} />
+                Export Code
+              </button>
+            </div>
           </header>
 
           {/* Three-column layout */}
@@ -194,6 +204,15 @@ export default function Page() {
               emailHTML={exportedEmail}
               initialTab={pageMode === 'email' ? 'email' : 'campaign'}
               onClose={() => setExportOpen(false)}
+            />
+          )}
+
+          {previewOpen && (
+            <PreviewModal
+              pageMode={pageMode}
+              modules={modules}
+              emailModules={emailModules}
+              onClose={() => setPreviewOpen(false)}
             />
           )}
         </div>

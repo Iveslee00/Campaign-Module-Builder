@@ -14,6 +14,7 @@ const moduleLabels: Record<string, string> = {
   'logo-wall': 'Logo Wall', 'cta': 'CTA Banner', 'faq': 'FAQ',
   'sticky-sidebar': 'Sticky Bar', 'article-text': '文章（純文字）',
   'article-image': '文章（帶圖片）', 'hero-carousel': 'KV 輪播', 'bank-promo': '銀行贈獎',
+  'email-title': '標題', 'email-image': '純圖片',
   'email-kv': 'KV 主視覺', 'email-products': '商品', 'email-image-products': '圖片帶商品',
   'email-bank-info': '銀行資訊', 'email-article': '文章', 'email-coupon': '折價券',
 };
@@ -35,6 +36,8 @@ const moduleColors: Record<string, string> = {
   'hero-carousel': 'bg-fuchsia-600/20 text-fuchsia-400 border-fuchsia-600/30',
   'bank-promo': 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30',
   // email
+  'email-title': 'bg-slate-600/20 text-slate-400 border-slate-600/30',
+  'email-image': 'bg-violet-600/20 text-violet-400 border-violet-600/30',
   'email-kv': 'bg-amber-600/20 text-amber-400 border-amber-600/30',
   'email-products': 'bg-emerald-600/20 text-emerald-400 border-emerald-600/30',
   'email-image-products': 'bg-teal-600/20 text-teal-400 border-teal-600/30',

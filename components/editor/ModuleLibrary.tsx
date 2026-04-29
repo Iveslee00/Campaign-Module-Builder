@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState } from 'react';
 import { ModuleSchemaItem } from '@/types/modules';
 import { EmailModuleSchemaItem } from '@/types/emailModules';
 import { moduleSchemas } from '@/data/moduleSchemas';
@@ -9,7 +10,7 @@ import {
   Layout, Columns2, Grid2X2, Image as ImageIcon,
   Megaphone, HelpCircle, Plus, Package, Star,
   Type, GalleryHorizontal, LayoutPanelLeft, Pin, FileText, FileImage,
-  CreditCard, Tag, GalleryHorizontalEnd,
+  CreditCard, Tag, GalleryHorizontalEnd, ChevronDown,
 } from 'lucide-react';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { useEmailSettings } from '@/contexts/EmailSettingsContext';
@@ -36,12 +37,12 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 const campaignCategories = ['Layout', 'Content', 'Commerce', 'Brand', 'Conversion', 'Float'];
-const emailCategories = ['KV', '商品', '圖片帶商品', '銀行資訊', '文章', '折價券'];
+const emailCategories = ['標題', '圖片', 'KV', '商品', '圖片帶商品', '銀行資訊', '文章', '折價券'];
 
-// Small inline color picker
-function ColorPicker({ label, value, onChange, allowEmpty, resetLabel, onReset }: {
+// ── Color picker ─────────────────────────────────────────────────────────────
+function ColorPicker({ label, value, onChange, allowEmpty, onReset }: {
   label: string; value: string; onChange: (v: string) => void;
-  allowEmpty?: boolean; resetLabel?: string; onReset?: () => void;
+  allowEmpty?: boolean; onReset?: () => void;
 }) {
   return (
     <div className="space-y-1">
@@ -61,6 +62,23 @@ function ColorPicker({ label, value, onChange, allowEmpty, resetLabel, onReset }
         {allowEmpty && value && <button onClick={() => onChange('')} className="text-xs text-slate-500 hover:text-slate-300 px-1" title="Clear">✕</button>}
         {!allowEmpty && onReset && <button onClick={onReset} className="text-xs text-slate-500 hover:text-slate-300 px-1" title="Reset">↺</button>}
       </div>
+    </div>
+  );
+}
+
+// ── Collapsible section ───────────────────────────────────────────────────────
+function Section({ title, defaultOpen = true, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between py-1 group"
+      >
+        <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">{title}</p>
+        <ChevronDown size={12} className={`text-slate-600 group-hover:text-slate-400 transition-transform ${open ? '' : '-rotate-90'}`} />
+      </button>
+      {open && <div className="mt-2 space-y-2">{children}</div>}
     </div>
   );
 }
@@ -87,7 +105,6 @@ export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
 
       <div className="flex-1 overflow-y-auto px-3 py-3 space-y-5">
         {isEmail ? (
-          // ── Email modules ─────────────────────────────────────────────
           emailCategories.map((cat) => {
             const items = emailModuleSchemas.filter((s) => s.category === cat);
             if (!items.length) return null;
@@ -112,7 +129,6 @@ export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
             );
           })
         ) : (
-          // ── Campaign modules ──────────────────────────────────────────
           campaignCategories.map((cat) => {
             const items = moduleSchemas.filter((s) => s.category === cat);
             if (!items.length) return null;
@@ -139,36 +155,42 @@ export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
         )}
       </div>
 
-      {/* Global settings — always visible at bottom */}
-      <div className="flex-shrink-0 px-4 py-3 border-t border-slate-800 space-y-3">
+      {/* Global settings */}
+      <div className="flex-shrink-0 px-4 py-3 border-t border-slate-800 space-y-3 max-h-72 overflow-y-auto">
         {isEmail ? (
-          // ── Email settings ────────────────────────────────────────────
           <>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">電子報設定</p>
-            <ColorPicker label="信件背景色" value={emailSettings.backgroundColor} onChange={(v) => emailSettings.update({ backgroundColor: v })} />
-            <ColorPicker label="內容底色" value={emailSettings.contentBgColor} onChange={(v) => emailSettings.update({ contentBgColor: v })} />
-            <ColorPicker label="主色（按鈕）" value={emailSettings.primaryColor} onChange={(v) => emailSettings.update({ primaryColor: v })} onReset={() => emailSettings.update({ primaryColor: '#6366f1' })} />
+            <Section title="電子報設定">
+              <ColorPicker label="信件背景色" value={emailSettings.backgroundColor} onChange={(v) => emailSettings.update({ backgroundColor: v })} />
+              <ColorPicker label="內容底色" value={emailSettings.contentBgColor} onChange={(v) => emailSettings.update({ contentBgColor: v })} />
+              <ColorPicker label="主色（按鈕）" value={emailSettings.primaryColor} onChange={(v) => emailSettings.update({ primaryColor: v })} onReset={() => emailSettings.update({ primaryColor: '#6366f1' })} />
+            </Section>
             <div className="h-px bg-slate-700/60" />
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">全站追蹤碼</p>
-            <div className="space-y-2">
-              {(['utmSource', 'utmMedium', 'utmCampaign'] as const).map((key) => (
-                <div key={key} className="space-y-1">
-                  <p className="text-xs text-slate-500">{key === 'utmSource' ? 'UTM Source' : key === 'utmMedium' ? 'UTM Medium' : 'UTM Campaign'}</p>
-                  <input type="text" value={emailSettings[key]} onChange={(e) => emailSettings.update({ [key]: e.target.value })} className="w-full bg-slate-800 border border-slate-700 rounded-md px-2 py-1 text-xs text-slate-300 font-mono focus:outline-none focus:border-indigo-500" placeholder={key === 'utmSource' ? 'email' : key === 'utmMedium' ? 'newsletter' : 'campaign-name'} />
-                </div>
-              ))}
+            <Section title="追蹤碼" defaultOpen={false}>
+              <div className="space-y-1">
+                <p className="text-xs text-slate-500">UTM 參數</p>
+                <input
+                  type="text"
+                  value={emailSettings.utmString}
+                  onChange={(e) => emailSettings.update({ utmString: e.target.value })}
+                  className="w-full bg-slate-800 border border-slate-700 rounded-md px-2 py-1 text-xs text-slate-300 font-mono focus:outline-none focus:border-indigo-500"
+                  placeholder="utm_source=edm&utm_medium=skm_email&utm_campaign=0430"
+                />
+                <p className="text-xs text-slate-600 leading-relaxed">自動附加到所有連結後方</p>
+              </div>
               <div className="space-y-1">
                 <p className="text-xs text-slate-500">Tracking Pixel HTML</p>
                 <textarea value={emailSettings.trackingPixel} onChange={(e) => emailSettings.update({ trackingPixel: e.target.value })} rows={2} className="w-full bg-slate-800 border border-slate-700 rounded-md px-2 py-1.5 text-xs text-slate-300 font-mono focus:outline-none focus:border-indigo-500 resize-none" placeholder='<img src="https://..." width="1" height="1">' />
               </div>
+            </Section>
+            <div className="h-px bg-slate-700/60" />
+            <Section title="收件匣設定" defaultOpen={false}>
               <div className="space-y-1">
                 <p className="text-xs text-slate-500">預覽文字（收件匣顯示）</p>
                 <input type="text" value={emailSettings.previewText} onChange={(e) => emailSettings.update({ previewText: e.target.value })} className="w-full bg-slate-800 border border-slate-700 rounded-md px-2 py-1 text-xs text-slate-300 focus:outline-none focus:border-indigo-500" placeholder="本週精選優惠，最高折扣…" />
               </div>
-            </div>
+            </Section>
           </>
         ) : (
-          // ── Campaign settings ─────────────────────────────────────────
           <>
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">全站設定</p>
             <ColorPicker label="底色" value={pageBackgroundColor} onChange={setPageBackgroundColor} allowEmpty />

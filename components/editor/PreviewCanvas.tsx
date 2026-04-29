@@ -38,6 +38,7 @@ const campaignLabels: Record<string, string> = {
 };
 
 const emailLabels: Record<string, string> = {
+  'email-title': '標題', 'email-image': '純圖片',
   'email-kv': 'KV 主視覺', 'email-products': '商品',
   'email-image-products': '圖片帶商品', 'email-bank-info': '銀行資訊',
   'email-article': '文章', 'email-coupon': '折價券',
