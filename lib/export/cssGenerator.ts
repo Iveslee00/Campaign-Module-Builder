@@ -342,35 +342,35 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
    18. HERO CAROUSEL (KV) MODULE — split layout (text left, image right)
    ------------------------------------------------------------ */
 .cb-kv { position: relative; overflow: hidden; }
-.cb-kv--small  { height: 360px; }
-.cb-kv--medium { height: 500px; }
-.cb-kv--large  { height: 640px; }
+.cb-kv--small  { height: 300px; }
+.cb-kv--medium { height: 400px; }
+.cb-kv--large  { height: 520px; }
 .cb-kv__track { display: flex; height: 100%; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
-.cb-kv__slide { flex: 0 0 100%; display: grid; grid-template-columns: 45% 55%; height: 100%; }
-.cb-kv__text { display: flex; flex-direction: column; justify-content: center; padding: 0 48px 0 56px; overflow: hidden; background: #1a1a2e; }
+.cb-kv__slide { flex: 0 0 100%; display: grid; grid-template-columns: 35% 65%; height: 100%; }
+.cb-kv__text { display: flex; flex-direction: column; justify-content: center; padding: 0 36px 0 44px; overflow: hidden; background: #1a1a2e; }
 .cb-kv__text--left   { align-items: flex-start; text-align: left; }
 .cb-kv__text--center { align-items: center; text-align: center; }
 .cb-kv__text--right  { align-items: flex-end; text-align: right; }
 .cb-kv__img { position: relative; overflow: hidden; }
 .cb-kv__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .cb-kv__overlay { position: absolute; inset: 0; }
-.cb-kv__title { font-size: clamp(1.4rem, 2.5vw, 2.25rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; color: #ffffff; margin: 0 0 10px; }
-.cb-kv__subtitle { font-size: clamp(0.85rem, 1.2vw, 1rem); line-height: 1.65; color: rgba(255,255,255,0.85); margin: 0 0 20px; max-width: 400px; }
+.cb-kv__title { font-size: clamp(1.1rem, 2vw, 1.65rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #ffffff; margin: 0 0 8px; }
+.cb-kv__subtitle { font-size: clamp(0.8rem, 1vw, 0.9rem); line-height: 1.6; color: rgba(255,255,255,0.85); margin: 0 0 16px; max-width: 320px; }
 .cb-kv__btn { }
 .cb-kv__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3; color: #fff; font-size: 16px; }
-.cb-kv__nav--prev { left: calc(55% - 50px); }
+.cb-kv__nav--prev { left: calc(35% + 12px); }
 .cb-kv__nav--next { right: 14px; }
-.cb-kv__dots { position: absolute; bottom: 16px; left: 72.5%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 3; }
+.cb-kv__dots { position: absolute; bottom: 16px; left: 67.5%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 3; }
 .cb-kv__dot { width: 7px; height: 7px; border-radius: 4px; background: rgba(255,255,255,0.5); border: none; cursor: pointer; padding: 0; transition: width 0.3s, background 0.3s; }
 .cb-kv__dot--active { width: 22px; background: #ffffff; }
 
 @media (max-width: 768px) {
-  .cb-kv--small  { height: 420px; }
-  .cb-kv--medium { height: 520px; }
-  .cb-kv--large  { height: 620px; }
+  .cb-kv--small  { height: 370px; }
+  .cb-kv--medium { height: 460px; }
+  .cb-kv--large  { height: 550px; }
   .cb-kv__slide { grid-template-columns: 1fr; grid-template-rows: 210px 1fr; }
   .cb-kv__img { grid-row: 1; grid-column: 1; }
-  .cb-kv__text { grid-row: 2; grid-column: 1; padding: 24px 20px; }
+  .cb-kv__text { grid-row: 2; grid-column: 1; padding: 20px 18px; }
   .cb-kv__text--center, .cb-kv__text--right { align-items: flex-start; text-align: left; }
   .cb-kv__nav--prev { left: 8px; top: 105px; }
   .cb-kv__nav--next { right: 8px; top: 105px; }

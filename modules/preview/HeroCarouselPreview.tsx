@@ -9,9 +9,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const PLACEHOLDER = 'https://placehold.co/1200x600/1a1a2e/6366f1?text=KV+Banner';
 
 const heightMap = {
-  small:  { desktop: '360px', mobile: '420px', mobileImg: '210px' },
-  medium: { desktop: '500px', mobile: '520px', mobileImg: '260px' },
-  large:  { desktop: '640px', mobile: '620px', mobileImg: '320px' },
+  small:  { desktop: '300px', mobile: '370px', mobileImg: '210px' },
+  medium: { desktop: '400px', mobile: '460px', mobileImg: '260px' },
+  large:  { desktop: '520px', mobile: '550px', mobileImg: '310px' },
 };
 
 export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
@@ -58,10 +58,10 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
     cursor: 'pointer', zIndex: 3, color: '#fff',
   };
 
-  // Nav & dots live in the image area
+  // Nav & dots live in the image area (image starts at 35% on desktop)
   const imgCenterTop = isMobile ? `calc(${h.mobileImg} / 2)` : '50%';
   const imgRight = '14px';
-  const imgLeft = isMobile ? '8px' : 'calc(55% - 50px)'; // near the boundary of image panel
+  const imgLeft = isMobile ? '8px' : 'calc(35% + 12px)';
 
   return (
     <section
@@ -111,27 +111,27 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
               <div
                 style={{
                   background: textBg,
-                  flex: isMobile ? '1 0 0' : '0 0 45%',
+                  flex: isMobile ? '1 0 0' : '0 0 35%',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
-                  padding: isMobile ? '24px 20px' : '0 48px 0 56px',
+                  padding: isMobile ? '20px 18px' : '0 36px 0 44px',
                   overflow: 'hidden',
                   ...alignStyle,
                 }}
               >
                 {s.title && (
-                  <h1 style={{ fontSize: isMobile ? '1.3rem' : '2rem', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.025em', color: s.titleColor || '#ffffff', marginBottom: '10px' }}>
+                  <h1 style={{ fontSize: isMobile ? '1.15rem' : '1.6rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', color: s.titleColor || '#ffffff', marginBottom: '8px' }}>
                     {s.title}
                   </h1>
                 )}
                 {s.subtitle && (
-                  <p style={{ fontSize: isMobile ? '0.85rem' : '0.95rem', lineHeight: 1.65, color: s.textColor || 'rgba(255,255,255,0.85)', marginBottom: '20px', maxWidth: '400px' }}>
+                  <p style={{ fontSize: isMobile ? '0.8rem' : '0.85rem', lineHeight: 1.6, color: s.textColor || 'rgba(255,255,255,0.85)', marginBottom: '16px', maxWidth: '320px' }}>
                     {s.subtitle}
                   </p>
                 )}
                 {s.buttonText && (
-                  <span style={{ display: 'inline-flex', alignItems: 'center', padding: isMobile ? '9px 20px' : '12px 26px', background: buttonColor, color: '#fff', borderRadius: '8px', fontWeight: 700, fontSize: isMobile ? '13px' : '14px', cursor: 'default' }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', padding: isMobile ? '8px 18px' : '10px 22px', background: buttonColor, color: '#fff', borderRadius: '7px', fontWeight: 700, fontSize: isMobile ? '12px' : '13px', cursor: 'default' }}>
                     {s.buttonText}
                   </span>
                 )}
@@ -139,7 +139,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
 
               {/* Desktop: image on the right */}
               {!isMobile && (
-                <div style={{ flex: '0 0 55%', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ flex: '0 0 65%', position: 'relative', overflow: 'hidden' }}>
                   {imageEl}
                   {overlay && <div style={{ position: 'absolute', inset: 0, background: overlay }} />}
                 </div>
@@ -166,7 +166,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
         <div style={{
           position: 'absolute',
           bottom: isMobile ? `calc(${slideH} - ${h.mobileImg} + 14px)` : '16px',
-          left: isMobile ? '50%' : 'calc(45% + 27.5%)',
+          left: isMobile ? '50%' : 'calc(35% + 32.5%)',
           transform: 'translateX(-50%)',
           display: 'flex', gap: '7px', zIndex: 3,
         }}>
