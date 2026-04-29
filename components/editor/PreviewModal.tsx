@@ -20,12 +20,38 @@ interface Props {
   onClose: () => void;
 }
 
+// html2canvas doesn't support aspect-ratio. Before capture we convert every
+// element that uses it to an explicit pixel height, then restore afterwards.
+async function fixAspectRatio(root: HTMLElement): Promise<() => void> {
+  type Fix = { el: HTMLElement; origAR: string; origH: string };
+  const fixes: Fix[] = [];
+
+  root.querySelectorAll<HTMLElement>('*').forEach((el) => {
+    if (el.style.aspectRatio) {
+      fixes.push({ el, origAR: el.style.aspectRatio, origH: el.style.height });
+      el.style.height = el.getBoundingClientRect().height + 'px';
+      el.style.aspectRatio = 'unset';
+    }
+  });
+
+  // Wait for reflow
+  await new Promise<void>((r) => requestAnimationFrame(() => { requestAnimationFrame(() => r()); }));
+
+  return () => {
+    fixes.forEach(({ el, origAR, origH }) => {
+      el.style.aspectRatio = origAR;
+      el.style.height = origH;
+    });
+  };
+}
+
 export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props) {
   const { pageBackgroundColor, pageBackgroundImage } = useGlobalSettings();
   const emailSettings = useEmailSettings();
   const [deviceMode, setDeviceMode] = useState<DeviceMode>('desktop');
   const [capturing, setCapturing] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const isEmail = pageMode === 'email';
   const isMobile = deviceMode === 'mobile';
@@ -35,7 +61,28 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
     setCapturing(true);
     try {
       const html2canvas = (await import('html2canvas')).default;
-      const canvas = await html2canvas(contentRef.current, {
+      const el = contentRef.current;
+
+      // Wait for all images to finish loading
+      const imgs = Array.from(el.querySelectorAll<HTMLImageElement>('img'));
+      await Promise.all(
+        imgs.map((img) =>
+          img.complete ? Promise.resolve() : new Promise<void>((r) => { img.onload = () => r(); img.onerror = () => r(); })
+        )
+      );
+
+      // Scroll to top
+      const prevScroll = scrollRef.current?.scrollTop ?? 0;
+      if (scrollRef.current) scrollRef.current.scrollTop = 0;
+      await new Promise<void>((r) => requestAnimationFrame(() => r()));
+
+      // Fix aspect-ratio elements (not supported by html2canvas 1.x)
+      const restoreAR = await fixAspectRatio(el);
+
+      const w = el.offsetWidth;
+      const h = el.scrollHeight;
+
+      const canvas = await html2canvas(el, {
         useCORS: true,
         allowTaint: true,
         scale: 2,
@@ -43,10 +90,21 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
           ? (emailSettings.backgroundColor || '#f4f4f4')
           : (pageBackgroundColor || '#ffffff'),
         logging: false,
-        scrollY: -window.scrollY,
-        windowHeight: contentRef.current.scrollHeight,
-        height: contentRef.current.scrollHeight,
+        x: 0,
+        y: 0,
+        scrollX: 0,
+        scrollY: 0,
+        width: w,
+        height: h,
+        windowWidth: w,
+        windowHeight: h,
+        imageTimeout: 15000,
       });
+
+      // Restore aspect-ratio
+      restoreAR();
+      if (scrollRef.current) scrollRef.current.scrollTop = prevScroll;
+
       const link = document.createElement('a');
       link.download = `preview-${Date.now()}.jpg`;
       link.href = canvas.toDataURL('image/jpeg', 0.92);
@@ -101,12 +159,18 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
         </div>
       </div>
 
-      {/* Preview area */}
-      <div className={`flex-1 overflow-y-auto ${isEmail ? '' : isMobile ? 'bg-slate-800' : 'bg-slate-950'}`}
-        style={isEmail ? { backgroundColor: emailSettings.backgroundColor || '#f4f4f4' } : {}}>
+      {/* Preview scroll area */}
+      <div
+        ref={scrollRef}
+        className={`flex-1 overflow-y-auto ${isEmail ? '' : isMobile ? 'bg-slate-800' : 'bg-slate-950'}`}
+        style={isEmail ? { backgroundColor: emailSettings.backgroundColor || '#f4f4f4' } : {}}
+      >
         {isEmail ? (
           <div className="flex justify-center py-8 px-4">
-            <div ref={contentRef} className="w-full" style={{ maxWidth: '600px', backgroundColor: emailSettings.contentBgColor || '#ffffff' }}>
+            <div
+              ref={contentRef}
+              style={{ width: '600px', maxWidth: '100%', backgroundColor: emailSettings.contentBgColor || '#ffffff' }}
+            >
               {emailModules.map((module) => (
                 <EmailModulePreviewRenderer key={module.id} module={module} />
               ))}
@@ -117,14 +181,20 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
             {isMobile ? (
               <div className="flex justify-center py-6 px-4">
                 <div style={{ width: '390px' }} className="shadow-2xl rounded-2xl overflow-hidden border border-slate-600">
-                  {/* Mobile status bar */}
                   <div className="flex items-center justify-between px-5 py-2 bg-slate-900 text-slate-400 text-xs border-b border-slate-700">
                     <span className="font-medium">9:41</span>
                     <div className="flex gap-1 items-center">
                       <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor"><rect x="0" y="3" width="3" height="7" rx="1"/><rect x="4" y="2" width="3" height="8" rx="1"/><rect x="8" y="0" width="3" height="10" rx="1"/><rect x="12" y="4" width="2" height="6" rx="1" opacity=".4"/></svg>
                     </div>
                   </div>
-                  <div ref={contentRef} style={pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}}>
+                  <div
+                    ref={contentRef}
+                    style={{
+                      width: '390px',
+                      ...(pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}),
+                      ...(pageBackgroundImage ? { backgroundImage: `url("${pageBackgroundImage}")`, backgroundRepeat: 'repeat-y', backgroundSize: '100% auto' } : {}),
+                    }}
+                  >
                     {modules.map((module) => (
                       <ModulePreviewRenderer key={module.id} module={module} />
                     ))}
@@ -132,10 +202,13 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
                 </div>
               </div>
             ) : (
-              <div ref={contentRef} style={{
-                ...(pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}),
-                ...(pageBackgroundImage ? { backgroundImage: `url("${pageBackgroundImage}")`, backgroundRepeat: 'repeat-y', backgroundSize: '100% auto' } : {}),
-              }}>
+              <div
+                ref={contentRef}
+                style={{
+                  ...(pageBackgroundColor ? { backgroundColor: pageBackgroundColor } : {}),
+                  ...(pageBackgroundImage ? { backgroundImage: `url("${pageBackgroundImage}")`, backgroundRepeat: 'repeat-y', backgroundSize: '100% auto' } : {}),
+                }}
+              >
                 {modules.map((module) => (
                   <ModulePreviewRenderer key={module.id} module={module} />
                 ))}
