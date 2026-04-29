@@ -45,6 +45,8 @@ const moduleLabels: Record<string, string> = {
   'sticky-sidebar': 'Sticky Bar',
   'article-text': '文章（純文字）',
   'article-image': '文章（帶圖片）',
+  'hero-carousel': 'KV 輪播',
+  'bank-promo': '銀行贈獎',
 };
 
 function SortableModule({ module, isSelected, onSelect, onDelete, onDuplicate }: SortableModuleProps) {

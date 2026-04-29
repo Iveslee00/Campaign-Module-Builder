@@ -18,6 +18,8 @@ const moduleLabels: Record<string, string> = {
   'sticky-sidebar': 'Sticky Bar',
   'article-text': '文章（純文字）',
   'article-image': '文章（帶圖片）',
+  'hero-carousel': 'KV 輪播',
+  'bank-promo': '銀行贈獎',
 };
 
 const moduleColors: Record<string, string> = {
@@ -34,6 +36,8 @@ const moduleColors: Record<string, string> = {
   'sticky-sidebar': 'bg-purple-600/20 text-purple-400 border-purple-600/30',
   'article-text': 'bg-sky-600/20 text-sky-400 border-sky-600/30',
   'article-image': 'bg-indigo-600/20 text-indigo-400 border-indigo-600/30',
+  'hero-carousel': 'bg-fuchsia-600/20 text-fuchsia-400 border-fuchsia-600/30',
+  'bank-promo': 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30',
 };
 
 interface Props {

@@ -11,7 +11,9 @@ export type ModuleType =
   | 'faq'
   | 'sticky-sidebar'
   | 'article-text'
-  | 'article-image';
+  | 'article-image'
+  | 'hero-carousel'
+  | 'bank-promo';
 
 export interface BaseModule {
   id: string;
@@ -279,6 +281,62 @@ export interface ArticleImageModule extends BaseModule {
   data: ArticleImageData;
 }
 
+// ── Hero Carousel (KV輪播) ────────────────────────────────────────────────────
+export interface KvSlide {
+  id: string;
+  image: string;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  buttonLink: string;
+  titleColor: string;
+  textColor: string;
+  overlayOpacity: number;
+  alignment: 'left' | 'center' | 'right';
+}
+
+export type KvHeight = 'small' | 'medium' | 'large';
+
+export interface HeroCarouselData {
+  slides: KvSlide[];
+  height: KvHeight;
+  autoPlay: boolean;
+  backgroundColor: string;
+}
+
+export interface HeroCarouselModule extends BaseModule {
+  type: 'hero-carousel';
+  data: HeroCarouselData;
+}
+
+// ── Bank Promo (銀行贈獎活動) ─────────────────────────────────────────────────
+export interface BankPromoItem {
+  id: string;
+  cardName: string;
+  condition: string;
+  benefit: string;
+  note: string;
+  logo: string;
+  accentColor: string;
+}
+
+export interface BankPromoData {
+  title: string;
+  subtitle: string;
+  items: BankPromoItem[];
+  disclaimer: string;
+  linkText: string;
+  linkUrl: string;
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface BankPromoModule extends BaseModule {
+  type: 'bank-promo';
+  data: BankPromoData;
+}
+
 // ── Union & Export ────────────────────────────────────────────────────────────
 export type PageModule =
   | TitleModule
@@ -293,7 +351,9 @@ export type PageModule =
   | FaqModule
   | StickySidebarModule
   | ArticleTextModule
-  | ArticleImageModule;
+  | ArticleImageModule
+  | HeroCarouselModule
+  | BankPromoModule;
 
 export interface ExportedCode {
   html: string;

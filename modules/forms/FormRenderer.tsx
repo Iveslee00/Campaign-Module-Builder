@@ -14,6 +14,8 @@ import { FaqForm } from './FaqForm';
 import { StickySidebarForm } from './StickySidebarForm';
 import { ArticleTextForm } from './ArticleTextForm';
 import { ArticleImageForm } from './ArticleImageForm';
+import { HeroCarouselForm } from './HeroCarouselForm';
+import { BankPromoForm } from './BankPromoForm';
 
 interface Props {
   module: PageModule;
@@ -48,6 +50,10 @@ export function FormRenderer({ module, onChange }: Props) {
       return <ArticleTextForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
     case 'article-image':
       return <ArticleImageForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+    case 'hero-carousel':
+      return <HeroCarouselForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+    case 'bank-promo':
+      return <BankPromoForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
     default:
       return null;
   }

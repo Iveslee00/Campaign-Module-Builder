@@ -80,8 +80,8 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
                 key={product.id}
                 style={{ flex: `0 0 ${itemWidth}px`, minWidth: 0 }}
               >
-                <div style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f0f0f8' }}>
+                <div style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
+                  <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f5f5f5' }}>
                     <img
                       src={product.image || PLACEHOLDER}
                       alt={product.name}

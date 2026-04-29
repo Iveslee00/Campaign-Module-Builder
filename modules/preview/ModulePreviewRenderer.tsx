@@ -14,6 +14,8 @@ import { FaqPreview } from './FaqPreview';
 import { StickySidebarPreview } from './StickySidebarPreview';
 import { ArticleTextPreview } from './ArticleTextPreview';
 import { ArticleImagePreview } from './ArticleImagePreview';
+import { HeroCarouselPreview } from './HeroCarouselPreview';
+import { BankPromoPreview } from './BankPromoPreview';
 
 export function ModulePreviewRenderer({ module }: { module: PageModule }) {
   switch (module.type) {
@@ -30,6 +32,8 @@ export function ModulePreviewRenderer({ module }: { module: PageModule }) {
     case 'sticky-sidebar':   return <StickySidebarPreview data={module.data} />;
     case 'article-text':     return <ArticleTextPreview data={module.data} />;
     case 'article-image':    return <ArticleImagePreview data={module.data} />;
+    case 'hero-carousel':    return <HeroCarouselPreview data={module.data} />;
+    case 'bank-promo':       return <BankPromoPreview data={module.data} />;
     default:                 return null;
   }
 }

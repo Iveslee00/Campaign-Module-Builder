@@ -12,6 +12,8 @@ import { generateFaqHTML } from '@/modules/exporters/faqExporter';
 import { generateStickySidebarHTML } from '@/modules/exporters/stickySidebarExporter';
 import { generateArticleTextHTML } from '@/modules/exporters/articleTextExporter';
 import { generateArticleImageHTML } from '@/modules/exporters/articleImageExporter';
+import { generateHeroCarouselHTML, generateHeroCarouselScript } from '@/modules/exporters/heroCarouselExporter';
+import { generateBankPromoHTML } from '@/modules/exporters/bankPromoExporter';
 import { generateCarouselScript } from '@/lib/export/cssGenerator';
 
 function renderModuleHTML(module: PageModule): string {
@@ -29,6 +31,8 @@ function renderModuleHTML(module: PageModule): string {
     case 'sticky-sidebar':  return generateStickySidebarHTML(module.data);
     case 'article-text':    return generateArticleTextHTML(module.data);
     case 'article-image':   return generateArticleImageHTML(module.data);
+    case 'hero-carousel':   return generateHeroCarouselHTML(module.data);
+    case 'bank-promo':      return generateBankPromoHTML(module.data);
     default:                return '';
   }
 }
@@ -37,6 +41,10 @@ export function generatePageHTML(modules: PageModule[]): string {
   if (modules.length === 0) return '<div class="cb-page">\n  <!-- Add modules to get started -->\n</div>';
   const sectionsHTML = modules.map(renderModuleHTML).filter(Boolean).join('\n\n');
   const hasCarousel = modules.some((m) => m.type === 'product-carousel');
-  const script = hasCarousel ? '\n\n' + generateCarouselScript() : '';
-  return `<div class="cb-page">\n\n${sectionsHTML}\n\n</div>${script}`;
+  const hasKv = modules.some((m) => m.type === 'hero-carousel');
+  const script = [
+    hasCarousel ? generateCarouselScript() : '',
+    hasKv ? generateHeroCarouselScript() : '',
+  ].filter(Boolean).join('\n\n');
+  return `<div class="cb-page">\n\n${sectionsHTML}\n\n</div>${script ? '\n\n' + script : ''}`;
 }

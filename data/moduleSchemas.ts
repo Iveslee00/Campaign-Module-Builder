@@ -321,6 +321,96 @@ export const moduleSchemas: ModuleSchemaItem[] = [
     },
   },
 
+  // ── KV / Hero ─────────────────────────────────────────────────────────────
+  {
+    type: 'hero-carousel',
+    key: 'hero-carousel',
+    label: 'KV 輪播',
+    description: 'Full-width KV banner carousel with text and image per slide',
+    icon: 'gallery-horizontal-end',
+    category: 'Layout',
+    defaultData: {
+      height: 'medium',
+      autoPlay: true,
+      backgroundColor: '#1a1a2e',
+      slides: [
+        {
+          id: generateId(),
+          image: 'https://placehold.co/1200x600/1a1a2e/6366f1?text=KV+Slide+1',
+          title: 'Campaign Headline',
+          subtitle: 'A compelling subtitle that supports the campaign message.',
+          buttonText: '立即選購',
+          buttonLink: '#',
+          titleColor: '#ffffff',
+          textColor: 'rgba(255,255,255,0.85)',
+          overlayOpacity: 40,
+          alignment: 'center',
+        },
+        {
+          id: generateId(),
+          image: 'https://placehold.co/1200x600/2d1b69/a78bfa?text=KV+Slide+2',
+          title: 'Second Slide Title',
+          subtitle: 'Another slide with a different image and message.',
+          buttonText: '了解更多',
+          buttonLink: '#',
+          titleColor: '#ffffff',
+          textColor: 'rgba(255,255,255,0.85)',
+          overlayOpacity: 35,
+          alignment: 'center',
+        },
+      ],
+    },
+  },
+
+  // ── Finance ───────────────────────────────────────────────────────────────
+  {
+    type: 'bank-promo',
+    key: 'bank-promo',
+    label: '銀行贈獎活動',
+    description: 'Credit card promotion block with benefit highlights',
+    icon: 'credit-card',
+    category: 'Content',
+    defaultData: {
+      title: '信用卡優惠說明',
+      subtitle: '活動期間：即日起至 2024/12/31',
+      disclaimer: '謹慎理財 信用至上',
+      linkText: '查看更多優惠 ›',
+      linkUrl: '#',
+      backgroundColor: '',
+      titleColor: '',
+      textColor: '',
+      items: [
+        {
+          id: generateId(),
+          cardName: '台新 Richart 卡',
+          condition: '指定通路 Pay 著刷',
+          benefit: '最高 3.8% 回饋',
+          note: '每月回饋上限 NT$500',
+          logo: '',
+          accentColor: '#e53e3e',
+        },
+        {
+          id: generateId(),
+          cardName: '台新 Point 信用卡',
+          condition: 'Pay 著刷方案',
+          benefit: '最高 5% 點數回饋',
+          note: '每月點數上限 1,000 點',
+          logo: '',
+          accentColor: '#6366f1',
+        },
+        {
+          id: generateId(),
+          cardName: '玉山 Pi 拍錢包卡',
+          condition: '一般消費',
+          benefit: '無上限 2.8% 回饋',
+          note: '國內外消費皆適用',
+          logo: '',
+          accentColor: '#0ea5e9',
+        },
+      ],
+    },
+  },
+
   // ── Float ─────────────────────────────────────────────────────────────────
   {
     type: 'sticky-sidebar',

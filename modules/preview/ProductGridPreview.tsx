@@ -15,8 +15,8 @@ export function ProductGridPreview({ data }: { data: ProductGridData }) {
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: isMobile ? '12px' : '20px' }}>
           {data.products.map((product) => (
-            <div key={product.id} style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f0f0f8' }}>
+            <div key={product.id} style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
+              <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f5f5f5' }}>
                 <img
                   src={product.image || PLACEHOLDER}
                   alt={product.name}
