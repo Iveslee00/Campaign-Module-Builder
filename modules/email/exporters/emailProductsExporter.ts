@@ -50,7 +50,7 @@ export function generateEmailProductsHTML(data: EmailProductsData, primaryColor:
     body = `<div style="border:1px solid #e8e8f4;border-radius:8px;overflow:hidden;background:#ffffff;">
   <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
     <td width="50%" valign="top"><img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" width="276" style="width:100%;height:auto;display:block;min-height:200px;object-fit:cover;"></td>
-    <td width="50%" valign="middle" style="padding:20px 18px;">
+    <td width="50%" valign="middle" style="padding:20px 18px;text-align:center;">
       ${p.brand ? `<p style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#9090b0;margin:0 0 6px 0;">${escapeHtml(p.brand)}</p>` : ''}
       <p style="font-size:18px;font-weight:800;color:#1a1a2e;margin:0 0 10px 0;line-height:1.2;">${escapeHtml(p.name)}</p>
       <div style="margin-bottom:16px;">
@@ -71,8 +71,19 @@ export function generateEmailProductsHTML(data: EmailProductsData, primaryColor:
 </tr></table>`;
   } else if (layout === '1+2') {
     const [main, ...rest] = products;
-    body = `${main ? productCard(main, buttonText, btn, '100%') : ''}
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:10px;"><tr>
+    const mainHtml = main ? `<div style="border:1px solid #e8e8f4;border-radius:8px;overflow:hidden;background:#ffffff;margin-bottom:10px;">
+  <img src="${escapeHtml(main.image)}" alt="${escapeHtml(main.name)}" width="568" style="width:100%;height:auto;display:block;max-height:240px;object-fit:cover;">
+  <div style="padding:14px 16px;text-align:center;">
+    ${main.brand ? `<p style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#9090b0;margin:0 0 4px 0;">${escapeHtml(main.brand)}</p>` : ''}
+    <p style="font-size:15px;font-weight:700;color:#1a1a2e;margin:0 0 6px 0;">${escapeHtml(main.name)}</p>
+    <div style="margin-bottom:10px;">
+      ${main.originalPrice ? `<span style="font-size:11px;color:#9090b0;text-decoration:line-through;margin-right:4px;">${escapeHtml(main.originalPrice)}</span>` : ''}
+      ${main.salePrice ? `<span style="font-size:16px;font-weight:800;color:#e53e3e;">${escapeHtml(main.salePrice)}</span>` : ''}
+    </div>
+    ${buttonText ? `<a href="${escapeHtml(main.link || '#')}" target="_blank" style="display:inline-block;padding:8px 28px;background-color:${btn};color:#ffffff;border-radius:6px;font-weight:700;font-size:12px;text-decoration:none;">${escapeHtml(buttonText)}</a>` : ''}
+  </div>
+</div>` : '';
+    body = `${mainHtml}<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
   ${rest.slice(0, 2).map((p) => `<td width="50%" valign="top" style="padding:0 5px;">${productCard(p, buttonText, btn, '100%')}</td>`).join('\n  ')}
 </tr></table>`;
   }

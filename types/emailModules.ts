@@ -1,4 +1,6 @@
 export type EmailModuleType =
+  | 'email-title'
+  | 'email-image'
   | 'email-kv'
   | 'email-products'
   | 'email-image-products'
@@ -10,6 +12,26 @@ export interface EmailBaseModule {
   id: string;
   type: EmailModuleType;
 }
+
+// ── Title ─────────────────────────────────────────────────────────────────────
+export interface EmailTitleData {
+  titleZh: string;
+  titleEn: string;
+  titleColor: string;
+  subtitleColor: string;
+  backgroundColor: string;
+  alignment: 'left' | 'center' | 'right';
+}
+export interface EmailTitleModule extends EmailBaseModule { type: 'email-title'; data: EmailTitleData; }
+
+// ── Pure Image ────────────────────────────────────────────────────────────────
+export interface EmailImageData {
+  image: string;
+  link: string;
+  altText: string;
+  backgroundColor: string;
+}
+export interface EmailImageModule extends EmailBaseModule { type: 'email-image'; data: EmailImageData; }
 
 // ── KV Banner ─────────────────────────────────────────────────────────────────
 export interface EmailKvData {
@@ -107,6 +129,8 @@ export interface EmailCouponModule extends EmailBaseModule { type: 'email-coupon
 
 // ── Union & Settings ──────────────────────────────────────────────────────────
 export type EmailPageModule =
+  | EmailTitleModule
+  | EmailImageModule
   | EmailKvModule
   | EmailProductsModule
   | EmailImageProductsModule
@@ -118,9 +142,7 @@ export interface EmailSettings {
   backgroundColor: string;
   contentBgColor: string;
   primaryColor: string;
-  utmSource: string;
-  utmMedium: string;
-  utmCampaign: string;
+  utmString: string;
   trackingPixel: string;
   previewText: string;
 }

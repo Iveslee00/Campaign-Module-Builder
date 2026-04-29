@@ -1,5 +1,7 @@
 import { EmailPageModule, EmailSettings } from '@/types/emailModules';
 import { escapeHtml } from '@/lib/utils';
+import { generateEmailTitleHTML } from '@/modules/email/exporters/emailTitleExporter';
+import { generateEmailImageHTML } from '@/modules/email/exporters/emailImageExporter';
 import { generateEmailKvHTML } from '@/modules/email/exporters/emailKvExporter';
 import { generateEmailProductsHTML } from '@/modules/email/exporters/emailProductsExporter';
 import { generateEmailImageProductsHTML } from '@/modules/email/exporters/emailImageProductsExporter';
@@ -9,12 +11,8 @@ import { generateEmailCouponHTML } from '@/modules/email/exporters/emailCouponEx
 
 function applyUtm(url: string, s: EmailSettings): string {
   if (!url || url === '#' || url.startsWith('mailto:')) return url;
-  const params: string[] = [];
-  if (s.utmSource) params.push(`utm_source=${encodeURIComponent(s.utmSource)}`);
-  if (s.utmMedium) params.push(`utm_medium=${encodeURIComponent(s.utmMedium)}`);
-  if (s.utmCampaign) params.push(`utm_campaign=${encodeURIComponent(s.utmCampaign)}`);
-  if (!params.length) return url;
-  return url + (url.includes('?') ? '&' : '?') + params.join('&');
+  if (!s.utmString) return url;
+  return url + (url.includes('?') ? '&' : '?') + s.utmString;
 }
 
 function renderModule(module: EmailPageModule, settings: EmailSettings): string {
@@ -22,6 +20,10 @@ function renderModule(module: EmailPageModule, settings: EmailSettings): string 
   const utm = (url: string) => applyUtm(url, settings);
 
   switch (module.type) {
+    case 'email-title':
+      return generateEmailTitleHTML(module.data);
+    case 'email-image':
+      return generateEmailImageHTML(module.data, utm(module.data.link));
     case 'email-kv':
       return generateEmailKvHTML(module.data, utm(module.data.link));
     case 'email-products':

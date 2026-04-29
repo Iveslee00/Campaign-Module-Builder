@@ -82,14 +82,14 @@ export function EmailProductsPreview({ data }: { data: EmailProductsData }) {
     return wrapper(
       <div style={{ border: '1px solid #e8e8f4', borderRadius: '8px', overflow: 'hidden', background: '#fff', display: isRow ? 'grid' : 'block', gridTemplateColumns: isRow ? '1fr 1fr' : undefined }}>
         <img src={prod.image || PH} alt={prod.name} style={{ width: '100%', display: 'block', height: isRow ? '100%' : '220px', objectFit: 'cover', minHeight: isRow ? '200px' : undefined }} onError={(e) => { (e.target as HTMLImageElement).src = PH; }} />
-        <div style={{ padding: '20px 18px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{ padding: '20px 18px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
           {prod.brand && <p style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9090b0', margin: '0 0 6px' }}>{prod.brand}</p>}
           <p style={{ fontSize: '18px', fontWeight: 800, color: '#1a1a2e', margin: '0 0 10px', lineHeight: 1.2 }}>{prod.name}</p>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline', marginBottom: '16px', justifyContent: 'center' }}>
             {prod.originalPrice && <span style={{ fontSize: '12px', color: '#9090b0', textDecoration: 'line-through' }}>{prod.originalPrice}</span>}
             {prod.salePrice && <span style={{ fontSize: '22px', fontWeight: 800, color: '#e53e3e' }}>{prod.salePrice}</span>}
           </div>
-          {buttonText && <span style={{ display: 'inline-block', padding: '10px 24px', background: p, color: '#fff', borderRadius: '7px', fontWeight: 700, fontSize: '13px', cursor: 'default', alignSelf: 'flex-start' }}>{buttonText}</span>}
+          {buttonText && <span style={{ display: 'inline-block', padding: '10px 24px', background: p, color: '#fff', borderRadius: '7px', fontWeight: 700, fontSize: '13px', cursor: 'default' }}>{buttonText}</span>}
         </div>
       </div>
     );
@@ -120,7 +120,20 @@ export function EmailProductsPreview({ data }: { data: EmailProductsData }) {
     const [main, ...rest] = products;
     return wrapper(
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {main && <ProductCard product={main} buttonText={buttonText} primaryColor={p} style={{ display: isMobile ? 'block' : 'grid', gridTemplateColumns: isMobile ? undefined : '1fr 1fr' }} />}
+        {main && (
+          <div style={{ border: '1px solid #e8e8f4', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
+            <img src={main.image || PH} alt={main.name} style={{ width: '100%', display: 'block', maxHeight: '240px', objectFit: 'cover' }} onError={(e) => { (e.target as HTMLImageElement).src = PH; }} />
+            <div style={{ padding: '14px 16px', textAlign: 'center' }}>
+              {main.brand && <p style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9090b0', margin: '0 0 4px' }}>{main.brand}</p>}
+              <p style={{ fontSize: '15px', fontWeight: 700, color: '#1a1a2e', margin: '0 0 6px' }}>{main.name}</p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', alignItems: 'center', marginBottom: '10px' }}>
+                {main.originalPrice && <span style={{ fontSize: '11px', color: '#9090b0', textDecoration: 'line-through' }}>{main.originalPrice}</span>}
+                {main.salePrice && <span style={{ fontSize: '16px', fontWeight: 800, color: '#e53e3e' }}>{main.salePrice}</span>}
+              </div>
+              {buttonText && <span style={{ display: 'inline-block', padding: '8px 28px', background: p, color: '#fff', borderRadius: '6px', fontWeight: 700, fontSize: '12px', cursor: 'default' }}>{buttonText}</span>}
+            </div>
+          </div>
+        )}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
           {rest.slice(0, 2).map((prod) => (
             <ProductCard key={prod.id} product={prod} buttonText={buttonText} primaryColor={p} />

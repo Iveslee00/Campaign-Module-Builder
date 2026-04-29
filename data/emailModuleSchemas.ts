@@ -15,6 +15,40 @@ const mkP = (overrides: Partial<EmailProductItem> = {}): EmailProductItem => ({
 });
 
 export const emailModuleSchemas: EmailModuleSchemaItem[] = [
+  // ── 標題 ──────────────────────────────────────────────────────────────────
+  {
+    type: 'email-title',
+    key: 'email-title',
+    label: '標題',
+    description: '中文大標 + 英文副標',
+    icon: 'type',
+    category: '標題',
+    defaultData: {
+      titleZh: '活動標題',
+      titleEn: 'CAMPAIGN TITLE',
+      titleColor: '#1a1a2e',
+      subtitleColor: '#9090b0',
+      backgroundColor: '#ffffff',
+      alignment: 'center',
+    },
+  },
+
+  // ── 純圖片 ────────────────────────────────────────────────────────────────
+  {
+    type: 'email-image',
+    key: 'email-image',
+    label: '純圖片',
+    description: '全寬圖片，可加連結',
+    icon: 'image',
+    category: '圖片',
+    defaultData: {
+      image: 'https://placehold.co/600x300/1a1a2e/6366f1?text=Image',
+      link: '#',
+      altText: '',
+      backgroundColor: '#ffffff',
+    },
+  },
+
   // ── KV ────────────────────────────────────────────────────────────────────
   {
     type: 'email-kv',

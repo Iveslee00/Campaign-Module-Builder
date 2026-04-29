@@ -1,5 +1,7 @@
 'use client';
 import { EmailPageModule } from '@/types/emailModules';
+import { EmailTitleForm } from './EmailTitleForm';
+import { EmailImageForm } from './EmailImageForm';
 import { EmailKvForm } from './EmailKvForm';
 import { EmailProductsForm } from './EmailProductsForm';
 import { EmailImageProductsForm } from './EmailImageProductsForm';
@@ -14,6 +16,10 @@ interface Props {
 
 export function EmailFormRenderer({ module, onChange }: Props) {
   switch (module.type) {
+    case 'email-title':
+      return <EmailTitleForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+    case 'email-image':
+      return <EmailImageForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
     case 'email-kv':
       return <EmailKvForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
     case 'email-products':
