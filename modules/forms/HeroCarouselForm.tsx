@@ -1,7 +1,7 @@
 'use client';
 
 import { HeroCarouselData, KvSlide } from '@/types/modules';
-import { FormField, ColorField, ToggleField, SegmentedField } from '@/components/ui/FormField';
+import { FormField, ColorField, ToggleField, SegmentedField, ImageField } from '@/components/ui/FormField';
 import { generateId } from '@/lib/utils';
 import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
@@ -76,7 +76,7 @@ export function HeroCarouselForm({ data, onChange }: Props) {
             {expanded === slide.id && (
               <div className="px-3 pb-3 border-t border-slate-700/60">
                 <div className="pt-3 space-y-3">
-                  <FormField label="圖片 URL" value={slide.image} onChange={(v) => updateSlide(slide.id, 'image', v)} type="url" placeholder="https://…" />
+                  <ImageField label="KV 圖片" value={slide.image} onChange={(v) => updateSlide(slide.id, 'image', v)} />
                   <FormField label="標題" value={slide.title} onChange={(v) => updateSlide(slide.id, 'title', v)} placeholder="Slide Title" />
                   <FormField label="副標題" value={slide.subtitle} onChange={(v) => updateSlide(slide.id, 'subtitle', v)} type="textarea" rows={2} placeholder="Subtitle text…" />
                   <FormField label="按鈕文字" value={slide.buttonText} onChange={(v) => updateSlide(slide.id, 'buttonText', v)} placeholder="Learn More" />

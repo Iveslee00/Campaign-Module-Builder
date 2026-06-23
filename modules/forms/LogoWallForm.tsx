@@ -1,7 +1,7 @@
 'use client';
 
 import { LogoWallData, LogoItem } from '@/types/modules';
-import { FormField, ColorField } from '@/components/ui/FormField';
+import { FormField, ColorField, ImageField } from '@/components/ui/FormField';
 import { generateId } from '@/lib/utils';
 import { Plus, Trash2 } from 'lucide-react';
 
@@ -38,7 +38,7 @@ export function LogoWallForm({ data, onChange }: Props) {
             </div>
             <FormField label="Alt Text" value={logo.alt} onChange={(v) => updateLogo(logo.id, 'alt', v)} placeholder="Brand name" />
             <FormField label="Link" value={logo.link} onChange={(v) => updateLogo(logo.id, 'link', v)} type="url" placeholder="https://" />
-            <FormField label="Image URL" value={logo.image} onChange={(v) => updateLogo(logo.id, 'image', v)} type="url" placeholder="https://..." />
+            <ImageField label="Logo 圖片" value={logo.image} onChange={(v) => updateLogo(logo.id, 'image', v)} />
           </div>
         ))}
       </div>

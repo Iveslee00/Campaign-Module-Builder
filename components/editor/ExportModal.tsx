@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import { ExportedCode } from '@/types/modules';
 import { copyToClipboard } from '@/lib/utils';
-import { X, Copy, Check, Code2, Palette, FileCode2, Mail } from 'lucide-react';
+import { generateCampaignPackage } from '@/lib/export/packageGenerator';
+import { X, Copy, Check, Code2, Palette, FileCode2, Mail, Package, Download } from 'lucide-react';
 
-type TopTab = 'campaign' | 'email';
+type TopTab = 'campaign' | 'package' | 'email';
 type CampaignTab = 'html' | 'css';
 
 interface Props {
@@ -19,6 +20,7 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
   const [topTab, setTopTab] = useState<TopTab>(initialTab);
   const [campaignTab, setCampaignTab] = useState<CampaignTab>('html');
   const [copied, setCopied] = useState<string | null>(null);
+  const [packageInfo, setPackageInfo] = useState<{ fileCount: number; remoteImages: string[] } | null>(null);
 
   const handleCopy = async (key: string, text: string) => {
     const success = await copyToClipboard(text);
@@ -26,6 +28,19 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
       setCopied(key);
       setTimeout(() => setCopied(null), 2000);
     }
+  };
+
+  const handleDownloadPackage = () => {
+    const result = generateCampaignPackage(code.html, code.css);
+    const url = URL.createObjectURL(result.blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'campaign-page.zip';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    setPackageInfo({ fileCount: result.fileCount, remoteImages: result.remoteImages });
   };
 
   const campaignCode = campaignTab === 'html' ? code.html : code.css;
@@ -72,6 +87,17 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
           >
             <Code2 size={12} />
             活動頁面
+          </button>
+          <button
+            onClick={() => setTopTab('package')}
+            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-t-lg border border-b-0 transition-colors ${
+              topTab === 'package'
+                ? 'bg-slate-800 border-slate-700 text-emerald-400'
+                : 'border-transparent text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            <Package size={12} />
+            精誠 ZIP
           </button>
           <button
             onClick={() => setTopTab('email')}
@@ -134,6 +160,68 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
               <pre className="p-5 text-xs leading-relaxed text-slate-300 font-mono whitespace-pre overflow-x-auto">
                 <code>{campaignCode}</code>
               </pre>
+            </div>
+          </>
+        ) : topTab === 'package' ? (
+          <>
+            <div className="px-6 py-3 bg-emerald-950/30 border-b border-slate-800">
+              <p className="text-xs text-emerald-300/80 leading-relaxed">
+                <strong className="text-emerald-300">精誠後台大包：</strong>下載 ZIP 後直接上傳。內含 <code className="bg-emerald-900/50 px-1 rounded">index.html</code>、<code className="bg-emerald-900/50 px-1 rounded">css/style.css</code>、<code className="bg-emerald-900/50 px-1 rounded">js/campaign.js</code>，以及上傳圖片用的 <code className="bg-emerald-900/50 px-1 rounded">images/</code>。
+              </p>
+            </div>
+
+            <div className="flex-1 min-h-0 overflow-y-auto bg-slate-950 rounded-b-2xl">
+              <div className="p-6 space-y-5">
+                <div className="rounded-xl border border-slate-800 bg-slate-900 p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-sm font-semibold text-slate-100">campaign-page.zip</h3>
+                      <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                        適合沒有圖床的行銷/營運使用者。只要在各模組圖片欄位按「上傳」，圖片就會在匯出時自動放入 ZIP 的 images 資料夾。
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleDownloadPackage}
+                      className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-500"
+                    >
+                      <Download size={14} />
+                      下載 ZIP
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid gap-3 text-xs text-slate-400 sm:grid-cols-2">
+                  <div className="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p className="font-semibold text-slate-300">包內結構</p>
+                    <pre className="mt-3 whitespace-pre text-slate-500">{`index.html
+css/style.css
+js/campaign.js
+images/`}</pre>
+                  </div>
+                  <div className="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
+                    <p className="font-semibold text-slate-300">圖片處理</p>
+                    <p className="mt-3 leading-relaxed">
+                      上傳圖片會打包進 images。外部圖片網址會保留原網址，因為瀏覽器通常不能直接抓取其他網站圖片檔。
+                    </p>
+                  </div>
+                </div>
+
+                {packageInfo && (
+                  <div className="rounded-lg border border-emerald-700/40 bg-emerald-950/20 p-4 text-xs">
+                    <p className="font-semibold text-emerald-300">ZIP 已建立，內含 {packageInfo.fileCount} 個檔案。</p>
+                    {packageInfo.remoteImages.length > 0 && (
+                      <div className="mt-3">
+                        <p className="text-amber-300">以下外部圖片網址未放入 images，請確認精誠後台可讀取：</p>
+                        <ul className="mt-2 max-h-28 space-y-1 overflow-y-auto text-slate-400">
+                          {packageInfo.remoteImages.map((url) => (
+                            <li key={url} className="truncate">{url}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </>
         ) : (

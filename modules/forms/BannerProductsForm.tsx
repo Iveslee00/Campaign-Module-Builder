@@ -1,7 +1,7 @@
 'use client';
 
 import { BannerProductsData, Product } from '@/types/modules';
-import { FormField, ToggleField, ColorField, SegmentedField, ColorSection } from '@/components/ui/FormField';
+import { FormField, ToggleField, ColorField, SegmentedField, ColorSection, ImageField } from '@/components/ui/FormField';
 import { generateId } from '@/lib/utils';
 import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
@@ -41,7 +41,7 @@ export function BannerProductsForm({ data, onChange }: Props) {
       <FormField label="Banner Title" value={data.bannerTitle} onChange={(v) => onChange({ ...data, bannerTitle: v })} placeholder="Campaign Title" />
       <FormField label="Banner Subtitle" value={data.bannerSubtitle} onChange={(v) => onChange({ ...data, bannerSubtitle: v })} placeholder="Limited time offer" />
       <FormField label="Banner Link" value={data.bannerLink} onChange={(v) => onChange({ ...data, bannerLink: v })} type="url" placeholder="https://" />
-      <FormField label="Banner Image URL" value={data.bannerImage} onChange={(v) => onChange({ ...data, bannerImage: v })} type="url" placeholder="https://..." />
+      <ImageField label="Banner 圖片" value={data.bannerImage} onChange={(v) => onChange({ ...data, bannerImage: v })} />
       <ColorField label="Banner Title Color" value={data.bannerTitleColor} onChange={(v) => onChange({ ...data, bannerTitleColor: v })} />
       <SegmentedField
         label="Background"
@@ -101,7 +101,7 @@ export function BannerProductsForm({ data, onChange }: Props) {
                     <FormField label="特價" value={product.salePrice} onChange={(v) => updateProduct(product.id, 'salePrice', v)} placeholder="$0.00" />
                   </div>
                   <FormField label="Link" value={product.link} onChange={(v) => updateProduct(product.id, 'link', v)} type="url" placeholder="https://" />
-                  <FormField label="Image URL" value={product.image} onChange={(v) => updateProduct(product.id, 'image', v)} type="url" placeholder="https://..." />
+                  <ImageField label="商品圖片" value={product.image} onChange={(v) => updateProduct(product.id, 'image', v)} />
                   <ToggleField label="顯示 Badge" value={product.showBadge} onChange={(v) => updateProduct(product.id, 'showBadge', v)} />
                   {product.showBadge && (
                     <FormField label="Badge Text" value={product.badgeText} onChange={(v) => updateProduct(product.id, 'badgeText', v)} placeholder="特賣 / NEW" />

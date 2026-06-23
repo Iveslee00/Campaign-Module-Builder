@@ -1,7 +1,7 @@
 'use client';
 
 import { ProductCarouselData, Product } from '@/types/modules';
-import { FormField, ToggleField, ColorSection } from '@/components/ui/FormField';
+import { FormField, ToggleField, ColorSection, ImageField } from '@/components/ui/FormField';
 import { generateId } from '@/lib/utils';
 import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
@@ -70,7 +70,7 @@ export function ProductCarouselForm({ data, onChange }: Props) {
                     <FormField label="特價" value={product.salePrice} onChange={(v) => updateProduct(product.id, 'salePrice', v)} placeholder="$0.00" />
                   </div>
                   <FormField label="Link" value={product.link} onChange={(v) => updateProduct(product.id, 'link', v)} type="url" placeholder="https://" />
-                  <FormField label="Image URL" value={product.image} onChange={(v) => updateProduct(product.id, 'image', v)} type="url" placeholder="https://..." />
+                  <ImageField label="商品圖片" value={product.image} onChange={(v) => updateProduct(product.id, 'image', v)} />
                   <ToggleField label="顯示 Badge" value={product.showBadge} onChange={(v) => updateProduct(product.id, 'showBadge', v)} />
                   {product.showBadge && (
                     <FormField label="Badge Text" value={product.badgeText} onChange={(v) => updateProduct(product.id, 'badgeText', v)} placeholder="特賣 / NEW / HOT" />

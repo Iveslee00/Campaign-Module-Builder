@@ -1,14 +1,14 @@
 'use client';
 
 import { ArticleImageData } from '@/types/modules';
-import { FormField, ColorSection, SegmentedField } from '@/components/ui/FormField';
+import { FormField, ColorSection, SegmentedField, ImageField } from '@/components/ui/FormField';
 
 interface Props { data: ArticleImageData; onChange: (data: ArticleImageData) => void }
 
 export function ArticleImageForm({ data, onChange }: Props) {
   return (
     <div className="space-y-4">
-      <FormField label="圖片 URL" value={data.image} onChange={(v) => onChange({ ...data, image: v })} type="url" placeholder="https://…" />
+      <ImageField label="文章圖片" value={data.image} onChange={(v) => onChange({ ...data, image: v })} />
       <SegmentedField
         label="圖片位置"
         value={data.imagePosition}

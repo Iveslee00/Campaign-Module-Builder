@@ -1,5 +1,7 @@
 'use client';
 
+import { ImagePlus, Link2, X } from 'lucide-react';
+
 interface Option { value: string; label: string }
 
 interface FormFieldProps {
@@ -191,6 +193,82 @@ export function ColorSection({ titleColor, textColor, onTitleColorChange, onText
       )}
       <ColorField label="Title Color" value={titleColor} onChange={onTitleColorChange} />
       <ColorField label="Body / Text Color" value={textColor} onChange={onTextColorChange} />
+    </div>
+  );
+}
+
+interface ImageFieldProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}
+
+const readFileAsDataUrl = (file: File) => new Promise<string>((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onload = () => resolve(String(reader.result ?? ''));
+  reader.onerror = () => reject(reader.error);
+  reader.readAsDataURL(file);
+});
+
+export function ImageField({ label, value, onChange, placeholder = 'https://…' }: ImageFieldProps) {
+  const isUploaded = value.startsWith('data:image/');
+
+  const handleUpload = async (file: File | undefined) => {
+    if (!file) return;
+    const dataUrl = await readFileAsDataUrl(file);
+    onChange(dataUrl);
+  };
+
+  return (
+    <div className="flex flex-col gap-2">
+      <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">{label}</label>
+      <div className="flex gap-2">
+        <label className="inline-flex flex-shrink-0 cursor-pointer items-center gap-1.5 rounded-md bg-indigo-600 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-indigo-500">
+          <ImagePlus size={13} />
+          上傳
+          <input
+            type="file"
+            accept="image/*"
+            className="sr-only"
+            onChange={(e) => {
+              void handleUpload(e.target.files?.[0]);
+              e.currentTarget.value = '';
+            }}
+          />
+        </label>
+        <div className="relative min-w-0 flex-1">
+          <Link2 size={13} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" />
+          <input
+            type="url"
+            value={isUploaded ? '已使用上傳圖片，匯出 ZIP 時會放入 images/' : value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={isUploaded}
+            placeholder={placeholder}
+            className="w-full rounded-md border border-slate-700 bg-slate-800 py-2 pl-8 pr-8 text-sm text-slate-100 outline-none transition-colors placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 disabled:text-slate-400"
+          />
+          {value && (
+            <button
+              type="button"
+              onClick={() => onChange('')}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 transition-colors hover:text-slate-300"
+              aria-label={`清除 ${label}`}
+            >
+              <X size={13} />
+            </button>
+          )}
+        </div>
+      </div>
+      {value && (
+        <div className="overflow-hidden rounded-md border border-slate-700 bg-slate-950">
+          <img
+            src={value}
+            alt=""
+            className="block max-h-32 w-full object-cover"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { HeroData } from '@/types/modules';
-import { FormField, SegmentedField, ColorSection } from '@/components/ui/FormField';
+import { FormField, SegmentedField, ColorSection, ImageField } from '@/components/ui/FormField';
 
 interface Props { data: HeroData; onChange: (data: HeroData) => void }
 
@@ -31,12 +31,7 @@ export function HeroForm({ data, onChange }: Props) {
       <FormField label="Button Text" value={data.buttonText} onChange={(v) => set('buttonText', v)} placeholder="Get Started" />
       <FormField label="Button Link" value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" placeholder="https://" />
       <div className="h-px bg-slate-700/60" />
-      <FormField label="Image URL" value={data.image} onChange={(v) => set('image', v)} type="url" placeholder="https://..." />
-      {data.image && (
-        <div className="rounded-md overflow-hidden border border-slate-700">
-          <img src={data.image} alt="" className="w-full block object-cover max-h-28" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-        </div>
-      )}
+      <ImageField label="Hero 圖片" value={data.image} onChange={(v) => set('image', v)} />
       <div className="h-px bg-slate-700/60" />
       <ColorSection
         backgroundColor={data.backgroundColor}

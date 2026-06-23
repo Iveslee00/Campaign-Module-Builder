@@ -1,7 +1,7 @@
 'use client';
 
 import { ProductBannerData } from '@/types/modules';
-import { FormField, SegmentedField, ToggleField, ColorSection } from '@/components/ui/FormField';
+import { FormField, SegmentedField, ToggleField, ColorSection, ImageField } from '@/components/ui/FormField';
 
 interface Props { data: ProductBannerData; onChange: (data: ProductBannerData) => void }
 
@@ -45,12 +45,7 @@ export function ProductBannerForm({ data, onChange }: Props) {
 
       <div className="h-px bg-slate-700/60" />
       <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Image</p>
-      <FormField label="Product Image URL" value={data.image} onChange={(v) => set('image', v)} type="url" placeholder="https://..." />
-      {data.image && (
-        <div className="rounded-md overflow-hidden border border-slate-700">
-          <img src={data.image} alt="" className="w-full block object-cover max-h-28" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-        </div>
-      )}
+      <ImageField label="商品圖片" value={data.image} onChange={(v) => set('image', v)} />
 
       <div className="h-px bg-slate-700/60" />
       <ColorSection

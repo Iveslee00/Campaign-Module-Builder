@@ -1,7 +1,7 @@
 'use client';
 
 import { SplitSectionData } from '@/types/modules';
-import { FormField, ToggleField, ColorSection } from '@/components/ui/FormField';
+import { FormField, ToggleField, ColorSection, ImageField } from '@/components/ui/FormField';
 
 interface Props { data: SplitSectionData; onChange: (data: SplitSectionData) => void }
 
@@ -16,12 +16,7 @@ export function SplitSectionForm({ data, onChange }: Props) {
       <FormField label="Button Text" value={data.buttonText} onChange={(v) => set('buttonText', v)} placeholder="Learn More" />
       <FormField label="Button Link" value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" placeholder="https://" />
       <div className="h-px bg-slate-700/60" />
-      <FormField label="Image URL" value={data.image} onChange={(v) => set('image', v)} type="url" placeholder="https://..." />
-      {data.image && (
-        <div className="rounded-md overflow-hidden border border-slate-700">
-          <img src={data.image} alt="" className="w-full block object-cover max-h-28" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-        </div>
-      )}
+      <ImageField label="內容圖片" value={data.image} onChange={(v) => set('image', v)} />
       <ToggleField label="Reverse Layout" description="Image on left, text on right" value={data.reverse} onChange={(v) => set('reverse', v)} />
       <div className="h-px bg-slate-700/60" />
       <ColorSection
