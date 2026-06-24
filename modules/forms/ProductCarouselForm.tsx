@@ -19,7 +19,7 @@ export function ProductCarouselForm({ data, onChange }: Props) {
   const addProduct = () => {
     const newProduct: Product = {
       id: generateId(),
-      image: 'https://placehold.co/400x400/f0f0f8/6366f1?text=新商品',
+      image: 'https://placehold.co/400x400/f0f0f8/6366f1?text=New',
       brand: '品牌名稱', name: '新商品',
       originalPrice: '$0.00', salePrice: '',
       link: '#', showBadge: false, badgeText: '新品',

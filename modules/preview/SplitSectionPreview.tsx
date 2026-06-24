@@ -4,7 +4,7 @@ import { SplitSectionData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 
-const PLACEHOLDER = 'https://placehold.co/600x450/e0e0f0/9090c0?text=圖片';
+const PLACEHOLDER = 'https://placehold.co/600x450/e0e0f0/9090c0?text=Image';
 
 export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
   const { isMobile } = useDevice();

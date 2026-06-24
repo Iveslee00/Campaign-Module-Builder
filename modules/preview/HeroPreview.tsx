@@ -4,7 +4,7 @@ import { HeroData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 
-const PLACEHOLDER = 'https://placehold.co/800x500/e0e0f0/9090c0?text=圖片';
+const PLACEHOLDER = 'https://placehold.co/800x500/e0e0f0/9090c0?text=Image';
 
 const bgMap: Record<string, React.CSSProperties> = {
   light: { background: 'transparent', color: '#1a1a2e' },

@@ -3,7 +3,7 @@
 import { ProductGridData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 
-const PLACEHOLDER = 'https://placehold.co/400x400/e0e0f0/9090c0?text=商品';
+const PLACEHOLDER = 'https://placehold.co/400x400/e0e0f0/9090c0?text=Product';
 
 export function ProductGridPreview({ data }: { data: ProductGridData }) {
   const { isMobile } = useDevice();

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BannerProductsData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 
-const PLACEHOLDER_PRODUCT = 'https://placehold.co/400x400/e0e0f0/9090c0?text=商品';
+const PLACEHOLDER_PRODUCT = 'https://placehold.co/400x400/e0e0f0/9090c0?text=Product';
 const PLACEHOLDER_BANNER = 'https://placehold.co/500x600/1a1a2e/6366f1?text=Banner';
 
 export function BannerProductsPreview({ data }: { data: BannerProductsData }) {

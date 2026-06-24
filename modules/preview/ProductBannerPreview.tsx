@@ -4,7 +4,7 @@ import { ProductBannerData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 
-const PLACEHOLDER = 'https://placehold.co/700x600/e0e0f0/9090c0?text=商品';
+const PLACEHOLDER = 'https://placehold.co/700x600/e0e0f0/9090c0?text=Product';
 
 const bgMap: Record<string, React.CSSProperties> = {
   light: { background: 'transparent', color: '#1a1a2e' },
