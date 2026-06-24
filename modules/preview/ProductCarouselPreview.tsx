@@ -107,11 +107,9 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
                         <span style={{ fontSize: '14px', fontWeight: 700, color: '#e53e3e' }}>{product.salePrice}</span>
                       )}
                     </div>
-                    {product.showSpecialTag && product.specialTag && (
-                      <span style={{ display: 'inline-block', marginTop: '3px', padding: '2px 7px', background: '#fff3cd', color: '#b45309', border: '1px solid #fcd34d', fontSize: '10px', fontWeight: 600, borderRadius: '3px', alignSelf: 'flex-start' }}>
-                        {product.specialTag}
-                      </span>
-                    )}
+                    <span style={{ display: 'inline-block', marginTop: '3px', padding: '2px 7px', background: '#fff3cd', color: '#b45309', border: '1px solid #fcd34d', fontSize: '10px', fontWeight: 600, borderRadius: '3px', alignSelf: 'flex-start', visibility: product.showSpecialTag && product.specialTag ? 'visible' : 'hidden' }}>
+                      {product.showSpecialTag && product.specialTag ? product.specialTag : '特標'}
+                    </span>
                   </div>
                 </div>
               </div>

@@ -128,6 +128,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   font-size: 11px; font-weight: 600; border-radius: 3px; line-height: 1.5;
   align-self: flex-start;
 }
+.cb-product-card__special-tag--empty { visibility: hidden; }
 
 /* ------------------------------------------------------------
    7. PRODUCT GRID MODULE
@@ -137,18 +138,23 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    8. BANNER + PRODUCTS MODULE
    ------------------------------------------------------------ */
-.cb-banner-products__inner { display: grid; grid-template-columns: minmax(0, 500px) minmax(0, 1fr); gap: 20px; align-items: start; }
+.cb-banner-products__inner { display: grid; grid-template-columns: minmax(0, 500px) minmax(0, 1fr); gap: 20px; align-items: stretch; height: 350px; }
 .cb-banner-products__inner--0 { grid-template-columns: 1fr; }
 .cb-banner-products__banner {
   position: relative; border-radius: 12px; overflow: hidden;
-  background-color: #1a1a2e; aspect-ratio: 500 / 350; display: flex;
+  background-color: #1a1a2e; height: 100%; display: flex;
 }
-.cb-banner-products__products { display: grid; gap: 20px; align-items: start; }
+.cb-banner-products__products { display: grid; gap: 20px; align-items: stretch; height: 100%; min-height: 0; }
 .cb-banner-products__products--0 { display: none; }
 .cb-banner-products__products--1 { grid-template-columns: minmax(0, 240px); }
 .cb-banner-products__products--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .cb-banner-products__products--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.cb-banner-products__products--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cb-banner-products__products--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 12px 20px; }
+.cb-banner-products .cb-product-card { height: 100%; min-height: 0; }
+.cb-banner-products .cb-product-card__media { aspect-ratio: auto; height: 64%; flex: 0 0 auto; }
+.cb-banner-products .cb-product-card__body { min-height: 0; padding: 10px 12px; gap: 3px; }
+.cb-banner-products__products--4 .cb-product-card__media { height: 56%; }
+.cb-banner-products__products--4 .cb-product-card__body { padding: 6px 10px; gap: 2px; }
 .cb-banner-products__picture { position: absolute; inset: 0; display: block; }
 .cb-banner-products__banner-img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
 .cb-banner-products__banner-overlay {
@@ -282,9 +288,14 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-products__grid { grid-template-columns: repeat(3, 1fr); }
   .cb-carousel__item { flex: 0 0 calc(33.333% - 14px); }
   .cb-product-banner__inner { gap: 40px; }
-  .cb-banner-products__inner { grid-template-columns: 1fr; }
+  .cb-banner-products__inner { grid-template-columns: 1fr; height: auto; align-items: start; }
+  .cb-banner-products__banner { aspect-ratio: 500 / 350; height: auto; }
+  .cb-banner-products__products { height: auto; }
+  .cb-banner-products .cb-product-card { height: auto; }
+  .cb-banner-products .cb-product-card__media { aspect-ratio: 1 / 1; height: auto; }
   .cb-banner-products__products--3,
   .cb-banner-products__products--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cb-banner-products__products--4 { grid-template-rows: auto; gap: 20px; }
 }
 
 @media (max-width: 768px) {

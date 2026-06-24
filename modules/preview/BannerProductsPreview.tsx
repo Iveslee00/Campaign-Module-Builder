@@ -41,13 +41,18 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
     : count >= 4
     ? 'repeat(2, minmax(0, 1fr))'
     : `repeat(${Math.max(1, count)}, minmax(0, 1fr))`;
+  const lockDesktopHeight = !isStacked;
+  const productGridRows = lockDesktopHeight && count >= 4 ? 'repeat(2, minmax(0, 1fr))' : undefined;
+  const productMediaStyle: React.CSSProperties = lockDesktopHeight
+    ? { height: count >= 4 ? '56%' : '64%' }
+    : { aspectRatio: '1/1' };
 
   return (
     <section style={{ ...bgStyle, padding: isMobile ? '32px 16px' : '48px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div ref={containerRef} style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? '12px' : '20px', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? '12px' : '20px', alignItems: lockDesktopHeight ? 'stretch' : 'start', height: lockDesktopHeight ? '350px' : undefined }}>
           {/* Banner */}
-          <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', background: '#1a1a2e', aspectRatio: bannerAspectRatio, display: 'flex' }}>
+          <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', background: '#1a1a2e', aspectRatio: lockDesktopHeight ? undefined : bannerAspectRatio, height: lockDesktopHeight ? '100%' : undefined, display: 'flex' }}>
             <PreviewImage src={bannerSrc} alt={data.bannerTitle} label={isMobile ? '活動 Banner M' : '活動 Banner PC'} spec={bannerSpec} tone="dark" />
             <div style={{ position: 'relative', zIndex: 1, padding: '24px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', width: '100%', background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)' }}>
               {data.bannerTitle && (
@@ -63,11 +68,11 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: productGridCols, gap: isMobile ? '12px' : '20px', alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: productGridCols, gridTemplateRows: productGridRows, gap: isMobile ? '12px' : lockDesktopHeight && count >= 4 ? '12px 20px' : '20px', alignItems: lockDesktopHeight ? 'stretch' : 'start', height: lockDesktopHeight ? '100%' : undefined, minHeight: 0 }}>
             {/* Product cards */}
             {data.products.map((product) => (
-              <div key={product.id} style={{ minWidth: 0, background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
-                <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f5f5f5' }}>
+              <div key={product.id} style={{ minWidth: 0, minHeight: 0, height: lockDesktopHeight ? '100%' : undefined, background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
+                <div style={{ position: 'relative', ...productMediaStyle, flexShrink: 0, overflow: 'hidden', background: '#f5f5f5' }}>
                   <PreviewImage src={product.image} alt={product.name} label="商品圖" spec={IMAGE_SPECS.product} />
                   {product.showBadge && product.badgeText && (
                     <span style={{ position: 'absolute', top: '8px', left: '8px', background: '#e53e3e', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '3px' }}>
@@ -75,7 +80,7 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
                     </span>
                   )}
                 </div>
-                <div style={{ padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                <div style={{ padding: lockDesktopHeight && count >= 4 ? '6px 10px' : '10px 12px', display: 'flex', flexDirection: 'column', gap: lockDesktopHeight && count >= 4 ? '2px' : '3px', minHeight: 0 }}>
                   {product.brand && (
                     <p style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: data.titleColor || '#9090b0', margin: 0, ...brandStyle }}>
                       {product.brand}
@@ -92,11 +97,9 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
                       <span style={{ fontSize: '12px', fontWeight: 700, color: '#e53e3e' }}>{product.salePrice}</span>
                     )}
                   </div>
-                  {product.showSpecialTag && product.specialTag && (
-                    <span style={{ display: 'inline-block', maxWidth: '100%', marginTop: '3px', padding: '1px 6px', background: '#fff3cd', color: '#b45309', border: '1px solid #fcd34d', fontSize: '10px', fontWeight: 600, borderRadius: '3px', alignSelf: 'flex-start', overflowWrap: 'anywhere' }}>
-                      {product.specialTag}
-                    </span>
-                  )}
+                  <span style={{ display: 'inline-block', maxWidth: '100%', marginTop: '3px', padding: '1px 6px', background: '#fff3cd', color: '#b45309', border: '1px solid #fcd34d', fontSize: '10px', fontWeight: 600, borderRadius: '3px', alignSelf: 'flex-start', overflowWrap: 'anywhere', visibility: product.showSpecialTag && product.specialTag ? 'visible' : 'hidden' }}>
+                    {product.showSpecialTag && product.specialTag ? product.specialTag : '特標'}
+                  </span>
                 </div>
               </div>
             ))}

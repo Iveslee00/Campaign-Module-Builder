@@ -9,7 +9,7 @@ export function generateProductGridHTML(data: ProductGridData): string {
         : '';
       const specialTag = p.showSpecialTag && p.specialTag
         ? `\n          <span class="cb-product-card__special-tag">${escapeHtml(p.specialTag)}</span>`
-        : '';
+        : `\n          <span class="cb-product-card__special-tag cb-product-card__special-tag--empty">特標</span>`;
       const brandStyle = data.titleColor ? ` style="color: ${escapeHtml(data.titleColor)}"` : '';
       const nameStyle = data.textColor ? ` style="color: ${escapeHtml(data.textColor)}"` : '';
 

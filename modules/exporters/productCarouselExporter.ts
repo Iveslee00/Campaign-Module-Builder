@@ -12,7 +12,7 @@ export function generateProductCarouselHTML(data: ProductCarouselData): string {
         : '';
       const specialTag = p.showSpecialTag && p.specialTag
         ? `\n          <span class="cb-product-card__special-tag">${escapeHtml(p.specialTag)}</span>`
-        : '';
+        : `\n          <span class="cb-product-card__special-tag cb-product-card__special-tag--empty">特標</span>`;
 
       return `        <div class="cb-carousel__item">
           <a href="${escapeHtml(p.link || '#')}" class="cb-product-card">
