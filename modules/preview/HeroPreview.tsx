@@ -4,7 +4,7 @@ import { HeroData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 
-const PLACEHOLDER = 'https://placehold.co/800x500/e0e0f0/9090c0?text=Image';
+const PLACEHOLDER = 'https://placehold.co/1200x600/e0e0f0/9090c0?text=KV+Banner';
 
 const heightMap = {
   small: { desktop: '300px', mobile: '370px', mobileImg: '210px' },
@@ -22,6 +22,10 @@ export function HeroPreview({ data }: { data: HeroData }) {
   const slideHeight = isMobile ? h.mobile : h.desktop;
   const showText = data.showText !== false;
   const textBg = data.backgroundColor || '#1a1a2e';
+  const hasBannerLink = Boolean(data.buttonLink && data.buttonLink !== '#');
+  const heroImage = (
+    <img src={imageSrc} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }} />
+  );
 
   const btnStyle: React.CSSProperties = {
     display: 'inline-flex', alignItems: 'center',
@@ -33,7 +37,11 @@ export function HeroPreview({ data }: { data: HeroData }) {
     <section style={{ height: slideHeight, display: 'flex', flexDirection: isMobile ? 'column' : 'row', overflow: 'hidden', background: textBg, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       {!showText ? (
         <div style={{ position: 'relative', flex: '1 1 auto', overflow: 'hidden' }}>
-          <img src={imageSrc} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }} />
+          {hasBannerLink ? (
+            <a href={data.buttonLink} style={{ position: 'absolute', inset: 0, display: 'block', cursor: 'pointer' }}>
+              {heroImage}
+            </a>
+          ) : heroImage}
         </div>
       ) : (
         <>

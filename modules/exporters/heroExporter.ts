@@ -25,9 +25,12 @@ export function generateHeroHTML(data: HeroData): string {
     : '';
 
   if (data.showText === false) {
+    const linkedMedia = data.buttonLink && data.buttonLink !== '#'
+      ? `<a href="${escapeHtml(data.buttonLink)}" class="cb-hero__link">${mediaPicture}</a>`
+      : mediaPicture;
     return `<section class="cb-hero ${heightClass}${imageOnlyClass}">
   <div class="cb-hero__media cb-hero__media--full">
-          ${mediaPicture}
+          ${linkedMedia}
   </div>
 </section>`;
   }

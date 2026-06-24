@@ -50,7 +50,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    3. TITLE BLOCK MODULE
    ------------------------------------------------------------ */
-.cb-title-block { padding: 48px 0 8px; }
+.cb-title-block { padding: 24px 0 8px; }
 .cb-title-block__cn {
   display: block; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700;
   letter-spacing: -0.02em; line-height: 1.2; color: #1a1a2e;
@@ -77,6 +77,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-hero__subtitle { font-size: 0.95rem; line-height: 1.6; opacity: 0.85; margin-bottom: 16px; max-width: 560px; }
 .cb-hero__media { flex: 0 0 65%; position: relative; overflow: hidden; }
 .cb-hero__media--full { flex: 1 1 auto; }
+.cb-hero__link { position: absolute; inset: 0; display: block; }
 .cb-hero__picture { position: absolute; inset: 0; display: block; }
 .cb-hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -284,6 +285,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 
 @media (max-width: 768px) {
   .cb-section { padding-top: 48px; padding-bottom: 48px; }
+  .cb-title-block { padding-top: 20px; }
   .cb-hero { flex-direction: column; }
   .cb-hero--small { height: 370px; }
   .cb-hero--medium { height: 460px; }
@@ -376,6 +378,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-kv__text--center { align-items: center; text-align: center; }
 .cb-kv__text--right  { align-items: flex-end; text-align: right; }
 .cb-kv__img { position: relative; overflow: hidden; }
+.cb-kv__link { position: absolute; inset: 0; display: block; color: inherit; }
 .cb-kv__picture { position: absolute; inset: 0; display: block; }
 .cb-kv__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .cb-kv__overlay { position: absolute; inset: 0; }

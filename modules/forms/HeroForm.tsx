@@ -27,15 +27,15 @@ export function HeroForm({ data, onChange }: Props) {
           <FormField label="副標" value={data.subtitle} onChange={(v) => set('subtitle', v)} type="textarea" rows={3} placeholder="用一句話說明活動利益點" />
           <div className="h-px bg-slate-700/60" />
           <FormField label="按鈕文字" value={data.buttonText} onChange={(v) => set('buttonText', v)} placeholder="立即看優惠" />
-          <FormField label="按鈕連結" value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" placeholder="https://" />
         </>
       )}
+      <FormField label={data.showText === false ? '整張 Banner 連結' : '按鈕 / Banner 連結'} value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" placeholder="https://" />
       <div className="h-px bg-slate-700/60" />
-      <ImageField label="KV 圖片（PC）" value={data.image} onChange={(v) => set('image', v)} spec={IMAGE_SPECS.hero} />
+      <ImageField label="KV 圖片（PC）" value={data.image} onChange={(v) => set('image', v)} spec={IMAGE_SPECS.kv} />
       <button type="button" onClick={() => set('mobileImage', data.image)} className="text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-300">
         同 PC 視覺
       </button>
-      <ImageField label="KV 圖片（M）" value={data.mobileImage ?? ''} onChange={(v) => set('mobileImage', v)} spec={IMAGE_SPECS.heroMobile} />
+      <ImageField label="KV 圖片（M）" value={data.mobileImage ?? ''} onChange={(v) => set('mobileImage', v)} spec={IMAGE_SPECS.kvMobile} />
       <div className="h-px bg-slate-700/60" />
       <ColorSection
         backgroundColor={data.backgroundColor}

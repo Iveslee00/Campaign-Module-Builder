@@ -91,6 +91,13 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
               onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
             />
           );
+          const imageLayer = (
+            <>
+              {imageEl}
+              {overlay && <div style={{ position: 'absolute', inset: 0, background: overlay }} />}
+            </>
+          );
+          const hasBannerLink = Boolean(s.buttonLink && s.buttonLink !== '#');
 
           return (
             <div
@@ -104,8 +111,11 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
             >
               {!showText && (
                 <div style={{ flex: '0 0 100%', position: 'relative', overflow: 'hidden' }}>
-                  {imageEl}
-                  {overlay && <div style={{ position: 'absolute', inset: 0, background: overlay }} />}
+                  {hasBannerLink ? (
+                    <a href={s.buttonLink} style={{ position: 'absolute', inset: 0, display: 'block', cursor: 'pointer' }}>
+                      {imageLayer}
+                    </a>
+                  ) : imageLayer}
                 </div>
               )}
 

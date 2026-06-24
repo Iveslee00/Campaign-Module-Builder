@@ -23,6 +23,10 @@ export function generateHeroCarouselHTML(data: HeroCarouselData): string {
         ? `          <a href="${escapeHtml(s.buttonLink || '#')}" class="cb-btn cb-kv__btn">${escapeHtml(s.buttonText)}</a>`
         : '';
       const overlayEl = overlay ? `\n        <div class="cb-kv__overlay" style="background: ${overlay}"></div>` : '';
+      const imageContent = `${imgEl}${overlayEl}`;
+      const linkedImageContent = !showText && s.buttonLink && s.buttonLink !== '#'
+        ? `<a href="${escapeHtml(s.buttonLink)}" class="cb-kv__link">${imageContent}\n        </a>`
+        : imageContent;
 
       return `    <div class="cb-kv__slide${showText ? '' : ' cb-kv__slide--image-only'}">
 ${showText ? `      <div class="cb-kv__text cb-kv__text--${align}"${textBgStyle}>
@@ -30,7 +34,7 @@ ${title}
 ${subtitle}
 ${btn}
       </div>` : ''}
-      <div class="cb-kv__img">${imgEl}${overlayEl}
+      <div class="cb-kv__img">${linkedImageContent}
       </div>
     </div>`;
     })

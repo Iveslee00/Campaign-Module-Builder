@@ -7,7 +7,7 @@ import { generateCampaignPackage } from '@/lib/export/packageGenerator';
 import { X, Copy, Check, Code2, Palette, FileCode2, Mail, Package, Download } from 'lucide-react';
 
 type TopTab = 'campaign' | 'package' | 'email';
-type CampaignTab = 'html' | 'css';
+type CampaignTab = 'embed' | 'html' | 'css' | 'js';
 
 interface Props {
   code: ExportedCode;
@@ -18,7 +18,7 @@ interface Props {
 
 export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
   const [topTab, setTopTab] = useState<TopTab>(initialTab);
-  const [campaignTab, setCampaignTab] = useState<CampaignTab>('html');
+  const [campaignTab, setCampaignTab] = useState<CampaignTab>('embed');
   const [copied, setCopied] = useState<string | null>(null);
   const [packageInfo, setPackageInfo] = useState<{ fileCount: number; remoteImages: string[] } | null>(null);
 
@@ -43,7 +43,17 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
     setPackageInfo({ fileCount: result.fileCount, remoteImages: result.remoteImages });
   };
 
-  const campaignCode = campaignTab === 'html' ? code.html : code.css;
+  const campaignParts = splitCampaignCode(code.html);
+  const cssCode = `<style>\n${code.css}\n</style>`;
+  const jsCode = `<script>\n${campaignParts.js || '// 目前沒有需要 JS 的模組'}\n</script>`;
+  const embedCode = `${campaignParts.html}\n\n${cssCode}\n\n${jsCode}`;
+  const campaignCodeMap: Record<CampaignTab, string> = {
+    embed: embedCode,
+    html: campaignParts.html,
+    css: cssCode,
+    js: jsCode,
+  };
+  const campaignCode = campaignCodeMap[campaignTab];
   const campaignLineCount = campaignCode.split('\n').length;
   const emailLineCount = emailHTML.split('\n').length;
 
@@ -117,13 +127,22 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
             {/* Usage note */}
             <div className="px-6 py-3 bg-indigo-950/40 border-b border-slate-800">
               <p className="text-xs text-indigo-300/80 leading-relaxed">
-                <strong className="text-indigo-300">貼碼使用：</strong>複製 HTML 到內容區，再把 CSS 加到樣式表或頁面 head 的 style 標籤。所有 class 都使用 <code className="bg-indigo-900/50 px-1 rounded">cb-</code> 前綴，降低和既有網站衝突的機率。
+                <strong className="text-indigo-300">貼碼使用：</strong>複製整包貼碼可直接貼進支援 HTML 的 CMS；若系統分欄，請分別複製 HTML、CSS、JS。CSS 目前保留完整 <code className="bg-indigo-900/50 px-1 rounded">cb-</code> 樣式，避免模組組合漏樣式。
               </p>
             </div>
 
-            {/* Sub-tabs HTML / CSS + copy */}
+            {/* Sub-tabs embed / HTML / CSS / JS + copy */}
             <div className="flex items-center justify-between px-6 py-3 border-b border-slate-800">
               <div className="flex gap-1 bg-slate-800 rounded-lg p-0.5">
+                <button
+                  onClick={() => setCampaignTab('embed')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    campaignTab === 'embed' ? 'bg-slate-700 text-slate-100' : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <FileCode2 size={14} />
+                  整包貼碼
+                </button>
                 <button
                   onClick={() => setCampaignTab('html')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
@@ -142,6 +161,15 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
                   <Palette size={14} />
                   CSS
                 </button>
+                <button
+                  onClick={() => setCampaignTab('js')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    campaignTab === 'js' ? 'bg-slate-700 text-slate-100' : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <Code2 size={14} />
+                  JS
+                </button>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-slate-500">{campaignLineCount} 行</span>
@@ -151,7 +179,7 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
                     copied === campaignTab ? 'bg-emerald-600 text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white'
                   }`}
                 >
-                  {copied === campaignTab ? <><Check size={13} />已複製</> : <><Copy size={13} />複製 {campaignTab.toUpperCase()}</>}
+                  {copied === campaignTab ? <><Check size={13} />已複製</> : <><Copy size={13} />複製{campaignTab === 'embed' ? '貼碼' : ` ${campaignTab.toUpperCase()}`}</>}
                 </button>
               </div>
             </div>
@@ -262,4 +290,20 @@ images/`}</pre>
       </div>
     </div>
   );
+}
+
+function splitCampaignCode(html: string): { html: string; js: string } {
+  const scripts: string[] = [];
+  const htmlWithoutScripts = html
+    .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gi, (_match, scriptBody: string) => {
+      scripts.push(scriptBody.trim());
+      return '';
+    })
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+
+  return {
+    html: htmlWithoutScripts,
+    js: scripts.filter(Boolean).join('\n\n'),
+  };
 }

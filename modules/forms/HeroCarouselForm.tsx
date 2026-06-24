@@ -90,7 +90,6 @@ export function HeroCarouselForm({ data, onChange }: Props) {
                       <FormField label="標題" value={slide.title} onChange={(v) => updateSlide(slide.id, 'title', v)} placeholder="活動主視覺標題" />
                       <FormField label="副標題" value={slide.subtitle} onChange={(v) => updateSlide(slide.id, 'subtitle', v)} type="textarea" rows={2} placeholder="用一句話說明活動利益點" />
                       <FormField label="按鈕文字" value={slide.buttonText} onChange={(v) => updateSlide(slide.id, 'buttonText', v)} placeholder="立即看優惠" />
-                      <FormField label="按鈕連結" value={slide.buttonLink} onChange={(v) => updateSlide(slide.id, 'buttonLink', v)} type="url" placeholder="#" />
                       <SegmentedField
                         label="對齊"
                         value={slide.alignment ?? 'center'}
@@ -99,6 +98,7 @@ export function HeroCarouselForm({ data, onChange }: Props) {
                       />
                     </>
                   )}
+                  <FormField label={slide.showText === false ? '整張 Banner 連結' : '按鈕 / Banner 連結'} value={slide.buttonLink} onChange={(v) => updateSlide(slide.id, 'buttonLink', v)} type="url" placeholder="https://" />
                   <FormField
                     label="遮罩透明度 (%)"
                     value={String(slide.overlayOpacity ?? 40)}

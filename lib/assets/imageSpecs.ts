@@ -4,8 +4,8 @@ export interface ImageSpec {
 }
 
 export const IMAGE_SPECS = {
-  hero: { width: 800, height: 500 },
-  heroMobile: { width: 750, height: 900 },
+  hero: { width: 1200, height: 600 },
+  heroMobile: { width: 750, height: 1000 },
   split: { width: 600, height: 450 },
   product: { width: 400, height: 400 },
   bannerProducts: { width: 500, height: 600 },
