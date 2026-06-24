@@ -4,8 +4,7 @@ import { ProductBannerData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { getProductBannerImageSpecs } from '@/lib/assets/imageSpecs';
-
-const PLACEHOLDER = 'https://placehold.co/700x600/e0e0f0/9090c0?text=Product';
+import { PreviewImage } from './PreviewImage';
 
 const heightPadding = {
   small: { desktop: '36px 24px', mobile: '28px 16px' },
@@ -21,7 +20,7 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
 
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
-  const imageSrc = isMobile ? (data.mobileImage || data.image || PLACEHOLDER) : (data.image || PLACEHOLDER);
+  const imageSrc = isMobile ? (data.mobileImage || data.image) : data.image;
   const imageSpecs = getProductBannerImageSpecs(data.height);
   const mediaSpec = isMobile ? imageSpecs.mobile : imageSpecs.desktop;
 
@@ -78,12 +77,7 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
 
   const media = (
     <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', aspectRatio: `${mediaSpec.width} / ${mediaSpec.height}` }}>
-      <img
-        src={imageSrc}
-        alt={data.productName || ''}
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-      />
+      <PreviewImage src={imageSrc} alt={data.productName || ''} label={isMobile ? '單品主打 M' : '單品主打 PC'} spec={mediaSpec} />
       {data.showBadge && data.badgeText && (
         <span style={{ position: 'absolute', top: '14px', right: '14px', background: '#e53e3e', color: '#fff', fontSize: '12px', fontWeight: 700, letterSpacing: '0.05em', padding: '5px 10px', borderRadius: '6px' }}>
           {data.badgeText}

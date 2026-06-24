@@ -3,8 +3,9 @@
 import { SplitSectionData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
+import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
+import { PreviewImage } from './PreviewImage';
 
-const PLACEHOLDER = 'https://placehold.co/600x450/e0e0f0/9090c0?text=Image';
 const heightPadding = {
   small: { desktop: '32px 24px', mobile: '24px 16px' },
   medium: { desktop: '48px 24px', mobile: '32px 16px' },
@@ -17,7 +18,8 @@ export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
   const padding = heightPadding[data.height ?? 'medium'];
-  const imageSrc = isMobile ? (data.mobileImage || data.image || PLACEHOLDER) : (data.image || PLACEHOLDER);
+  const imageSrc = isMobile ? (data.mobileImage || data.image) : data.image;
+  const imageSpec = isMobile ? IMAGE_SPECS.splitMobile : IMAGE_SPECS.split;
 
   const btnStyle: React.CSSProperties = {
     display: 'inline-flex', alignItems: 'center',
@@ -37,7 +39,7 @@ export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
 
   const media = (
     <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', aspectRatio: '4 / 3' }}>
-      <img src={imageSrc} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }} />
+      <PreviewImage src={imageSrc} alt="" label={isMobile ? '圖文區塊 M' : '圖文區塊 PC'} spec={imageSpec} />
     </div>
   );
 

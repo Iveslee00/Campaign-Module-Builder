@@ -2,8 +2,8 @@
 
 import { LogoWallData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
-
-const PLACEHOLDER = 'https://placehold.co/160x60/e0e0f0/9090c0?text=Brand';
+import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
+import { PreviewImage } from './PreviewImage';
 
 export function LogoWallPreview({ data }: { data: LogoWallData }) {
   const { isMobile } = useDevice();
@@ -14,12 +14,9 @@ export function LogoWallPreview({ data }: { data: LogoWallData }) {
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: isMobile ? '20px 28px' : '32px 48px' }}>
           {data.logos.map((logo) => (
             <div key={logo.id} style={{ opacity: 0.5, filter: 'grayscale(100%)' }}>
-              <img
-                src={logo.image || PLACEHOLDER}
-                alt={logo.alt}
-                style={{ height: isMobile ? '28px' : '36px', width: 'auto', maxWidth: '130px', objectFit: 'contain', display: 'block' }}
-                onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-              />
+              <div style={{ position: 'relative', width: '130px', aspectRatio: '160 / 60', overflow: 'hidden' }}>
+                <PreviewImage src={logo.image} alt={logo.alt} label="Logo" spec={IMAGE_SPECS.logo} objectFit="contain" />
+              </div>
             </div>
           ))}
         </div>

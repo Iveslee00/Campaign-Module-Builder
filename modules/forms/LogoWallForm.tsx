@@ -14,7 +14,7 @@ export function LogoWallForm({ data, onChange }: Props) {
   };
 
   const addLogo = () => {
-    const newLogo: LogoItem = { id: generateId(), image: 'https://placehold.co/160x60/f0f0f8/6366f1?text=Brand', alt: '品牌名稱', link: '#' };
+    const newLogo: LogoItem = { id: generateId(), image: '', alt: '品牌名稱', link: '#' };
     onChange({ ...data, logos: [...data.logos, newLogo] });
   };
 

@@ -3,9 +3,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { ProductCarouselData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
+import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-const PLACEHOLDER = 'https://placehold.co/400x400/e0e0f0/9090c0?text=Product';
+import { PreviewImage } from './PreviewImage';
 
 export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) {
   const { isMobile } = useDevice();
@@ -83,12 +83,7 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
               >
                 <div style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
                   <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f5f5f5' }}>
-                    <img
-                      src={product.image || PLACEHOLDER}
-                      alt={product.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                      onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-                    />
+                    <PreviewImage src={product.image} alt={product.name} label="商品圖" spec={IMAGE_SPECS.product} />
                     {product.showBadge && product.badgeText && (
                       <span style={{ position: 'absolute', top: '8px', left: '8px', background: '#e53e3e', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '3px' }}>
                         {product.badgeText}

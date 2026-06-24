@@ -2,8 +2,8 @@
 
 import { ArticleImageData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
-
-const PLACEHOLDER = 'https://placehold.co/1200x420/e8e8f8/6366f1?text=Article+Image';
+import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
+import { PreviewImage } from './PreviewImage';
 
 export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
   const { isMobile } = useDevice();
@@ -11,7 +11,8 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
   const pos = data.imagePosition || 'top';
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
-  const imageSrc = isMobile ? (data.mobileImage || data.image || PLACEHOLDER) : (data.image || PLACEHOLDER);
+  const imageSrc = isMobile ? (data.mobileImage || data.image) : data.image;
+  const imageSpec = isMobile ? IMAGE_SPECS.articleMobile : IMAGE_SPECS.article;
 
   const isHorizontal = !isMobile && (pos === 'left' || pos === 'right');
   const topImageRatio = isMobile ? '750 / 420' : '1200 / 420';
@@ -22,25 +23,12 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
       position: 'relative',
       flexShrink: 0,
       width: isHorizontal ? '45%' : '100%',
-      aspectRatio: isTopLayout ? topImageRatio : undefined,
+      aspectRatio: isTopLayout ? topImageRatio : '4 / 3',
       borderRadius: '12px',
       overflow: 'hidden',
       marginBottom: pos === 'top' ? '36px' : 0,
     }}>
-      <img
-        src={imageSrc}
-        alt={data.title || 'Article image'}
-        style={{
-          position: isTopLayout ? 'absolute' : undefined,
-          inset: isTopLayout ? 0 : undefined,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block',
-          minHeight: isHorizontal ? '320px' : undefined,
-        }}
-        onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-      />
+      <PreviewImage src={imageSrc} alt={data.title || 'Article image'} label={isMobile ? '文章圖片 M' : '文章圖片 PC'} spec={imageSpec} />
     </div>
   );
 
@@ -92,12 +80,7 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
             {isMobile ? (
               <div style={{ width: '100%' }}>
                 <div style={{ position: 'relative', aspectRatio: topImageRatio, borderRadius: '12px', overflow: 'hidden', marginBottom: '28px' }}>
-                  <img
-                    src={imageSrc}
-                    alt={data.title || 'Article image'}
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                    onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-                  />
+                  <PreviewImage src={imageSrc} alt={data.title || 'Article image'} label="文章圖片 M" spec={IMAGE_SPECS.articleMobile} />
                 </div>
                 {textEl}
               </div>

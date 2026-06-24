@@ -3,9 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { BannerProductsData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
-
-const PLACEHOLDER_PRODUCT = 'https://placehold.co/400x400/e0e0f0/9090c0?text=Product';
-const PLACEHOLDER_BANNER = 'https://placehold.co/500x600/1a1a2e/6366f1?text=Banner';
+import { IMAGE_SPECS, getBannerProductsImageSpecs } from '@/lib/assets/imageSpecs';
+import { PreviewImage } from './PreviewImage';
 
 export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
   const { isMobile } = useDevice();
@@ -14,7 +13,9 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
   const count = data.products.length;
   const brandStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const nameStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
-  const bannerSrc = isMobile ? (data.mobileBannerImage || data.bannerImage || PLACEHOLDER_BANNER) : (data.bannerImage || PLACEHOLDER_BANNER);
+  const bannerSrc = isMobile ? (data.mobileBannerImage || data.bannerImage) : data.bannerImage;
+  const bannerSpecs = getBannerProductsImageSpecs(count);
+  const bannerSpec = isMobile ? bannerSpecs.mobile : bannerSpecs.desktop;
   const bannerAspectRatio = isMobile ? '750 / 900' : count >= 4 ? '500 / 800' : '500 / 600';
 
   useEffect(() => {
@@ -55,12 +56,7 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
         <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? '12px' : '20px', alignItems: 'stretch' }}>
           {/* Banner */}
           <div style={{ ...(isMobile || isCompact || count <= 0 ? { gridColumn: '1 / -1' } : {}), position: 'relative', borderRadius: '12px', overflow: 'hidden', background: '#1a1a2e', aspectRatio: bannerAspectRatio, display: 'flex' }}>
-            <img
-              src={bannerSrc}
-              alt={data.bannerTitle}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }}
-              onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_BANNER; }}
-            />
+            <PreviewImage src={bannerSrc} alt={data.bannerTitle} label={isMobile ? '活動 Banner M' : '活動 Banner PC'} spec={bannerSpec} tone="dark" />
             <div style={{ position: 'relative', zIndex: 1, padding: '24px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', width: '100%', background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)' }}>
               {data.bannerTitle && (
                 <p style={{ fontSize: isMobile ? '1rem' : '1.1rem', fontWeight: 700, color: data.bannerTitleColor || '#ffffff', lineHeight: 1.2, margin: 0, overflowWrap: 'anywhere' }}>
@@ -79,12 +75,7 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
           {data.products.map((product) => (
             <div key={product.id} style={{ minWidth: 0, background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
               <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f5f5f5' }}>
-                <img
-                  src={product.image || PLACEHOLDER_PRODUCT}
-                  alt={product.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_PRODUCT; }}
-                />
+                <PreviewImage src={product.image} alt={product.name} label="商品圖" spec={IMAGE_SPECS.product} />
                 {product.showBadge && product.badgeText && (
                   <span style={{ position: 'absolute', top: '8px', left: '8px', background: '#e53e3e', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '3px' }}>
                     {product.badgeText}

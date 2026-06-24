@@ -1,0 +1,74 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { ImageSpec } from '@/lib/assets/imageSpecs';
+
+interface ImagePlaceholderProps {
+  label: string;
+  spec: ImageSpec;
+  tone?: 'light' | 'dark';
+  state?: 'empty' | 'error';
+}
+
+interface PreviewImageProps extends ImagePlaceholderProps {
+  src?: string;
+  alt?: string;
+  objectFit?: React.CSSProperties['objectFit'];
+}
+
+export function ImagePlaceholder({ label, spec, tone = 'light', state = 'empty' }: ImagePlaceholderProps) {
+  const isDark = tone === 'dark';
+
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+        padding: '16px',
+        background: isDark
+          ? 'linear-gradient(135deg, #141827 0%, #20243a 100%)'
+          : 'linear-gradient(135deg, #f1f5f9 0%, #e0e7ff 100%)',
+        color: isDark ? '#c7d2fe' : '#4f46e5',
+        textAlign: 'center',
+        boxShadow: 'inset 0 0 0 1px rgba(99,102,241,0.18)',
+      }}
+    >
+      <span style={{ fontSize: '12px', fontWeight: 800, letterSpacing: '0.08em' }}>
+        {state === 'error' ? '圖片載入失敗' : label}
+      </span>
+      <span style={{ fontSize: '22px', fontWeight: 800, lineHeight: 1 }}>
+        {spec.width} x {spec.height}
+      </span>
+      <span style={{ fontSize: '11px', fontWeight: 600, opacity: 0.7 }}>
+        請上傳指定尺寸圖檔
+      </span>
+    </div>
+  );
+}
+
+export function PreviewImage({ src, alt = '', label, spec, tone = 'light', state = 'empty', objectFit = 'cover' }: PreviewImageProps) {
+  const [failed, setFailed] = useState(false);
+  const hasImage = Boolean(src?.trim());
+
+  useEffect(() => {
+    setFailed(false);
+  }, [src]);
+
+  if (!hasImage || failed) {
+    return <ImagePlaceholder label={label} spec={spec} tone={tone} state={failed ? 'error' : state} />;
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit, display: 'block' }}
+      onError={() => setFailed(true)}
+    />
+  );
+}

@@ -5,8 +5,8 @@ import { HeroCarouselData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-const PLACEHOLDER = 'https://placehold.co/1200x600/1a1a2e/6366f1?text=KV+Banner';
+import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
+import { PreviewImage } from './PreviewImage';
 
 const heightMap = {
   small:  { desktopRatio: '1200 / 300', mobileFullRatio: '750 / 370', mobileImgRatio: '750 / 210' },
@@ -84,14 +84,11 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
             : align === 'right' ? { textAlign: 'right', alignItems: 'flex-end' }
             : { textAlign: 'left', alignItems: 'flex-start' };
 
-          const imageSrc = isMobile ? (s.mobileImage || s.image || PLACEHOLDER) : (s.image || PLACEHOLDER);
+          const imageSpecs = getKvImageSpecs(data.height, showText);
+          const imageSpec = isMobile ? imageSpecs.mobile : imageSpecs.desktop;
+          const imageSrc = isMobile ? (s.mobileImage || s.image) : s.image;
           const imageEl = (
-            <img
-              src={imageSrc}
-              alt={s.title}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-            />
+            <PreviewImage src={imageSrc} alt={s.title} label={isMobile ? 'KV 輪播 M' : showText ? 'KV 輪播 PC 圖片區' : 'KV 輪播 PC 純 Banner'} spec={imageSpec} tone="dark" />
           );
           const imageLayer = (
             <>

@@ -3,8 +3,8 @@
 import { HeroData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
-
-const PLACEHOLDER = 'https://placehold.co/1200x600/e0e0f0/9090c0?text=KV+Banner';
+import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
+import { PreviewImage } from './PreviewImage';
 
 const heightMap = {
   small: { desktopRatio: '1200 / 300', mobileFullRatio: '750 / 370', mobileImgRatio: '750 / 210' },
@@ -17,9 +17,12 @@ export function HeroPreview({ data }: { data: HeroData }) {
   const { buttonColor } = useGlobalSettings();
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
-  const imageSrc = isMobile ? (data.mobileImage || data.image || PLACEHOLDER) : (data.image || PLACEHOLDER);
   const h = heightMap[data.height ?? 'medium'];
   const showText = data.showText !== false;
+  const imageSpecs = getKvImageSpecs(data.height, showText);
+  const imageSrc = isMobile ? (data.mobileImage || data.image) : data.image;
+  const imageSpec = isMobile ? imageSpecs.mobile : imageSpecs.desktop;
+  const imageLabel = isMobile ? 'KV M' : showText ? 'KV PC 圖片區' : 'KV PC 純 Banner';
   const textBg = data.backgroundColor || '#1a1a2e';
   const sectionStyle: React.CSSProperties = {
     display: 'flex',
@@ -33,7 +36,7 @@ export function HeroPreview({ data }: { data: HeroData }) {
   };
   const hasBannerLink = Boolean(data.buttonLink && data.buttonLink !== '#');
   const heroImage = (
-    <img src={imageSrc} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }} />
+    <PreviewImage src={imageSrc} alt="" label={imageLabel} spec={imageSpec} tone="dark" />
   );
 
   const btnStyle: React.CSSProperties = {
@@ -56,7 +59,7 @@ export function HeroPreview({ data }: { data: HeroData }) {
         <>
           {isMobile && (
             <div style={{ aspectRatio: h.mobileImgRatio, flexShrink: 0, position: 'relative', overflow: 'hidden' }}>
-              <img src={imageSrc} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }} />
+              {heroImage}
             </div>
           )}
           <div style={{ flex: isMobile ? '0 0 auto' : '0 0 35%', background: textBg, color: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: isMobile ? '20px 18px' : '0 36px 0 44px', overflow: 'hidden' }}>
@@ -67,7 +70,7 @@ export function HeroPreview({ data }: { data: HeroData }) {
           </div>
           {!isMobile && (
             <div style={{ flex: '0 0 65%', position: 'relative', overflow: 'hidden' }}>
-              <img src={imageSrc} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }} />
+              {heroImage}
             </div>
           )}
         </>
