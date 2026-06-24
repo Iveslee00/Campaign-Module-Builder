@@ -23,12 +23,12 @@ export const SIZE_SPEC_SECTIONS: SizeSpecSection[] = [
       {
         headers: ['模組', '狀態', '尺寸', 'PC 圖片區', 'M 端圖片區'],
         rows: [
-          { cells: ['KV', '有文字區', 'S', '780 x 300', '750 x 210'] },
-          { cells: ['KV', '有文字區', 'M', '780 x 400', '750 x 260'] },
-          { cells: ['KV', '有文字區', 'L', '780 x 520', '750 x 310'] },
-          { cells: ['KV', '純 Banner', 'S', '1200 x 300', '750 x 370'] },
-          { cells: ['KV', '純 Banner', 'M', '1200 x 400', '750 x 460'] },
-          { cells: ['KV', '純 Banner', 'L', '1200 x 520', '750 x 500'] },
+          { cells: ['KV', '有文字區', 'S', '780 x 300', '750 x 750'] },
+          { cells: ['KV', '有文字區', 'M', '780 x 400', '750 x 850'] },
+          { cells: ['KV', '有文字區', 'L', '780 x 520', '750 x 950'] },
+          { cells: ['KV', '純 Banner', 'S', '1200 x 300', '750 x 750'] },
+          { cells: ['KV', '純 Banner', 'M', '1200 x 400', '750 x 850'] },
+          { cells: ['KV', '純 Banner', 'L', '1200 x 520', '750 x 950'] },
           { cells: ['KV 輪播', '有文字區', 'S/M/L', '同 KV 有文字區', '同 KV 有文字區'] },
           { cells: ['KV 輪播', '純 Banner', 'S/M/L', '同 KV 純 Banner', '同 KV 純 Banner'] },
         ],
@@ -46,9 +46,9 @@ export const SIZE_SPEC_SECTIONS: SizeSpecSection[] = [
       {
         headers: ['模組', 'PC 版型', 'PC Banner 尺寸', 'M 端版型', 'M 端尺寸'],
         rows: [
-          { cells: ['活動 Banner + 2 商品', 'Banner 左、2 商品右側橫排', '500 x 600', 'Banner 上、2 商品下方橫排', '750 x 900'] },
-          { cells: ['活動 Banner + 3 商品', 'Banner 左、3 商品右側橫排', '500 x 600', 'Banner 上、3 商品下方橫排', '750 x 900'] },
-          { cells: ['活動 Banner + 4 商品', 'Banner 左、4 商品右側 2x2 格', '500 x 800', 'Banner 上、4 商品下方 2x2 格', '750 x 900'] },
+          { cells: ['活動 Banner + 2 商品', 'Banner 左、2 商品右側橫排', '500 x 600', 'Banner 上、2 商品下方橫排', '750 x 750'] },
+          { cells: ['活動 Banner + 3 商品', 'Banner 左、3 商品右側橫排', '500 x 600', 'Banner 上、3 商品下方橫排', '750 x 750'] },
+          { cells: ['活動 Banner + 4 商品', 'Banner 左、4 商品右側 2x2 格', '500 x 600', 'Banner 上、4 商品下方 2x2 格', '750 x 750'] },
         ],
       },
     ],
@@ -106,7 +106,7 @@ export const SIZE_SPEC_SECTIONS: SizeSpecSection[] = [
       'M 端以 750px 寬為基準（對應 @2x 設計稿，實際顯示 375px）。',
       '商品圖統一 1:1 正方形，方便圖庫統一管理。',
       'M 端「有文字區」模組高度 = 圖片區高度 + 文字區高度，兩者分開計算。',
-      'KV 純 Banner L size M 端高度上限建議不超過 500px，避免首屏被單一圖片佔滿。',
+      'KV M 端最矮尺寸為 750 x 750，避免主視覺在手機版過扁。',
     ],
   },
 ];

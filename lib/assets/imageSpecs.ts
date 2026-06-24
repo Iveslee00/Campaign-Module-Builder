@@ -5,18 +5,18 @@ export interface ImageSpec {
 
 export const IMAGE_SPECS = {
   hero: { width: 1200, height: 400 },
-  heroMobile: { width: 750, height: 460 },
+  heroMobile: { width: 750, height: 850 },
   split: { width: 600, height: 450 },
   splitMobile: { width: 750, height: 562 },
   product: { width: 400, height: 400 },
   bannerProducts: { width: 500, height: 600 },
-  bannerProductsMobile: { width: 750, height: 900 },
+  bannerProductsMobile: { width: 750, height: 750 },
   productBanner: { width: 700, height: 600 },
   productBannerMobile: { width: 750, height: 900 },
   article: { width: 1200, height: 420 },
   articleMobile: { width: 750, height: 420 },
   kv: { width: 1200, height: 400 },
-  kvMobile: { width: 750, height: 460 },
+  kvMobile: { width: 750, height: 850 },
   logo: { width: 160, height: 60 },
   bankLogo: { width: 160, height: 60 },
 } as const;
@@ -25,31 +25,31 @@ export const KV_IMAGE_SPECS = {
   small: {
     full: {
       desktop: { width: 1200, height: 300 },
-      mobile: { width: 750, height: 370 },
+      mobile: { width: 750, height: 750 },
     },
     split: {
       desktop: { width: 780, height: 300 },
-      mobile: { width: 750, height: 210 },
+      mobile: { width: 750, height: 750 },
     },
   },
   medium: {
     full: {
       desktop: { width: 1200, height: 400 },
-      mobile: { width: 750, height: 460 },
+      mobile: { width: 750, height: 850 },
     },
     split: {
       desktop: { width: 780, height: 400 },
-      mobile: { width: 750, height: 260 },
+      mobile: { width: 750, height: 850 },
     },
   },
   large: {
     full: {
       desktop: { width: 1200, height: 520 },
-      mobile: { width: 750, height: 500 },
+      mobile: { width: 750, height: 950 },
     },
     split: {
       desktop: { width: 780, height: 520 },
-      mobile: { width: 750, height: 310 },
+      mobile: { width: 750, height: 950 },
     },
   },
 } as const;
@@ -61,8 +61,8 @@ export const getKvImageSpecs = (height: string | undefined, showText = true) => 
   return showText ? KV_IMAGE_SPECS[key].split : KV_IMAGE_SPECS[key].full;
 };
 
-export const getBannerProductsImageSpecs = (count: number) => ({
-  desktop: count >= 4 ? { width: 500, height: 800 } : { width: 500, height: 600 },
+export const getBannerProductsImageSpecs = (_count: number) => ({
+  desktop: { width: 500, height: 600 },
   mobile: IMAGE_SPECS.bannerProductsMobile,
 });
 

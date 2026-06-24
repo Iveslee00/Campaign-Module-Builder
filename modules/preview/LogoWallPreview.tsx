@@ -14,7 +14,7 @@ export function LogoWallPreview({ data }: { data: LogoWallData }) {
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: isMobile ? '20px 28px' : '32px 48px' }}>
           {data.logos.map((logo) => (
             <div key={logo.id} style={{ opacity: 0.5, filter: 'grayscale(100%)' }}>
-              <div style={{ position: 'relative', width: '130px', aspectRatio: '160 / 60', overflow: 'hidden' }}>
+              <div style={{ position: 'relative', width: '160px', aspectRatio: '160 / 60', overflow: 'hidden' }}>
                 <PreviewImage src={logo.image} alt={logo.alt} label="Logo" spec={IMAGE_SPECS.logo} objectFit="contain" />
               </div>
             </div>

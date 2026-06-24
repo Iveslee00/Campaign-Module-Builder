@@ -147,7 +147,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   position: relative; border-radius: 12px; overflow: hidden;
   background-color: #1a1a2e; aspect-ratio: 5 / 6; display: flex;
 }
-.cb-banner-products__inner--4 .cb-banner-products__banner { aspect-ratio: 5 / 8; }
+.cb-banner-products__inner--4 .cb-banner-products__banner { aspect-ratio: 5 / 6; }
 .cb-banner-products__picture { position: absolute; inset: 0; display: block; }
 .cb-banner-products__banner-img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
 .cb-banner-products__banner-overlay {
@@ -163,7 +163,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
    9. PRODUCT CAROUSEL MODULE
    ------------------------------------------------------------ */
 .cb-carousel__wrapper { position: relative; }
-.cb-carousel__track-outer { overflow: hidden; }
+.cb-carousel__track-outer { overflow-x: hidden; overflow-y: visible; padding: 6px 0 12px; }
 .cb-carousel__track {
   display: flex; gap: 20px;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -218,7 +218,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-logo-wall__grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 40px 56px; }
 .cb-logo-wall__item { display: flex; align-items: center; justify-content: center; opacity: 0.45; filter: grayscale(100%); transition: opacity 0.2s ease, filter 0.2s ease; }
 .cb-logo-wall__item:hover { opacity: 1; filter: grayscale(0%); }
-.cb-logo-wall__item img { height: 40px; width: auto; max-width: 160px; object-fit: contain; }
+.cb-logo-wall__item img { width: 160px; height: 60px; object-fit: contain; display: block; }
 
 /* ------------------------------------------------------------
    12. CTA MODULE
@@ -294,13 +294,13 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-hero--small,
   .cb-hero--medium,
   .cb-hero--large { aspect-ratio: auto; }
-  .cb-hero--image-only.cb-hero--small { aspect-ratio: 750 / 370; }
-  .cb-hero--image-only.cb-hero--medium { aspect-ratio: 750 / 460; }
-  .cb-hero--image-only.cb-hero--large { aspect-ratio: 750 / 500; }
+  .cb-hero--image-only.cb-hero--small { aspect-ratio: 750 / 750; }
+  .cb-hero--image-only.cb-hero--medium { aspect-ratio: 750 / 850; }
+  .cb-hero--image-only.cb-hero--large { aspect-ratio: 750 / 950; }
   .cb-hero__content { flex: 0 0 auto; padding: 20px 18px; }
-  .cb-hero__media { flex: 0 0 auto; order: -1; aspect-ratio: 750 / 260; }
-  .cb-hero--small .cb-hero__media { aspect-ratio: 750 / 210; }
-  .cb-hero--large .cb-hero__media { aspect-ratio: 750 / 310; }
+  .cb-hero__media { flex: 0 0 auto; order: -1; aspect-ratio: 750 / 850; }
+  .cb-hero--small .cb-hero__media { aspect-ratio: 750 / 750; }
+  .cb-hero--large .cb-hero__media { aspect-ratio: 750 / 950; }
   .cb-hero--image-only .cb-hero__media { flex: 1 1 auto; order: 0; }
   .cb-hero__title { font-size: 1.5rem; }
   .cb-split__inner { grid-template-columns: 1fr; gap: 32px; }
@@ -313,14 +313,14 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-banner-products__inner--3,
   .cb-banner-products__inner--4 { grid-template-columns: 1fr 1fr; }
   .cb-banner-products__banner,
-  .cb-banner-products__inner--4 .cb-banner-products__banner { grid-column: 1 / -1; aspect-ratio: 5 / 6; }
+  .cb-banner-products__inner--4 .cb-banner-products__banner { grid-column: 1 / -1; aspect-ratio: 1 / 1; }
   .cb-product-banner__inner { grid-template-columns: 1fr; gap: 32px; }
   .cb-product-banner__inner--reverse .cb-product-banner__media { order: 0; }
   .cb-product-banner__media { aspect-ratio: 750 / 850; }
   .cb-product-banner--small .cb-product-banner__media { aspect-ratio: 750 / 750; }
   .cb-product-banner--large .cb-product-banner__media { aspect-ratio: 750 / 900; }
   .cb-logo-wall__grid { gap: 24px 32px; }
-  .cb-logo-wall__item img { height: 32px; }
+  .cb-logo-wall__item img { width: 160px; height: 60px; }
   .cb-cta__title { font-size: 1.75rem; }
   .cb-title-block__cn { font-size: 1.5rem; }
 }
@@ -410,20 +410,26 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-kv--large { aspect-ratio: auto; }
   .cb-kv__track { height: auto; }
   .cb-kv__slide { grid-template-columns: 1fr; grid-template-rows: auto auto; height: auto; }
-  .cb-kv__img { aspect-ratio: 750 / 260; }
-  .cb-kv--small .cb-kv__img { aspect-ratio: 750 / 210; }
-  .cb-kv--large .cb-kv__img { aspect-ratio: 750 / 310; }
+  .cb-kv__img { aspect-ratio: 750 / 850; }
+  .cb-kv--small .cb-kv__img { aspect-ratio: 750 / 750; }
+  .cb-kv--large .cb-kv__img { aspect-ratio: 750 / 950; }
   .cb-kv__slide--image-only { grid-template-rows: 1fr; }
   .cb-kv__slide--image-only .cb-kv__img { aspect-ratio: auto; }
-  .cb-kv--small .cb-kv__slide--image-only { aspect-ratio: 750 / 370; }
-  .cb-kv--medium .cb-kv__slide--image-only { aspect-ratio: 750 / 460; }
-  .cb-kv--large .cb-kv__slide--image-only { aspect-ratio: 750 / 500; }
+  .cb-kv--small .cb-kv__slide--image-only { aspect-ratio: 750 / 750; }
+  .cb-kv--medium .cb-kv__slide--image-only { aspect-ratio: 750 / 850; }
+  .cb-kv--large .cb-kv__slide--image-only { aspect-ratio: 750 / 950; }
   .cb-kv__img { grid-row: 1; grid-column: 1; }
   .cb-kv__text { grid-row: 2; grid-column: 1; padding: 20px 18px; }
   .cb-kv__text--center, .cb-kv__text--right { align-items: flex-start; text-align: left; }
-  .cb-kv__nav--prev { left: 8px; top: 105px; }
-  .cb-kv__nav--next { right: 8px; top: 105px; }
-  .cb-kv__dots { bottom: auto; top: calc(210px - 22px); left: 50%; }
+  .cb-kv__nav--prev { left: 8px; top: calc((100vw - 32px) / (750 / 850) / 2); }
+  .cb-kv__nav--next { right: 8px; top: calc((100vw - 32px) / (750 / 850) / 2); }
+  .cb-kv__dots { bottom: auto; top: calc((100vw - 32px) / (750 / 850) - 22px); left: 50%; }
+  .cb-kv--small .cb-kv__nav--prev,
+  .cb-kv--small .cb-kv__nav--next { top: calc((100vw - 32px) / (750 / 750) / 2); }
+  .cb-kv--small .cb-kv__dots { top: calc((100vw - 32px) / (750 / 750) - 22px); }
+  .cb-kv--large .cb-kv__nav--prev,
+  .cb-kv--large .cb-kv__nav--next { top: calc((100vw - 32px) / (750 / 950) / 2); }
+  .cb-kv--large .cb-kv__dots { top: calc((100vw - 32px) / (750 / 950) - 22px); }
 }
 
 /* ------------------------------------------------------------

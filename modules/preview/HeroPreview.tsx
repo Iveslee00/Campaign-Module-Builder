@@ -7,9 +7,9 @@ import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
 
 const heightMap = {
-  small: { desktopRatio: '1200 / 300', mobileFullRatio: '750 / 370', mobileImgRatio: '750 / 210' },
-  medium: { desktopRatio: '1200 / 400', mobileFullRatio: '750 / 460', mobileImgRatio: '750 / 260' },
-  large: { desktopRatio: '1200 / 520', mobileFullRatio: '750 / 500', mobileImgRatio: '750 / 310' },
+  small: { desktopRatio: '1200 / 300', mobileFullRatio: '750 / 750', mobileImgRatio: '750 / 750' },
+  medium: { desktopRatio: '1200 / 400', mobileFullRatio: '750 / 850', mobileImgRatio: '750 / 850' },
+  large: { desktopRatio: '1200 / 520', mobileFullRatio: '750 / 950', mobileImgRatio: '750 / 950' },
 };
 
 export function HeroPreview({ data }: { data: HeroData }) {

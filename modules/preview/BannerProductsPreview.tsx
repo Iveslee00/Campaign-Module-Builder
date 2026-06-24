@@ -16,7 +16,7 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
   const bannerSrc = isMobile ? (data.mobileBannerImage || data.bannerImage) : data.bannerImage;
   const bannerSpecs = getBannerProductsImageSpecs(count);
   const bannerSpec = isMobile ? bannerSpecs.mobile : bannerSpecs.desktop;
-  const bannerAspectRatio = isMobile ? '750 / 900' : count >= 4 ? '500 / 800' : '500 / 600';
+  const bannerAspectRatio = isMobile ? '750 / 750' : '500 / 600';
 
   useEffect(() => {
     const node = containerRef.current;

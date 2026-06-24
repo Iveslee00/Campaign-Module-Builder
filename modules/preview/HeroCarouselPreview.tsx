@@ -9,9 +9,9 @@ import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
 
 const heightMap = {
-  small:  { desktopRatio: '1200 / 300', mobileFullRatio: '750 / 370', mobileImgRatio: '750 / 210' },
-  medium: { desktopRatio: '1200 / 400', mobileFullRatio: '750 / 460', mobileImgRatio: '750 / 260' },
-  large:  { desktopRatio: '1200 / 520', mobileFullRatio: '750 / 500', mobileImgRatio: '750 / 310' },
+  small:  { desktopRatio: '1200 / 300', mobileFullRatio: '750 / 750', mobileImgRatio: '750 / 750' },
+  medium: { desktopRatio: '1200 / 400', mobileFullRatio: '750 / 850', mobileImgRatio: '750 / 850' },
+  large:  { desktopRatio: '1200 / 520', mobileFullRatio: '750 / 950', mobileImgRatio: '750 / 950' },
 };
 
 export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
@@ -62,7 +62,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
   };
 
   // Nav & dots live in the image area (image starts at 35% on desktop)
-  const imgCenterTop = isMobile && currentSlideHasText ? 'calc(50vw / (750 / 260))' : '50%';
+  const imgCenterTop = isMobile && currentSlideHasText ? `calc(50vw / (${h.mobileImgRatio}))` : '50%';
   const imgRight = '14px';
   const imgLeft = isMobile || !currentSlideHasText ? '8px' : 'calc(35% + 12px)';
 
@@ -187,7 +187,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
         <div style={{
           position: 'absolute',
           bottom: isMobile && currentSlideHasText ? 'auto' : '16px',
-          top: isMobile && currentSlideHasText ? 'calc((100vw - 32px) / (750 / 210) - 22px)' : undefined,
+          top: isMobile && currentSlideHasText ? `calc((100vw - 32px) / (${h.mobileImgRatio}) - 22px)` : undefined,
           left: isMobile || !currentSlideHasText ? '50%' : 'calc(35% + 32.5%)',
           transform: 'translateX(-50%)',
           display: 'flex', gap: '7px', zIndex: 3,

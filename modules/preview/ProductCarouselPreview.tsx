@@ -74,7 +74,7 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
         </button>
 
         {/* Track */}
-        <div ref={viewportRef} style={{ overflow: 'hidden' }}>
+        <div ref={viewportRef} style={{ overflowX: 'hidden', overflowY: 'visible', padding: '6px 0 12px' }}>
           <div style={{ display: 'flex', gap: `${gap}px`, transform: `translateX(-${offset}px)`, transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)' }}>
             {data.products.map((product) => (
               <div
