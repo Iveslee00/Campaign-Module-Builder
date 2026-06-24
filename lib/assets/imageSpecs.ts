@@ -22,32 +22,32 @@ export const IMAGE_SPECS = {
 export const KV_IMAGE_SPECS = {
   small: {
     full: {
-      desktop: { width: 1200, height: 400 },
-      mobile: { width: 750, height: 900 },
+      desktop: { width: 1200, height: 300 },
+      mobile: { width: 750, height: 370 },
     },
     split: {
-      desktop: { width: 780, height: 400 },
-      mobile: { width: 750, height: 400 },
+      desktop: { width: 780, height: 300 },
+      mobile: { width: 750, height: 210 },
     },
   },
   medium: {
     full: {
-      desktop: { width: 1200, height: 600 },
-      mobile: { width: 750, height: 1000 },
+      desktop: { width: 1200, height: 400 },
+      mobile: { width: 750, height: 460 },
     },
     split: {
-      desktop: { width: 780, height: 600 },
-      mobile: { width: 750, height: 500 },
+      desktop: { width: 780, height: 400 },
+      mobile: { width: 750, height: 260 },
     },
   },
   large: {
     full: {
-      desktop: { width: 1200, height: 800 },
-      mobile: { width: 750, height: 1200 },
+      desktop: { width: 1200, height: 520 },
+      mobile: { width: 750, height: 550 },
     },
     split: {
-      desktop: { width: 780, height: 800 },
-      mobile: { width: 750, height: 600 },
+      desktop: { width: 780, height: 520 },
+      mobile: { width: 750, height: 310 },
     },
   },
 } as const;
