@@ -11,7 +11,7 @@ assert.ok(hasRow(['活動 Banner + 2 商品', 'Banner 左、2 商品右側橫排
 assert.ok(hasRow(['活動 Banner + 3 商品', 'Banner 左、3 商品右側橫排', '570 x 350', 'Banner 上、3 商品下方橫排', '750 x 520']));
 assert.ok(hasRow(['活動 Banner + 4 商品', 'Banner 左、4 商品右側橫排', '360 x 350', 'Banner 上、4 商品下方橫排', '750 x 520']));
 assert.ok(hasRow(['單品主打', 'M', '700 x 600', '750 x 850']));
-assert.ok(hasRow(['圖文區塊 S/M/L', '600 x 450', '750 x 562', '寬度統一 750px，高度維持 4:3 比例']));
+assert.ok(hasRow(['圖文區塊', '600 x 450', '750 x 562', '寬度統一 750px，高度維持 4:3 比例']));
 assert.ok(hasRow(['文章搭配圖片（上方大圖）', '1200 x 420', '750 x 420', '高度固定，PC 全幅']));
 assert.ok(hasRow(['商品列表商品圖', '400 x 400', '1:1']));
 assert.ok(hasRow(['銀行 / 品牌 Logo', '160 x 60', '8:3']));

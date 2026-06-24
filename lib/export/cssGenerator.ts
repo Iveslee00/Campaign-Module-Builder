@@ -85,9 +85,6 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
    5. SPLIT CONTENT MODULE
    ------------------------------------------------------------ */
 .cb-split {}
-.cb-split--small { padding-top: 32px; padding-bottom: 32px; }
-.cb-split--medium { padding-top: 48px; padding-bottom: 48px; }
-.cb-split--large { padding-top: 72px; padding-bottom: 72px; }
 .cb-split__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .cb-split__inner--reverse .cb-split__media { order: -1; }
 .cb-split__content { display: flex; flex-direction: column; gap: 20px; }
@@ -196,7 +193,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
    10. PRODUCT BANNER MODULE
    ------------------------------------------------------------ */
 .cb-product-banner { position: relative; overflow: hidden; }
-.cb-product-banner { color: #ffffff; }
+.cb-product-banner { color: #1a1a2e; }
 .cb-product-banner--small { padding-top: 36px; padding-bottom: 36px; }
 .cb-product-banner--medium { padding-top: 56px; padding-bottom: 56px; }
 .cb-product-banner--large { padding-top: 76px; padding-bottom: 76px; }
@@ -206,13 +203,13 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-banner__kicker { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.65; }
 .cb-product-banner__headline { font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
 .cb-product-banner__tagline { font-size: 1rem; line-height: 1.7; opacity: 0.75; max-width: 480px; }
-.cb-product-banner__product-info { display: flex; flex-direction: column; gap: 6px; padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); }
+.cb-product-banner__product-info { display: flex; flex-direction: column; gap: 6px; padding: 20px 0; border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); }
 .cb-product-banner--light .cb-product-banner__product-info { border-color: rgba(0,0,0,0.1); }
 .cb-product-banner__product-brand { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.55; }
 .cb-product-banner__product-name { font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
 .cb-product-banner__prices { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
 .cb-product-banner__original-price { font-size: 14px; font-weight: 500; opacity: 0.5; text-decoration: line-through; }
-.cb-product-banner__sale-price { font-size: 1.75rem; font-weight: 800; color: #ff6b6b; letter-spacing: -0.02em; }
+.cb-product-banner__sale-price { font-size: 1.75rem; font-weight: 800; color: #e53e3e; letter-spacing: -0.02em; }
 .cb-product-banner--light .cb-product-banner__sale-price { color: #e53e3e; }
 .cb-product-banner__media { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 700 / 600; }
 .cb-product-banner--small .cb-product-banner__media { aspect-ratio: 700 / 460; }
@@ -349,7 +346,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-logo-wall__grid { gap: 24px 32px; }
   .cb-logo-wall__item img { width: 160px; height: 60px; }
   .cb-cta__title { font-size: 1.75rem; }
-  .cb-title-block__cn { font-size: 1.5rem; }
+  .cb-title-block__cn { font-size: 1.25rem; }
+  .cb-title-block__en { font-size: 0.68rem; }
 }
 
 @media (max-width: 480px) {

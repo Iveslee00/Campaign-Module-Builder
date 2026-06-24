@@ -6,18 +6,11 @@ import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
 
-const heightPadding = {
-  small: { desktop: '32px 24px', mobile: '24px 16px' },
-  medium: { desktop: '48px 24px', mobile: '32px 16px' },
-  large: { desktop: '72px 24px', mobile: '48px 16px' },
-};
-
 export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
   const { isMobile } = useDevice();
   const { buttonColor } = useGlobalSettings();
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
-  const padding = heightPadding[data.height ?? 'medium'];
   const imageSrc = isMobile ? (data.mobileImage || data.image) : data.image;
   const imageSpec = isMobile ? IMAGE_SPECS.splitMobile : IMAGE_SPECS.split;
 
@@ -44,7 +37,7 @@ export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
   );
 
   return (
-    <section style={{ background: data.backgroundColor || 'transparent', padding: isMobile ? padding.mobile : padding.desktop, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ background: data.backgroundColor || 'transparent', padding: isMobile ? '32px 16px' : '48px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '28px' : '60px', alignItems: 'center' }}>
         {data.reverse ? <>{media}{content}</> : <>{content}{media}</>}
       </div>

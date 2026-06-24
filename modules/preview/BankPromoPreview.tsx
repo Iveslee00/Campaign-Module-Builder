@@ -84,19 +84,12 @@ export function BankPromoPreview({ data }: { data: BankPromoData }) {
           </div>
         )}
 
-        {/* Footer: disclaimer + link */}
-        {(data.disclaimer || data.linkText) && (
+        {/* Footer: disclaimer */}
+        {data.disclaimer && (
           <div style={{ marginTop: '18px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
-            {data.disclaimer && (
-              <p style={{ fontSize: '11px', color: '#b0b0c0', margin: 0, ...textStyle }}>
-                {data.disclaimer}
-              </p>
-            )}
-            {data.linkText && (
-              <span style={{ fontSize: '12px', fontWeight: 600, color: data.textColor || '#6366f1', cursor: 'default' }}>
-                {data.linkText}
-              </span>
-            )}
+            <p style={{ fontSize: '11px', color: '#b0b0c0', margin: 0, ...textStyle }}>
+              {data.disclaimer}
+            </p>
           </div>
         )}
       </div>

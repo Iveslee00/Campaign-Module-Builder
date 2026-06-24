@@ -46,10 +46,9 @@ export function generateBankPromoHTML(data: BankPromoData): string {
     })
     .join('\n');
 
-  const footer = (data.disclaimer || data.linkText)
+  const footer = data.disclaimer
     ? `  <div class="cb-bank__footer">
     ${data.disclaimer ? `<p class="cb-bank__disclaimer"${textStyle}>${escapeHtml(data.disclaimer)}</p>` : ''}
-    ${data.linkText ? `<a href="${escapeHtml(data.linkUrl || '#')}" class="cb-bank__link">${escapeHtml(data.linkText)}</a>` : ''}
   </div>`
     : '';
 

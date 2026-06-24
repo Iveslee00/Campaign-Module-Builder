@@ -1,8 +1,10 @@
 'use client';
 
 import { TitleData } from '@/types/modules';
+import { useDevice } from '@/contexts/DeviceContext';
 
 export function TitlePreview({ data }: { data: TitleData }) {
+  const { isMobile } = useDevice();
   const alignMap: Record<string, React.CSSProperties> = {
     left: { textAlign: 'left' },
     center: { textAlign: 'center' },
@@ -15,10 +17,10 @@ export function TitlePreview({ data }: { data: TitleData }) {
   return (
     <div style={{ padding: '24px 24px 8px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', ...bgStyle }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', ...align }}>
-        <span style={{ display: 'block', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.2, color: '#1a1a2e', ...titleStyle }}>
+        <span style={{ display: 'block', fontSize: isMobile ? '1.25rem' : 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.2, color: '#1a1a2e', ...titleStyle }}>
           {data.titleCn || '主要標題'}
         </span>
-        <span style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#1a1a2e', opacity: 0.4, marginTop: '6px', ...titleStyle }}>
+        <span style={{ display: 'block', fontSize: isMobile ? '0.68rem' : '0.75rem', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#1a1a2e', opacity: 0.4, marginTop: '6px', ...titleStyle }}>
           {data.titleEn || '活動副標'}
         </span>
       </div>

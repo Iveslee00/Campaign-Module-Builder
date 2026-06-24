@@ -85,8 +85,6 @@ export function BankPromoForm({ data, onChange }: Props) {
 
       <div className="h-px bg-slate-700/60" />
       <FormField label="免責聲明" value={data.disclaimer} onChange={(v) => onChange({ ...data, disclaimer: v })} type="textarea" rows={2} placeholder="謹慎理財 信用至上…" />
-      <FormField label="連結文字" value={data.linkText} onChange={(v) => onChange({ ...data, linkText: v })} placeholder="查看更多優惠 ›" />
-      <FormField label="連結網址" value={data.linkUrl} onChange={(v) => onChange({ ...data, linkUrl: v })} type="url" placeholder="#" />
 
       <div className="h-px bg-slate-700/60" />
       <ColorSection

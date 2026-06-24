@@ -3,7 +3,6 @@ import { escapeHtml } from '@/lib/utils';
 
 export function generateSplitSectionHTML(data: SplitSectionData): string {
   const reverseClass = data.reverse ? ' cb-split__inner--reverse' : '';
-  const heightClass = ` cb-split--${data.height ?? 'medium'}`;
   const titleStyle = data.titleColor ? ` style="color: ${escapeHtml(data.titleColor)}"` : '';
   const textStyle = data.textColor ? ` style="color: ${escapeHtml(data.textColor)}"` : '';
 
@@ -16,7 +15,7 @@ export function generateSplitSectionHTML(data: SplitSectionData): string {
     ? `<picture class="cb-split__picture">${data.mobileImage ? `\n          <source media="(max-width: 767px)" srcset="${escapeHtml(data.mobileImage)}">` : ''}\n          <img src="${escapeHtml(data.image)}" alt="${escapeHtml(data.title)}">\n        </picture>`
     : '';
 
-  return `<section class="cb-split cb-section${heightClass}"${bgOverride}>
+  return `<section class="cb-split cb-section"${bgOverride}>
   <div class="cb-container">
     <div class="cb-split__inner${reverseClass}">
       <div class="cb-split__content">

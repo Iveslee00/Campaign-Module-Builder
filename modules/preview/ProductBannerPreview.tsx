@@ -15,7 +15,7 @@ const heightPadding = {
 export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
   const { isMobile } = useDevice();
   const { buttonColor } = useGlobalSettings();
-  const bg = { background: data.backgroundColor || '#1a1a2e', color: '#ffffff' };
+  const bg = { background: data.backgroundColor || 'transparent', color: '#1a1a2e' };
   const padding = heightPadding[data.height ?? 'medium'];
 
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
@@ -33,8 +33,8 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
     lineHeight: 1, cursor: 'default', whiteSpace: 'nowrap',
   };
 
-  const dividerColor = 'rgba(255,255,255,0.12)';
-  const salePriceColor = '#ff6b6b';
+  const dividerColor = 'rgba(0,0,0,0.1)';
+  const salePriceColor = '#e53e3e';
 
   const content = (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
