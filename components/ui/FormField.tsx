@@ -129,6 +129,7 @@ interface ColorFieldProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  defaultPreviewColor?: string;
 }
 
 export function GradientPickerPopover({ value, onChange }: { value: string; onChange: (value: string) => void }) {
@@ -320,11 +321,12 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
   );
 }
 
-export function ColorField({ label, value, onChange, placeholder = '自動' }: ColorFieldProps) {
+export function ColorField({ label, value, onChange, placeholder = '使用預設', defaultPreviewColor = '#1a1a2e' }: ColorFieldProps) {
   const isHex = /^#[0-9a-fA-F]{6}$/.test(value);
-  const displayColor = isHex ? value : '#ffffff';
+  const displayColor = isHex ? value : defaultPreviewColor;
   const isGradient = isGradientValue(value);
   const canUseNativePicker = !isGradient && isHex;
+  const swatchValue = value || defaultPreviewColor;
 
   return (
     <div className="flex flex-col gap-2">
@@ -342,12 +344,10 @@ export function ColorField({ label, value, onChange, placeholder = '自動' }: C
           )}
           <div
             className="w-8 h-8 rounded-md border border-slate-600 flex items-center justify-center overflow-hidden"
-            style={colorSwatchStyle(value)}
+            style={colorSwatchStyle(swatchValue)}
           >
             {!value && (
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-slate-500">
-                <line x1="0" y1="0" x2="16" y2="16" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
+              <span className="rounded bg-white/90 px-1 text-[9px] font-bold leading-4 text-slate-700">預</span>
             )}
           </div>
         </div>
@@ -394,10 +394,10 @@ export function ColorSection({ titleColor, textColor, onTitleColorChange, onText
     <div className="space-y-3">
       <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">顏色設定</p>
       {onBackgroundColorChange !== undefined && (
-        <ColorField label="背景色" value={backgroundColor ?? ''} onChange={onBackgroundColorChange} />
+        <ColorField label="背景色" value={backgroundColor ?? ''} onChange={onBackgroundColorChange} defaultPreviewColor="#ffffff" placeholder="使用預設 #ffffff" />
       )}
-      <ColorField label="標題色" value={titleColor} onChange={onTitleColorChange} />
-      <ColorField label="內文字色" value={textColor} onChange={onTextColorChange} />
+      <ColorField label="標題色" value={titleColor} onChange={onTitleColorChange} defaultPreviewColor="#1a1a2e" placeholder="使用預設 #1a1a2e" />
+      <ColorField label="內文字色" value={textColor} onChange={onTextColorChange} defaultPreviewColor="#4a4a6a" placeholder="使用預設 #4a4a6a" />
     </div>
   );
 }
@@ -516,7 +516,7 @@ export function ImageField({ label, value, onChange, placeholder = 'https://…'
           <img
             src={value}
             alt=""
-            className="block max-h-32 w-full object-cover"
+            className="block h-32 w-full object-contain p-2"
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
           />
         </div>

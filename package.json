@@ -15,6 +15,7 @@
     "verify:image-upload": "node --no-warnings scripts/verify-image-upload.mjs",
     "verify:pc-layout": "node --no-warnings scripts/verify-pc-layout.mjs",
     "verify:cms-consistency": "node --no-warnings scripts/verify-cms-consistency.mjs",
+    "verify:color-upload-ui": "node --no-warnings scripts/verify-color-upload-ui.mjs",
     "verify:preview-placeholders": "node --no-warnings scripts/verify-preview-placeholders.mjs",
     "start": "next start",
     "lint": "next lint"

@@ -48,6 +48,8 @@ function ColorPicker({ label, value, onChange, allowEmpty, onReset }: {
 }) {
   const isHex = /^#[0-9a-fA-F]{6}$/.test(value);
   const isGradient = isGradientValue(value);
+  const defaultPreviewColor = label.includes('底色') ? '#ffffff' : label.includes('文字') ? '#ffffff' : '#6366f1';
+  const swatchValue = value || defaultPreviewColor;
   return (
     <div className="space-y-1">
       <p className="text-xs text-slate-500">{label}</p>
@@ -56,11 +58,9 @@ function ColorPicker({ label, value, onChange, allowEmpty, onReset }: {
           {isHex && !isGradient && (
             <input type="color" value={value} onChange={(e) => onChange(e.target.value)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
           )}
-          <div className="w-7 h-7 rounded-md border border-slate-600 overflow-hidden" style={colorSwatchStyle(value)}>
+          <div className="w-7 h-7 rounded-md border border-slate-600 overflow-hidden" style={colorSwatchStyle(swatchValue)}>
             {!value && allowEmpty && (
-              <svg width="28" height="28" viewBox="0 0 28 28" className="text-slate-600">
-                <line x1="0" y1="0" x2="28" y2="28" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
+              <span className="flex h-full w-full items-center justify-center text-[9px] font-bold text-slate-700">預</span>
             )}
           </div>
         </div>
