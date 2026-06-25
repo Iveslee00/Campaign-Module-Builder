@@ -427,6 +427,7 @@ const readImageSize = (src: string) => new Promise<{ width: number; height: numb
 const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
 
 export function ImageField({ label, value, onChange, placeholder = 'https://…', spec }: ImageFieldProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const isUploaded = value.startsWith('data:image/');
   const [error, setError] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -471,20 +472,27 @@ export function ImageField({ label, value, onChange, placeholder = 'https://…'
         {spec && <span className="flex-shrink-0 text-xs text-slate-500">{specLabel}</span>}
       </div>
       <div className="flex gap-2">
-        <label className={`inline-flex flex-shrink-0 items-center gap-1.5 rounded-md px-3 py-2 text-xs font-semibold text-white transition-colors ${uploading ? 'cursor-wait bg-slate-700' : 'cursor-pointer bg-indigo-600 hover:bg-indigo-500'}`}>
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          disabled={uploading}
+          aria-label={`上傳 ${label}`}
+          className={`inline-flex flex-shrink-0 items-center gap-1.5 rounded-md px-3 py-2 text-xs font-semibold text-white transition-colors ${uploading ? 'cursor-wait bg-slate-700' : 'bg-indigo-600 hover:bg-indigo-500'}`}
+        >
           <ImagePlus size={13} />
           {uploadLabel}
-          <input
-            type="file"
-            accept="image/*"
-            className="sr-only"
-            disabled={uploading}
-            onChange={(e) => {
-              void handleUpload(e.target.files?.[0]);
-              e.currentTarget.value = '';
-            }}
-          />
-        </label>
+        </button>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          disabled={uploading}
+          onChange={(e) => {
+            void handleUpload(e.target.files?.[0]);
+            e.currentTarget.value = '';
+          }}
+        />
         <div className="relative min-w-0 flex-1">
           <Link2 size={13} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" />
           <input
