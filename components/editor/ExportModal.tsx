@@ -56,6 +56,8 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
   const campaignCode = campaignCodeMap[campaignTab];
   const campaignLineCount = campaignCode.split('\n').length;
   const emailLineCount = emailHTML.split('\n').length;
+  const codePanelClass = 'flex-1 min-h-0 overflow-y-auto overflow-x-hidden bg-slate-950 rounded-b-2xl';
+  const codePreClass = 'min-w-0 max-w-full p-5 text-xs leading-relaxed text-slate-300 font-mono whitespace-pre-wrap break-all';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
@@ -184,8 +186,8 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
               </div>
             </div>
 
-            <div className="flex-1 min-h-0 overflow-y-auto bg-slate-950 rounded-b-2xl">
-              <pre className="p-5 text-xs leading-relaxed text-slate-300 font-mono whitespace-pre overflow-x-auto">
+            <div className={codePanelClass}>
+              <pre className={codePreClass}>
                 <code>{campaignCode}</code>
               </pre>
             </div>
@@ -280,8 +282,8 @@ images/`}</pre>
               </div>
             </div>
 
-            <div className="flex-1 min-h-0 overflow-y-auto bg-slate-950 rounded-b-2xl">
-              <pre className="p-5 text-xs leading-relaxed text-slate-300 font-mono whitespace-pre overflow-x-auto">
+            <div className={codePanelClass}>
+              <pre className={codePreClass}>
                 <code>{emailHTML}</code>
               </pre>
             </div>
