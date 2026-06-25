@@ -6,6 +6,7 @@ import { useDevice } from '@/contexts/DeviceContext';
 import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { PreviewImage } from './PreviewImage';
+import { ProductCardLabels } from './ProductCardLabels';
 
 export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) {
   const { isMobile } = useDevice();
@@ -84,11 +85,7 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
                 <div style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
                   <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f5f5f5' }}>
                     <PreviewImage src={product.image} alt={product.name} label="商品圖" spec={IMAGE_SPECS.product} />
-                    {product.showBadge && product.badgeText && (
-                      <span style={{ position: 'absolute', top: '8px', left: '8px', background: '#e53e3e', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '3px' }}>
-                        {product.badgeText}
-                      </span>
-                    )}
+                    <ProductCardLabels product={product} compact={isMobile} />
                   </div>
                   <div style={{ padding: isMobile ? '10px 12px' : '14px 16px', display: 'flex', flexDirection: 'column', gap: '3px' }}>
                     {product.brand && (
@@ -107,9 +104,6 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
                         <span style={{ fontSize: '14px', fontWeight: 700, color: '#e53e3e' }}>{product.salePrice}</span>
                       )}
                     </div>
-                    <span style={{ display: 'inline-block', marginTop: '3px', padding: '2px 7px', background: '#fff3cd', color: '#b45309', border: '1px solid #fcd34d', fontSize: '10px', fontWeight: 600, borderRadius: '3px', alignSelf: 'flex-start', visibility: product.showSpecialTag && product.specialTag ? 'visible' : 'hidden' }}>
-                      {product.showSpecialTag && product.specialTag ? product.specialTag : '特標'}
-                    </span>
                   </div>
                 </div>
               </div>

@@ -138,10 +138,21 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-card__media { position: relative; aspect-ratio: 1/1; overflow: hidden; background-color: #f5f5f5; }
 .cb-product-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
 .cb-product-card:hover .cb-product-card__media img { transform: scale(1.05); }
-.cb-product-card__badge {
-  position: absolute; top: 10px; left: 10px;
-  padding: 3px 8px; background-color: #e53e3e; color: #ffffff;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.05em; border-radius: 4px; line-height: 1.4; z-index: 1;
+.cb-product-card__labels {
+  position: absolute; top: 10px; left: 10px; z-index: 2;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  max-width: calc(100% - 20px);
+}
+.cb-product-card__label {
+  display: inline-block; max-width: 100%; padding: 3px 8px;
+  font-size: 11px; font-weight: 700; border-radius: 4px; line-height: 1.35;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cb-product-card__label--badge {
+  background-color: #e53e3e; color: #ffffff; letter-spacing: 0.05em;
+}
+.cb-product-card__label--special {
+  background: #fff3cd; color: #b45309; border: 1px solid #fcd34d;
 }
 .cb-product-card__body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 3px; }
 .cb-product-card__brand { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #9090b0; }
@@ -149,13 +160,6 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-card__prices { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
 .cb-product-card__original-price { font-size: 12px; font-weight: 500; color: #9090b0; text-decoration: line-through; }
 .cb-product-card__sale-price { font-size: 15px; font-weight: 700; color: #e53e3e; }
-.cb-product-card__special-tag {
-  display: inline-block; margin-top: 6px; padding: 2px 8px;
-  background: #fff3cd; color: #b45309; border: 1px solid #fcd34d;
-  font-size: 11px; font-weight: 600; border-radius: 3px; line-height: 1.5;
-  align-self: flex-start;
-}
-.cb-product-card__special-tag--empty { visibility: hidden; }
 
 /* ------------------------------------------------------------
    7. PRODUCT GRID MODULE

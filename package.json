@@ -9,6 +9,7 @@
     "verify:image-specs": "node --no-warnings scripts/verify-image-specs.mjs",
     "verify:size-spec-table": "node --no-warnings scripts/verify-size-spec-table.mjs",
     "verify:anchors": "node --no-warnings scripts/verify-anchors.mjs",
+    "verify:product-labels": "node --no-warnings scripts/verify-product-labels.mjs",
     "verify:preview-placeholders": "node --no-warnings scripts/verify-preview-placeholders.mjs",
     "start": "next start",
     "lint": "next lint"
