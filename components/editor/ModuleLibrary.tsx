@@ -64,7 +64,7 @@ function ColorPicker({ label, value, onChange, allowEmpty, onReset }: {
             )}
           </div>
         </div>
-        <input type="text" value={value} onChange={(e) => onChange(e.target.value)} placeholder={allowEmpty ? '無底色' : '#000000'} className="flex-1 bg-slate-800 border border-slate-700 rounded-md px-2 py-1 text-xs text-slate-300 font-mono focus:outline-none focus:border-indigo-500 placeholder-slate-600" />
+        <input type="text" value={value} onChange={(e) => onChange(e.target.value)} placeholder={allowEmpty ? '無底色' : '#000000'} className="min-w-0 flex-1 bg-slate-800 border border-slate-700 rounded-md px-2 py-1 text-xs text-slate-300 font-mono focus:outline-none focus:border-indigo-500 placeholder-slate-600" />
         <GradientPickerPopover value={value} onChange={onChange} />
         {allowEmpty && value && <button onClick={() => onChange('')} className="text-xs text-slate-500 hover:text-slate-300 px-1" title="Clear">✕</button>}
         {!allowEmpty && onReset && <button onClick={onReset} className="text-xs text-slate-500 hover:text-slate-300 px-1" title="Reset">↺</button>}

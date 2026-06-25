@@ -137,7 +137,7 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
   const [toColor, setToColor] = useState('#7c3aed');
   const [direction, setDirection] = useState('135deg');
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 12, width: 280 });
+  const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 12, width: 280, maxHeight: 460 });
 
   useEffect(() => {
     if (!open) return;
@@ -147,9 +147,14 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
       if (!rect) return;
       const margin = 12;
       const width = Math.min(280, window.innerWidth - margin * 2);
+      const panelHeight = Math.min(460, window.innerHeight - margin * 2);
       const left = Math.min(Math.max(margin, rect.right - width), window.innerWidth - width - margin);
-      const top = Math.min(rect.bottom + 8, window.innerHeight - margin);
-      setPopoverPosition({ top, left, width });
+      const belowTop = rect.bottom + 8;
+      const aboveTop = rect.top - panelHeight - 8;
+      const top = belowTop + panelHeight <= window.innerHeight - margin
+        ? belowTop
+        : Math.max(margin, aboveTop);
+      setPopoverPosition({ top, left, width, maxHeight: panelHeight });
     };
 
     updatePosition();
@@ -172,7 +177,8 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
         ref={buttonRef}
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className={`inline-flex h-8 items-center gap-1.5 rounded-md border px-2 text-xs font-semibold transition-colors ${
+        aria-label="選擇漸層"
+        className={`inline-flex h-8 w-8 items-center justify-center rounded-md border text-xs font-semibold transition-colors ${
           isGradientValue(value)
             ? 'border-indigo-400 bg-indigo-500/15 text-indigo-100'
             : 'border-slate-700 bg-slate-800 text-slate-300 hover:border-slate-600 hover:text-white'
@@ -180,11 +186,10 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
         title="選擇漸層"
       >
         <Palette size={13} />
-        漸層
       </button>
       {open && (
         <div
-          className="fixed z-50 max-h-[min(560px,calc(100vh-24px))] overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 p-3 shadow-2xl shadow-black/40"
+          className="fixed z-50 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 p-3 shadow-2xl shadow-black/40"
           style={popoverPosition}
         >
           <div className="mb-3 flex items-center justify-between">
@@ -308,7 +313,7 @@ export function ColorField({ label, value, onChange, placeholder = '自動' }: C
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 bg-slate-800 border border-slate-700 text-slate-100 rounded-md px-2.5 py-1.5 text-sm outline-none focus:border-indigo-500 transition-colors placeholder-slate-500 font-mono"
+          className="min-w-0 flex-1 bg-slate-800 border border-slate-700 text-slate-100 rounded-md px-2.5 py-1.5 text-sm outline-none focus:border-indigo-500 transition-colors placeholder-slate-500 font-mono"
         />
 
         <GradientPickerPopover value={value} onChange={onChange} />
