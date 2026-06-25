@@ -60,9 +60,12 @@ for (const target of targets) {
 }
 
 const css = readFileSync(new URL('../lib/export/cssGenerator.ts', import.meta.url), 'utf8');
-assert.match(css, /flex: 0 0 168px/);
+assert.match(css, /flex: 0 0 188px/);
+assert.match(css, /min-height: 44px/);
 assert.match(css, /\.cb-anchor-nav__link:hover/);
 assert.match(css, /transform: translateY\(-2px\)/);
 assert.match(css, /flex-basis: calc\(50% - 4px\)/);
+assert.match(css, /min-height: 40px/);
+assert.doesNotMatch(css, /box-shadow: 0 8px 20px/);
 
 console.log('anchors verified');

@@ -25,7 +25,7 @@ export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
       <h2 style={{ fontSize: isMobile ? '1.6rem' : '2.1rem', fontWeight: 700, lineHeight: 1.2, letterSpacing: '-0.02em', color: '#1a1a2e', margin: 0, ...titleStyle }}>
         {data.title || '區塊標題'}
       </h2>
-      {data.description && <p style={{ fontSize: '1.05rem', lineHeight: 1.75, color: '#4a4a6a', margin: 0, ...textStyle }}>{data.description}</p>}
+      {data.description && <p style={{ fontSize: '1rem', lineHeight: 1.75, color: '#4a4a6a', margin: 0, ...textStyle }}>{data.description}</p>}
       {data.buttonText && <span style={btnStyle}>{data.buttonText}</span>}
     </div>
   );

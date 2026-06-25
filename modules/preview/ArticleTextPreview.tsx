@@ -27,7 +27,7 @@ export function ArticleTextPreview({ data }: { data: ArticleTextData }) {
           </h2>
         )}
         {data.subtitle && (
-          <p style={{ fontSize: isMobile ? '1rem' : '1.125rem', lineHeight: 1.65, color: data.textColor || '#4a4a6a', margin: '0 0 28px', opacity: 0.85 }}>
+          <p style={{ fontSize: '1rem', lineHeight: 1.65, color: data.textColor || '#4a4a6a', margin: '0 0 28px', opacity: 0.85 }}>
             {data.subtitle}
           </p>
         )}

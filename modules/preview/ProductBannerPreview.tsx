@@ -47,7 +47,7 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
         {data.headline || '單品主打'}
       </h2>
       {data.tagline && (
-        <p style={{ fontSize: '0.95rem', lineHeight: 1.7, opacity: 0.75, margin: 0, ...textStyle }}>
+        <p style={{ fontSize: '1rem', lineHeight: 1.7, opacity: 0.75, margin: 0, ...textStyle }}>
           {data.tagline}
         </p>
       )}

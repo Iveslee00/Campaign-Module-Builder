@@ -50,9 +50,9 @@ assert(kvForm.includes('label="標題文字色"'), 'KV carousel form should expo
 assert(kvForm.includes('label="內文文字色"'), 'KV carousel form should expose a clear body text color control');
 assert(kvForm.includes('label="M 端文字底色"'), 'KV carousel form should clarify that background color controls the mobile text panel');
 assert(kvForm.includes('defaultPreviewColor="#ffffff"'), 'KV carousel form should show white as the text color default');
-assert(css.includes('.cb-hero__title { max-width: 430px; font-size: clamp(1.25rem, 2.4vw, 2rem); font-weight: 800; line-height: 1.15; margin-bottom: 10px; color: #ffffff; }'), 'KV CSS title default should be white');
+assert(css.includes('.cb-hero__title { max-width: 430px; font-size: 2.25rem; font-weight: 800; line-height: 1.15; margin-bottom: 10px; color: #ffffff; }'), 'KV CSS title default should be white and match preview sizing');
 assert(css.includes('background: var(--cb-hero-mobile-bg, #1a1a2e);'), 'Mobile KV content should use the mobile text background variable only at mobile breakpoint');
-assert(css.includes('.cb-kv__title { font-size: clamp(1.1rem, 2vw, 1.65rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #ffffff; margin: 0 0 8px; }'), 'KV carousel CSS title default should be white');
+assert(css.includes('.cb-kv__title { font-size: 1.75rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #ffffff; margin: 0 0 8px; }'), 'KV carousel CSS title default should be white and match preview sizing');
 assert(css.includes('.cb-kv__subtitle { font-size: clamp(0.8rem, 1vw, 0.9rem); line-height: 1.6; color: #ffffff;'), 'KV carousel CSS body default should be white');
 
 assert(productBannerPreview.includes("isMobile ? <>{media}{content}</>"), 'Mobile product banner should always render image above text');

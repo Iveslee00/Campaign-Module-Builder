@@ -42,46 +42,46 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 14px 32px; background: ${btnColor}; color: ${btnTextColor};
   border-radius: 8px; font-size: 16px; font-weight: 600; line-height: 1;
-  text-decoration: none; transition: background-color 0.2s ease, transform 0.1s ease;
+  text-decoration: none; transition: background-color 0.2s ease, transform 0.1s ease, color 0.2s ease;
   cursor: pointer; border: none; white-space: nowrap;
 }
+.cb-page a.cb-btn { color: ${btnTextColor}; }
 .cb-btn:hover { background: ${btnHover}; transform: translateY(-1px); }
+.cb-page a.cb-btn:hover { color: ${btnTextColor}; }
 .cb-btn--white { background: ${btnColor}; color: ${btnTextColor}; }
 .cb-btn--white:hover { background: ${btnHover}; transform: translateY(-1px); }
 
 /* ------------------------------------------------------------
    3. ANCHOR NAV MODULE
    ------------------------------------------------------------ */
-.cb-anchor-nav { padding: 18px 0; }
+.cb-anchor-nav { padding: 14px 0; }
 .cb-anchor-nav__inner {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
 }
 .cb-anchor-nav__link {
   display: inline-flex; align-items: center; justify-content: center;
-  flex: 0 0 168px; width: 168px; min-height: 38px; padding: 8px 12px; border-radius: 999px;
+  flex: 0 0 188px; width: 188px; min-height: 44px; padding: 10px 16px; border-radius: 999px;
   border: 1px solid rgba(99,102,241,0.28);
   background: linear-gradient(180deg, #1f2440 0%, #15192d 100%);
-  color: #ffffff; box-shadow: 0 8px 20px rgba(15,23,42,0.12), inset 0 1px 0 rgba(255,255,255,0.08);
-  font-size: 14px; font-weight: 700; line-height: 1.2; text-decoration: none;
+  color: #ffffff;
+  font-size: 15px; font-weight: 700; line-height: 1.2; text-decoration: none;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 .cb-anchor-nav__link:hover {
   transform: translateY(-2px);
   border-color: rgba(99,102,241,0.52);
   background: linear-gradient(180deg, #343a6b 0%, #20264d 100%);
-  box-shadow: 0 12px 26px rgba(15,23,42,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
 }
 .cb-anchor-nav__link span { color: #ffffff; }
 .cb-anchor-nav__link:active {
   transform: translateY(0);
-  box-shadow: 0 6px 16px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 /* ------------------------------------------------------------
    4. TITLE BLOCK MODULE
    ------------------------------------------------------------ */
-.cb-title-block { padding: 24px 0 8px; }
+.cb-title-block { padding: 12px 0 4px; }
 .cb-title-block__cn {
   display: block; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700;
   letter-spacing: -0.02em; line-height: 1.2; color: #1a1a2e;
@@ -110,8 +110,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   overflow: hidden;
 }
 .cb-hero__kicker { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.65; margin-bottom: 16px; }
-.cb-hero__title { max-width: 430px; font-size: clamp(1.25rem, 2.4vw, 2rem); font-weight: 800; line-height: 1.15; margin-bottom: 10px; color: #ffffff; }
-.cb-hero__subtitle { max-width: 430px; font-size: 0.95rem; line-height: 1.6; opacity: 0.85; margin-bottom: 16px; }
+.cb-hero__title { max-width: 430px; font-size: 2.25rem; font-weight: 800; line-height: 1.15; margin-bottom: 10px; color: #ffffff; }
+.cb-hero__subtitle { max-width: 430px; font-size: 1rem; line-height: 1.6; opacity: 0.85; margin-bottom: 16px; }
 .cb-hero__media { position: absolute; inset: 0; overflow: hidden; }
 .cb-hero__media--full { flex: 1 1 auto; }
 .cb-hero__link { position: absolute; inset: 0; display: block; }
@@ -126,7 +126,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-split__inner--reverse .cb-split__media { order: -1; }
 .cb-split__content { display: flex; flex-direction: column; gap: 20px; }
 .cb-split__title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: #1a1a2e; }
-.cb-split__description { font-size: 1.05rem; line-height: 1.75; color: #4a4a6a; }
+.cb-split__description { font-size: 1rem; line-height: 1.75; color: #4a4a6a; }
 .cb-split__media { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; }
 .cb-split__picture { position: absolute; inset: 0; display: block; }
 .cb-split__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -280,7 +280,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-cta__inner--center { align-items: center; text-align: center; }
 .cb-cta__inner--right { align-items: flex-end; text-align: right; }
 .cb-cta__title { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; }
-.cb-cta__subtitle { font-size: 1.1rem; line-height: 1.65; opacity: 0.8; max-width: 560px; }
+.cb-cta__subtitle { font-size: 1rem; line-height: 1.65; opacity: 0.8; max-width: 560px; }
 
 /* ------------------------------------------------------------
    13. FAQ MODULE
@@ -347,7 +347,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 
 @media (max-width: 768px) {
   .cb-section { padding-top: 48px; padding-bottom: 48px; }
-  .cb-title-block { padding-top: 20px; }
+  .cb-title-block { padding-top: 10px; padding-bottom: 4px; }
   .cb-hero { flex-direction: column; align-items: stretch; }
   .cb-hero--small,
   .cb-hero--medium,
@@ -381,10 +381,10 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-banner-products__products--2,
   .cb-banner-products__products--3,
   .cb-banner-products__products--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cb-anchor-nav { padding: 14px 0; }
+  .cb-anchor-nav { padding: 12px 0; }
   .cb-anchor-nav__inner { gap: 8px; }
   .cb-anchor-nav__link { flex-basis: calc(50% - 4px); width: calc(50% - 4px); }
-  .cb-anchor-nav__link { min-height: 34px; font-size: 13px; }
+  .cb-anchor-nav__link { min-height: 40px; font-size: 14px; }
   .cb-product-banner__inner { grid-template-columns: 1fr; gap: 32px; }
   .cb-product-banner__inner--reverse .cb-product-banner__media { order: 0; }
   .cb-product-banner__media { aspect-ratio: 750 / 850; }
@@ -413,7 +413,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-article--left .cb-article__inner { text-align: left; }
 .cb-article__eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #9090b0; margin-bottom: 12px; }
 .cb-article__title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #1a1a2e; margin: 0 0 16px; }
-.cb-article__subtitle { font-size: 1.1rem; line-height: 1.65; color: #4a4a6a; margin: 0 0 28px; opacity: 0.85; }
+.cb-article__subtitle { font-size: 1rem; line-height: 1.65; color: #4a4a6a; margin: 0 0 28px; opacity: 0.85; }
 .cb-article__content { font-size: 15px; line-height: 1.85; color: #4a4a6a; text-align: left; }
 .cb-article--center .cb-article__content { text-align: center; }
 .cb-article__meta { margin-top: 32px; padding-top: 20px; border-top: 1px solid #e8e8f4; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
@@ -467,7 +467,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-kv__picture { position: absolute; inset: 0; display: block; }
 .cb-kv__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .cb-kv__overlay { position: absolute; inset: 0; }
-.cb-kv__title { font-size: clamp(1.1rem, 2vw, 1.65rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #ffffff; margin: 0 0 8px; }
+.cb-kv__title { font-size: 1.75rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #ffffff; margin: 0 0 8px; }
 .cb-kv__subtitle { font-size: clamp(0.8rem, 1vw, 0.9rem); line-height: 1.6; color: #ffffff; margin: 0 0 16px; max-width: 320px; }
 .cb-kv__btn { }
 .cb-kv__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3; color: #fff; font-size: 16px; }

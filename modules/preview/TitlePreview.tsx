@@ -15,7 +15,7 @@ export function TitlePreview({ data }: { data: TitleData }) {
   const bgStyle: React.CSSProperties = data.backgroundColor ? { background: data.backgroundColor } : {};
 
   return (
-    <div style={{ padding: '24px 24px 8px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', ...bgStyle }}>
+    <div style={{ padding: '12px 24px 4px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', ...bgStyle }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto', ...align }}>
         <span style={{ display: 'block', fontSize: isMobile ? '1.25rem' : 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.2, color: '#1a1a2e', ...titleStyle }}>
           {data.titleCn || '主要標題'}

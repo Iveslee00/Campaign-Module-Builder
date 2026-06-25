@@ -18,6 +18,7 @@
     "verify:color-upload-ui": "node --no-warnings scripts/verify-color-upload-ui.mjs",
     "verify:export-modal": "node --no-warnings scripts/verify-export-modal.mjs",
     "verify:preview-placeholders": "node --no-warnings scripts/verify-preview-placeholders.mjs",
+    "verify:design-system": "node --no-warnings scripts/verify-design-system.mjs",
     "start": "next start",
     "lint": "next lint"
   },
