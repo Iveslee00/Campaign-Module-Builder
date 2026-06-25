@@ -79,7 +79,7 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
     'anchorName' in module.data && module.data.anchorName ? getModuleAnchorId(module.id) : undefined
   );
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (isEmail || isMobile) return;
     const node = desktopViewportRef.current;
     if (!node) return;
@@ -93,9 +93,9 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
     const observer = new ResizeObserver(updateScale);
     observer.observe(node);
     return () => observer.disconnect();
-  }, [isEmail, isMobile]);
+  }, [isEmail, isMobile, modules.length]);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (isEmail || isMobile) return;
     const node = contentRef.current;
     if (!node) return;

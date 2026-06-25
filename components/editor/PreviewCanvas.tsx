@@ -262,7 +262,7 @@ export function PreviewCanvas({
     height: desktopCanvasHeight || undefined,
   };
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (isEmail || isMobile) return;
     const node = desktopViewportRef.current;
     if (!node) return;
@@ -276,9 +276,9 @@ export function PreviewCanvas({
     const observer = new ResizeObserver(updateScale);
     observer.observe(node);
     return () => observer.disconnect();
-  }, [isEmail, isMobile]);
+  }, [isEmail, isMobile, modules.length]);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (isEmail || isMobile) return;
     const node = desktopCanvasRef.current;
     if (!node) return;
