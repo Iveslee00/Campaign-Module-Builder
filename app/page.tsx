@@ -29,6 +29,7 @@ export default function Page() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [deviceMode, setDeviceMode] = useState<DeviceMode>('desktop');
   const [buttonColor, setButtonColor] = useState('#6366f1');
+  const [buttonTextColor, setButtonTextColor] = useState('#ffffff');
   const [pageBackgroundColor, setPageBackgroundColor] = useState('#ffffff');
   const [pageBackgroundImage, setPageBackgroundImage] = useState('');
 
@@ -127,14 +128,14 @@ export default function Page() {
 
   const exportedCode: ExportedCode = {
     html: generatePageHTML(modules),
-    css: generatePageCSS({ buttonColor, pageBackgroundColor, pageBackgroundImage }),
+    css: generatePageCSS({ buttonColor, buttonTextColor, pageBackgroundColor, pageBackgroundImage }),
   };
   const exportedEmail = generateEmailHTML(emailModules, emailSettings);
 
   const canExport = pageMode === 'campaign' ? modules.length > 0 : emailModules.length > 0;
 
   return (
-    <GlobalSettingsContext.Provider value={{ buttonColor, setButtonColor, pageBackgroundColor, setPageBackgroundColor, pageBackgroundImage, setPageBackgroundImage }}>
+    <GlobalSettingsContext.Provider value={{ buttonColor, buttonTextColor, setButtonColor, setButtonTextColor, pageBackgroundColor, setPageBackgroundColor, pageBackgroundImage, setPageBackgroundImage }}>
       <EmailSettingsContext.Provider value={{ ...emailSettings, update: updateEmailSettings }}>
         <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-slate-950">
           {/* Top bar */}

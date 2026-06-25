@@ -4,8 +4,7 @@ import { escapeHtml } from '@/lib/utils';
 export function generateCtaHTML(data: CtaData): string {
   const bgClass = `cb-cta--${data.backgroundStyle}`;
   const alignClass = `cb-cta__inner--${data.alignment}`;
-  const isDark = data.backgroundStyle === 'dark' || data.backgroundStyle === 'gradient';
-  const btnClass = isDark ? 'cb-btn cb-btn--white' : 'cb-btn';
+  const btnClass = 'cb-btn';
 
   const titleStyle = data.titleColor ? ` style="color: ${escapeHtml(data.titleColor)}"` : '';
   const textStyle = data.textColor ? ` style="color: ${escapeHtml(data.textColor)}"` : '';

@@ -8,13 +8,9 @@ export function generateHeroCarouselHTML(data: HeroCarouselData): string {
   const slides = data.slides
     .map((s) => {
       const showText = s.showText !== false;
-      const overlay = s.overlayOpacity ? `rgba(0,0,0,${(s.overlayOpacity / 100).toFixed(2)})` : null;
       const titleStyle = s.titleColor ? ` style="color: ${escapeHtml(s.titleColor)}"` : '';
       const textStyle = s.textColor ? ` style="color: ${escapeHtml(s.textColor)}"` : '';
-      const textBg = s.textBgColor || '';
-      const textBgStyle = textBg
-        ? ` style="background: ${escapeHtml(textBg.includes('gradient(') ? textBg : `linear-gradient(90deg, ${textBg} 0%, rgba(26,26,46,0.72) 38%, rgba(26,26,46,0) 72%)`)}"`
-        : '';
+      const textBgStyle = '';
       const align = s.alignment ?? 'left';
       const imgEl = s.image
         ? `\n        <picture class="cb-kv__picture">${s.mobileImage ? `\n          <source media="(max-width: 767px)" srcset="${escapeHtml(s.mobileImage)}">` : ''}\n          <img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title || '')}" class="cb-kv__bg">\n        </picture>`
@@ -25,8 +21,7 @@ export function generateHeroCarouselHTML(data: HeroCarouselData): string {
       const btn = showText && s.buttonText
         ? `          <a href="${escapeHtml(s.buttonLink || '#')}" class="cb-btn cb-kv__btn">${escapeHtml(s.buttonText)}</a>`
         : '';
-      const overlayEl = overlay ? `\n        <div class="cb-kv__overlay" style="background: ${overlay}"></div>` : '';
-      const imageContent = `${imgEl}${overlayEl}`;
+      const imageContent = imgEl;
       const linkedImageContent = !showText && s.buttonLink && s.buttonLink !== '#'
         ? `<a href="${escapeHtml(s.buttonLink)}" class="cb-kv__link">${imageContent}\n        </a>`
         : imageContent;

@@ -26,9 +26,9 @@ export function HeroCarouselForm({ data, onChange }: Props) {
       subtitle: '用一句話說明活動利益點。',
       buttonText: '立即看優惠',
       buttonLink: '#',
-      titleColor: '#ffffff',
-      textColor: 'rgba(255,255,255,0.85)',
-      textBgColor: '#1a1a2e',
+      titleColor: '#1a1a2e',
+      textColor: '#4a4a6a',
+      textBgColor: '',
       overlayOpacity: 0,
       alignment: 'left',
     };
@@ -104,17 +104,9 @@ export function HeroCarouselForm({ data, onChange }: Props) {
                     </>
                   )}
                   <FormField label={showText ? '按鈕 / Banner 連結' : '整張 Banner 連結'} value={slide.buttonLink} onChange={(v) => updateSlide(slide.id, 'buttonLink', v)} type="url" placeholder="https://" />
-                  <FormField
-                    label="遮罩透明度 (%)"
-                    value={String(slide.overlayOpacity ?? 40)}
-                    onChange={(v) => updateSlide(slide.id, 'overlayOpacity', Math.min(100, Math.max(0, Number(v) || 0)))}
-                    type="text"
-                    placeholder="0–100"
-                  />
-                  <ColorField label="文字區塊底色" value={slide.textBgColor} onChange={(v) => updateSlide(slide.id, 'textBgColor', v)} placeholder="#1a1a2e" />
                   <div className="grid grid-cols-2 gap-3">
-                    <ColorField label="標題色" value={slide.titleColor} onChange={(v) => updateSlide(slide.id, 'titleColor', v)} placeholder="#ffffff" />
-                    <ColorField label="文字色" value={slide.textColor} onChange={(v) => updateSlide(slide.id, 'textColor', v)} placeholder="rgba(255,255,255,0.85)" />
+                    <ColorField label="標題色" value={slide.titleColor} onChange={(v) => updateSlide(slide.id, 'titleColor', v)} placeholder="#1a1a2e" />
+                    <ColorField label="文字色" value={slide.textColor} onChange={(v) => updateSlide(slide.id, 'textColor', v)} placeholder="#4a4a6a" />
                   </div>
                 </div>
               </div>

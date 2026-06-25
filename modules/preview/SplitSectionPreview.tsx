@@ -8,7 +8,7 @@ import { PreviewImage } from './PreviewImage';
 
 export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
   const { isMobile } = useDevice();
-  const { buttonColor } = useGlobalSettings();
+  const { buttonColor, buttonTextColor } = useGlobalSettings();
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
   const imageSrc = isMobile ? (data.mobileImage || data.image) : data.image;
@@ -16,7 +16,7 @@ export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
 
   const btnStyle: React.CSSProperties = {
     display: 'inline-flex', alignItems: 'center',
-    padding: '10px 18px', background: buttonColor, color: '#fff',
+    padding: '10px 18px', background: buttonColor, color: buttonTextColor,
     borderRadius: '8px', fontWeight: 600, fontSize: '15px', lineHeight: 1, cursor: 'default',
   };
 

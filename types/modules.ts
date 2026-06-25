@@ -395,6 +395,7 @@ export interface ExportedCode {
 
 export interface GlobalSettings {
   buttonColor: string;
+  buttonTextColor: string;
   pageBackgroundColor: string;
   pageBackgroundImage: string;
 }

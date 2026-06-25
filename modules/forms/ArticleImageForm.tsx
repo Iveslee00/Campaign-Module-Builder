@@ -2,14 +2,16 @@
 
 import { ArticleImageData } from '@/types/modules';
 import { FormField, ColorSection, SegmentedField, ImageField } from '@/components/ui/FormField';
-import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
+import { IMAGE_SPECS, getArticleImageSpec } from '@/lib/assets/imageSpecs';
 
 interface Props { data: ArticleImageData; onChange: (data: ArticleImageData) => void }
 
 export function ArticleImageForm({ data, onChange }: Props) {
+  const pcImageSpec = getArticleImageSpec(data.imagePosition, false);
+
   return (
     <div className="space-y-4">
-      <ImageField label="文章圖片（PC）" value={data.image} onChange={(v) => onChange({ ...data, image: v })} spec={IMAGE_SPECS.article} />
+      <ImageField label="文章圖片（PC）" value={data.image} onChange={(v) => onChange({ ...data, image: v })} spec={pcImageSpec} />
       <button type="button" onClick={() => onChange({ ...data, mobileImage: data.image })} className="text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-300">
         同 PC 視覺
       </button>

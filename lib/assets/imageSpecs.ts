@@ -14,6 +14,7 @@ export const IMAGE_SPECS = {
   productBanner: { width: 700, height: 600 },
   productBannerMobile: { width: 750, height: 900 },
   article: { width: 1200, height: 420 },
+  articleSide: { width: 600, height: 450 },
   articleMobile: { width: 750, height: 420 },
   kv: { width: 1920, height: 640 },
   kvMobile: { width: 750, height: 850 },
@@ -90,6 +91,11 @@ type ProductBannerSpecHeight = keyof typeof PRODUCT_BANNER_IMAGE_SPECS;
 export const getProductBannerImageSpecs = (height: string | undefined) => {
   const key: ProductBannerSpecHeight = height === 'small' || height === 'large' ? height : 'medium';
   return PRODUCT_BANNER_IMAGE_SPECS[key];
+};
+
+export const getArticleImageSpec = (position: string | undefined, isMobile = false) => {
+  if (isMobile) return IMAGE_SPECS.articleMobile;
+  return position === 'left' || position === 'right' ? IMAGE_SPECS.articleSide : IMAGE_SPECS.article;
 };
 
 export const formatImageSpec = (spec: ImageSpec) => `${spec.width} x ${spec.height}`;

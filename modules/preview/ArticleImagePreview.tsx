@@ -2,7 +2,7 @@
 
 import { ArticleImageData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
-import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
+import { IMAGE_SPECS, getArticleImageSpec } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
 
 export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
@@ -12,10 +12,11 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
   const imageSrc = isMobile ? (data.mobileImage || data.image) : data.image;
-  const imageSpec = isMobile ? IMAGE_SPECS.articleMobile : IMAGE_SPECS.article;
+  const imageSpec = getArticleImageSpec(pos, isMobile);
 
   const isHorizontal = !isMobile && (pos === 'left' || pos === 'right');
   const topImageRatio = isMobile ? '750 / 420' : '1200 / 420';
+  const sideImageRatio = '600 / 450';
   const isTopLayout = pos === 'top' || isMobile;
 
   const imageEl = (
@@ -23,7 +24,7 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
       position: 'relative',
       flexShrink: 0,
       width: isHorizontal ? '45%' : '100%',
-      aspectRatio: isTopLayout ? topImageRatio : '4 / 3',
+      aspectRatio: isTopLayout ? topImageRatio : sideImageRatio,
       borderRadius: '12px',
       overflow: 'hidden',
       marginBottom: pos === 'top' ? '36px' : 0,
@@ -50,7 +51,7 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
         </p>
       )}
       {data.content && (
-        <div style={{ fontSize: '15px', lineHeight: 1.85, color: data.textColor || '#4a4a6a', whiteSpace: 'pre-wrap', textAlign: 'left', ...textStyle }}>
+        <div style={{ fontSize: '15px', lineHeight: 1.85, color: data.textColor || '#4a4a6a', whiteSpace: 'pre-wrap', textAlign: align, ...textStyle }}>
           {data.content}
         </div>
       )}
@@ -76,10 +77,10 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
             {textEl}
           </>
         ) : (
-          <div style={{ display: 'flex', gap: '48px', alignItems: 'flex-start', flexDirection: (isMobile || pos === 'left') ? 'row' : 'row-reverse' }}>
+        <div style={{ display: 'flex', gap: isMobile ? '20px' : '48px', alignItems: 'flex-start', flexDirection: (isMobile || pos === 'left') ? 'row' : 'row-reverse' }}>
             {isMobile ? (
               <div style={{ width: '100%' }}>
-                <div style={{ position: 'relative', aspectRatio: topImageRatio, borderRadius: '12px', overflow: 'hidden', marginBottom: '28px' }}>
+                <div style={{ position: 'relative', aspectRatio: topImageRatio, borderRadius: '12px', overflow: 'hidden', marginBottom: '18px' }}>
                   <PreviewImage src={imageSrc} alt={data.title || 'Article image'} label="文章圖片 M" spec={IMAGE_SPECS.articleMobile} />
                 </div>
                 {textEl}

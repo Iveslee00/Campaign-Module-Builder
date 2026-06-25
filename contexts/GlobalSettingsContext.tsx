@@ -5,15 +5,18 @@ import { GlobalSettings } from '@/types/modules';
 
 interface GlobalSettingsContextValue extends GlobalSettings {
   setButtonColor: (color: string) => void;
+  setButtonTextColor: (color: string) => void;
   setPageBackgroundColor: (color: string) => void;
   setPageBackgroundImage: (url: string) => void;
 }
 
 export const GlobalSettingsContext = createContext<GlobalSettingsContextValue>({
   buttonColor: '#6366f1',
+  buttonTextColor: '#ffffff',
   pageBackgroundColor: '',
   pageBackgroundImage: '',
   setButtonColor: () => {},
+  setButtonTextColor: () => {},
   setPageBackgroundColor: () => {},
   setPageBackgroundImage: () => {},
 });

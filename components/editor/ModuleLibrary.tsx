@@ -97,7 +97,7 @@ interface Props {
 }
 
 export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
-  const { buttonColor, setButtonColor, pageBackgroundColor, setPageBackgroundColor, pageBackgroundImage, setPageBackgroundImage } = useGlobalSettings();
+  const { buttonColor, buttonTextColor, setButtonColor, setButtonTextColor, pageBackgroundColor, setPageBackgroundColor, pageBackgroundImage, setPageBackgroundImage } = useGlobalSettings();
   const emailSettings = useEmailSettings();
 
   const isEmail = pageMode === 'email';
@@ -215,6 +215,7 @@ export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
               )}
             </div>
             <ColorPicker label="按鈕色" value={buttonColor} onChange={setButtonColor} onReset={() => setButtonColor('#6366f1')} />
+            <ColorPicker label="按鈕文字色" value={buttonTextColor} onChange={setButtonTextColor} onReset={() => setButtonTextColor('#ffffff')} />
           </>
         )}
       </div>

@@ -2,6 +2,7 @@ import { GlobalSettings } from '@/types/modules';
 
 export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   const btnColor = settings?.buttonColor || '#6366f1';
+  const btnTextColor = settings?.buttonTextColor || '#ffffff';
   const btnHover = settings?.buttonColor ? darken(settings.buttonColor) : '#4f46e5';
   const pageBg = settings?.pageBackgroundColor || '#ffffff';
   const pageBgImg = settings?.pageBackgroundImage || '';
@@ -39,14 +40,14 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* Buttons */
 .cb-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  padding: 14px 32px; background: ${btnColor}; color: #ffffff;
+  padding: 14px 32px; background: ${btnColor}; color: ${btnTextColor};
   border-radius: 8px; font-size: 16px; font-weight: 600; line-height: 1;
   text-decoration: none; transition: background-color 0.2s ease, transform 0.1s ease;
   cursor: pointer; border: none; white-space: nowrap;
 }
 .cb-btn:hover { background: ${btnHover}; transform: translateY(-1px); }
-.cb-btn--white { background-color: #ffffff; color: #1a1a2e; }
-.cb-btn--white:hover { background-color: rgba(255,255,255,0.9); transform: translateY(-1px); }
+.cb-btn--white { background: ${btnColor}; color: ${btnTextColor}; }
+.cb-btn--white:hover { background: ${btnHover}; transform: translateY(-1px); }
 
 /* ------------------------------------------------------------
    3. ANCHOR NAV MODULE
@@ -104,11 +105,11 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   position: relative; z-index: 1; width: 100%; max-width: 1080px;
   margin-left: auto; margin-right: auto; padding: 0 40px;
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-  background: linear-gradient(90deg, #1a1a2e 0%, rgba(26,26,46,0.72) 38%, rgba(26,26,46,0) 72%);
+  background: transparent;
   overflow: hidden;
 }
 .cb-hero__kicker { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.65; margin-bottom: 16px; }
-.cb-hero__title { max-width: 430px; font-size: clamp(1.25rem, 2.4vw, 2rem); font-weight: 800; line-height: 1.15; margin-bottom: 10px; color: #ffffff; }
+.cb-hero__title { max-width: 430px; font-size: clamp(1.25rem, 2.4vw, 2rem); font-weight: 800; line-height: 1.15; margin-bottom: 10px; color: #1a1a2e; }
 .cb-hero__subtitle { max-width: 430px; font-size: 0.95rem; line-height: 1.6; opacity: 0.85; margin-bottom: 16px; }
 .cb-hero__media { position: absolute; inset: 0; overflow: hidden; }
 .cb-hero__media--full { flex: 1 1 auto; }
@@ -262,8 +263,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
    11. LOGO WALL MODULE
    ------------------------------------------------------------ */
 .cb-logo-wall__grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 40px 56px; }
-.cb-logo-wall__item { display: flex; align-items: center; justify-content: center; opacity: 0.45; filter: grayscale(100%); transition: opacity 0.2s ease, filter 0.2s ease; }
-.cb-logo-wall__item:hover { opacity: 1; filter: grayscale(0%); }
+.cb-logo-wall__item { display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.2s ease; }
+.cb-logo-wall__item:hover { opacity: 0.82; }
 .cb-logo-wall__item img { width: 160px; height: 60px; object-fit: contain; display: block; }
 
 /* ------------------------------------------------------------
@@ -413,6 +414,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-article__title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #1a1a2e; margin: 0 0 16px; }
 .cb-article__subtitle { font-size: 1.1rem; line-height: 1.65; color: #4a4a6a; margin: 0 0 28px; opacity: 0.85; }
 .cb-article__content { font-size: 15px; line-height: 1.85; color: #4a4a6a; text-align: left; }
+.cb-article--center .cb-article__content { text-align: center; }
 .cb-article__meta { margin-top: 32px; padding-top: 20px; border-top: 1px solid #e8e8f4; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
 .cb-article--center .cb-article__meta { justify-content: center; }
 .cb-article__author { font-size: 13px; font-weight: 600; color: #1a1a2e; }
@@ -430,15 +432,15 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-article-img__layout--right { grid-template-columns: 1fr 45%; }
 .cb-article-img__layout--right .cb-article-img__media { order: 2; }
 .cb-article-img__layout--right .cb-article__inner { order: 1; }
-.cb-article-img__layout .cb-article-img__media { position: relative; border-radius: 12px; overflow: hidden; min-height: 320px; }
+.cb-article-img__layout .cb-article-img__media { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 600 / 450; }
 
 @media (max-width: 768px) {
   .cb-article-img__layout--left,
-  .cb-article-img__layout--right { grid-template-columns: 1fr; }
-  .cb-article-img__layout--right .cb-article-img__media { order: 0; margin-bottom: 28px; }
+  .cb-article-img__layout--right { grid-template-columns: 1fr; gap: 20px; }
+  .cb-article-img__layout--right .cb-article-img__media { order: 0; margin-bottom: 0; }
   .cb-article-img__layout--right .cb-article__inner { order: 0; }
   .cb-article-img--top .cb-article-img__media--top { aspect-ratio: 750 / 420; }
-  .cb-article-img__layout .cb-article-img__media { min-height: auto; height: 420px; }
+  .cb-article-img__layout .cb-article-img__media { min-height: auto; height: auto; aspect-ratio: 750 / 420; }
 }
 
 /* ------------------------------------------------------------
@@ -455,7 +457,6 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   position: relative; z-index: 1; width: 100%; max-width: 1080px; height: 100%;
   margin-left: auto; margin-right: auto; padding: 0 40px;
   display: flex; flex-direction: column; justify-content: center; overflow: hidden;
-  background: linear-gradient(90deg, #1a1a2e 0%, rgba(26,26,46,0.72) 38%, rgba(26,26,46,0) 72%);
 }
 .cb-kv__text--left   { align-items: flex-start; text-align: left; }
 .cb-kv__text--center { align-items: center; text-align: center; }
@@ -465,8 +466,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-kv__picture { position: absolute; inset: 0; display: block; }
 .cb-kv__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .cb-kv__overlay { position: absolute; inset: 0; }
-.cb-kv__title { font-size: clamp(1.1rem, 2vw, 1.65rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #ffffff; margin: 0 0 8px; }
-.cb-kv__subtitle { font-size: clamp(0.8rem, 1vw, 0.9rem); line-height: 1.6; color: rgba(255,255,255,0.85); margin: 0 0 16px; max-width: 320px; }
+.cb-kv__title { font-size: clamp(1.1rem, 2vw, 1.65rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #1a1a2e; margin: 0 0 8px; }
+.cb-kv__subtitle { font-size: clamp(0.8rem, 1vw, 0.9rem); line-height: 1.6; color: #4a4a6a; margin: 0 0 16px; max-width: 320px; }
 .cb-kv__btn { }
 .cb-kv__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3; color: #fff; font-size: 16px; }
 .cb-kv__nav--prev { left: 8px; }
@@ -490,7 +491,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-kv--medium .cb-kv__slide--image-only { aspect-ratio: 750 / 850; }
   .cb-kv--large .cb-kv__slide--image-only { aspect-ratio: 750 / 950; }
   .cb-kv__img { grid-row: 1; grid-column: 1; }
-  .cb-kv__text { grid-row: 2; grid-column: 1; width: 100%; max-width: none; height: auto; padding: 20px 18px; background: #1a1a2e; }
+  .cb-kv__text { grid-row: 2; grid-column: 1; width: 100%; max-width: none; height: auto; padding: 20px 18px; }
   .cb-kv__text--center, .cb-kv__text--right { align-items: flex-start; text-align: left; }
   .cb-kv__nav--prev { left: 8px; top: calc((100vw - 32px) / (750 / 850) / 2); }
   .cb-kv__nav--next { right: 8px; top: calc((100vw - 32px) / (750 / 850) / 2); }

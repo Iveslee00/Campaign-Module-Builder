@@ -18,20 +18,19 @@ const alignMap: Record<string, React.CSSProperties> = {
 
 export function CtaPreview({ data }: { data: CtaData }) {
   const { isMobile } = useDevice();
-  const { buttonColor } = useGlobalSettings();
+  const { buttonColor, buttonTextColor } = useGlobalSettings();
   const bg = data.backgroundColor
     ? { background: data.backgroundColor, color: '#1a1a2e' }
     : (bgMap[data.backgroundStyle] ?? bgMap.dark);
   const align = alignMap[data.alignment] ?? alignMap.center;
-  const isDark = data.backgroundStyle === 'dark' || data.backgroundStyle === 'gradient';
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
 
   const btnStyle: React.CSSProperties = {
     display: 'inline-flex', alignItems: 'center',
     padding: '14px 32px',
-    background: isDark ? '#ffffff' : buttonColor,
-    color: isDark ? '#1a1a2e' : '#ffffff',
+    background: buttonColor,
+    color: buttonTextColor,
     borderRadius: '8px', fontWeight: 600, fontSize: '15px',
     lineHeight: 1, cursor: 'default', whiteSpace: 'nowrap',
   };

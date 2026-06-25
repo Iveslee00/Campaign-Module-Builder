@@ -32,7 +32,7 @@ export function ArticleTextPreview({ data }: { data: ArticleTextData }) {
           </p>
         )}
         {data.content && (
-          <div style={{ fontSize: '15px', lineHeight: 1.85, color: data.textColor || '#4a4a6a', whiteSpace: 'pre-wrap', textAlign: 'left', ...textStyle }}>
+          <div style={{ fontSize: '15px', lineHeight: 1.85, color: data.textColor || '#4a4a6a', whiteSpace: 'pre-wrap', textAlign: align, ...textStyle }}>
             {data.content}
           </div>
         )}

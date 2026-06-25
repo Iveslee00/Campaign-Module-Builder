@@ -16,7 +16,7 @@ const heightMap = {
 
 export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
   const { isMobile } = useDevice();
-  const { buttonColor } = useGlobalSettings();
+  const { buttonColor, buttonTextColor } = useGlobalSettings();
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const slides = data.slides;
@@ -75,11 +75,6 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
       <div style={{ display: 'flex', transform: `translateX(-${current * 100}%)`, transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1)', height: '100%' }}>
         {slides.map((s) => {
           const showText = s.showText !== false;
-          const textBg = s.textBgColor || '#1a1a2e';
-          const desktopOverlayBg = textBg.includes('gradient(')
-            ? textBg
-            : `linear-gradient(90deg, ${textBg} 0%, rgba(26,26,46,0.72) 38%, rgba(26,26,46,0) 72%)`;
-          const overlay = s.overlayOpacity ? `rgba(0,0,0,${s.overlayOpacity / 100})` : undefined;
           const align = s.alignment ?? 'left';
           const alignStyle: React.CSSProperties =
             align === 'center' ? { textAlign: 'center', alignItems: 'center' }
@@ -95,7 +90,6 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
           const imageLayer = (
             <>
               {imageEl}
-              {overlay && <div style={{ position: 'absolute', inset: 0, background: overlay }} />}
             </>
           );
           const hasBannerLink = Boolean(s.buttonLink && s.buttonLink !== '#');
@@ -125,14 +119,12 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
               {showText && isMobile && (
                 <div style={{ aspectRatio: h.mobileImgRatio, flexShrink: 0, position: 'relative', overflow: 'hidden' }}>
                   {imageEl}
-                  {overlay && <div style={{ position: 'absolute', inset: 0, background: overlay }} />}
                 </div>
               )}
 
               {showText && !isMobile && (
                 <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
                   {imageEl}
-                  {overlay && <div style={{ position: 'absolute', inset: 0, background: overlay }} />}
                 </div>
               )}
 
@@ -143,7 +135,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
                     position: isMobile ? 'relative' : 'absolute',
                     inset: isMobile ? undefined : 0,
                     zIndex: 1,
-                    background: isMobile ? textBg : desktopOverlayBg,
+                    background: 'transparent',
                     flex: isMobile ? '0 0 auto' : undefined,
                     display: 'flex',
                     flexDirection: 'column',
@@ -156,17 +148,17 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
                   <div style={{ width: '100%', maxWidth: isMobile ? undefined : '1080px', margin: isMobile ? undefined : '0 auto', padding: isMobile ? 0 : '0 40px', display: 'flex', flexDirection: 'column', ...alignStyle }}>
                     <div style={{ maxWidth: isMobile ? 'none' : '430px' }}>
                       {s.title && (
-                        <h1 style={{ fontSize: isMobile ? '1.15rem' : '1.75rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', color: s.titleColor || '#ffffff', marginBottom: '8px' }}>
+                        <h1 style={{ fontSize: isMobile ? '1.15rem' : '1.75rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', color: s.titleColor || '#1a1a2e', marginBottom: '8px' }}>
                           {s.title}
                         </h1>
                       )}
                       {s.subtitle && (
-                        <p style={{ fontSize: isMobile ? '0.8rem' : '0.95rem', lineHeight: 1.6, color: s.textColor || 'rgba(255,255,255,0.85)', marginBottom: '16px', maxWidth: '320px' }}>
+                        <p style={{ fontSize: isMobile ? '0.8rem' : '0.95rem', lineHeight: 1.6, color: s.textColor || '#4a4a6a', marginBottom: '16px', maxWidth: '320px' }}>
                           {s.subtitle}
                         </p>
                       )}
                       {s.buttonText && (
-                        <span style={{ display: 'inline-flex', alignItems: 'center', padding: isMobile ? '8px 18px' : '10px 22px', background: buttonColor, color: '#fff', borderRadius: '7px', fontWeight: 700, fontSize: isMobile ? '12px' : '13px', cursor: 'default' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', padding: isMobile ? '8px 18px' : '10px 22px', background: buttonColor, color: buttonTextColor, borderRadius: '7px', fontWeight: 700, fontSize: isMobile ? '12px' : '13px', cursor: 'default' }}>
                           {s.buttonText}
                         </span>
                       )}

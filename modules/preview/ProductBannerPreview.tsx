@@ -14,7 +14,7 @@ const heightPadding = {
 
 export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
   const { isMobile } = useDevice();
-  const { buttonColor } = useGlobalSettings();
+  const { buttonColor, buttonTextColor } = useGlobalSettings();
   const bg = { background: data.backgroundColor || 'transparent', color: '#1a1a2e' };
   const padding = heightPadding[data.height ?? 'medium'];
 
@@ -28,7 +28,7 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
     display: 'inline-flex', alignItems: 'center',
     padding: '13px 28px',
     background: buttonColor,
-    color: '#ffffff',
+    color: buttonTextColor,
     borderRadius: '8px', fontWeight: 600, fontSize: '15px',
     lineHeight: 1, cursor: 'default', whiteSpace: 'nowrap',
   };
@@ -90,7 +90,7 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
     <section style={{ ...bg, padding: isMobile ? padding.mobile : padding.desktop, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '32px' : '56px', alignItems: 'center' }}>
-          {data.reverse ? <>{media}{content}</> : <>{content}{media}</>}
+        {isMobile ? <>{media}{content}</> : data.reverse ? <>{media}{content}</> : <>{content}{media}</>}
         </div>
       </div>
     </section>
