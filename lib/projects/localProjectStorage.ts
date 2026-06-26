@@ -92,6 +92,18 @@ export function duplicateProject(project: CampaignBuilderProject): CampaignBuild
   };
 }
 
+export function deleteProject(workspace: ProjectWorkspace, projectId: string): ProjectWorkspace {
+  const remainingProjects = workspace.projects.filter((project) => project.id !== projectId);
+  const projects = remainingProjects.length > 0 ? remainingProjects : [createEmptyProject()];
+  const activeProjectId = workspace.activeProjectId === projectId ? projects[0].id : workspace.activeProjectId;
+
+  return {
+    version: 1,
+    activeProjectId,
+    projects,
+  };
+}
+
 export function createProjectWorkspace(project = createEmptyProject()): ProjectWorkspace {
   return {
     version: 1,
