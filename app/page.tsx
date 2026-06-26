@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
+import type { FormEvent } from 'react';
 import { PageModule, ModuleSchemaItem, ExportedCode } from '@/types/modules';
 import { EmailPageModule, EmailSettings } from '@/types/emailModules';
 import { EmailModuleSchemaItem } from '@/types/emailModules';
@@ -33,14 +34,85 @@ import { InspectorPanel } from '@/components/editor/InspectorPanel';
 import { ExportModal } from '@/components/editor/ExportModal';
 import { PreviewModal } from '@/components/editor/PreviewModal';
 
-import { Copy, Download, Eye, FolderOpen, Layers, Plus, Trash2 } from 'lucide-react';
+import {
+  ArrowLeft,
+  CalendarClock,
+  Copy,
+  Download,
+  Eye,
+  FolderOpen,
+  Home,
+  Layers,
+  LogOut,
+  Plus,
+  Settings,
+  Sparkles,
+  Trash2,
+  Wrench,
+} from 'lucide-react';
 
 export type PageMode = 'campaign' | 'email';
 type DeviceMode = 'desktop' | 'mobile';
+type AppView = 'login' | 'workshop' | 'editor';
+
+interface ProjectHeroPreview {
+  title: string;
+  subtitle: string;
+  image: string;
+  hasHero: boolean;
+}
+
+const DEMO_SESSION_STORAGE_KEY = 'campaign-builder-demo-session-v1';
+
+const formatProjectDate = (value: string) => {
+  if (!value) return '尚未編輯';
+  try {
+    return new Intl.DateTimeFormat('zh-TW', {
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(value));
+  } catch {
+    return '尚未編輯';
+  }
+};
+
+const getProjectHeroPreview = (project: CampaignBuilderProject): ProjectHeroPreview => {
+  const heroModule = project.campaign.modules.find((module) => module.type === 'hero' || module.type === 'hero-carousel');
+
+  if (!heroModule) {
+    return {
+      title: '尚未設定主視覺',
+      subtitle: '點擊開啟後新增 KV 模組',
+      image: '',
+      hasHero: false,
+    };
+  }
+
+  if (heroModule.type === 'hero') {
+    return {
+      title: heroModule.data.title || project.name,
+      subtitle: heroModule.data.subtitle || '單張 KV',
+      image: heroModule.data.image || heroModule.data.mobileImage || '',
+      hasHero: true,
+    };
+  }
+
+  const firstSlide = heroModule.data.slides[0];
+  return {
+    title: firstSlide?.title || project.name,
+    subtitle: firstSlide?.subtitle || 'KV 輪播',
+    image: firstSlide?.image || firstSlide?.mobileImage || '',
+    hasHero: true,
+  };
+};
 
 export default function Page() {
   const workspaceRef = useRef<ProjectWorkspace | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [appView, setAppView] = useState<AppView>('login');
+  const [demoEmail, setDemoEmail] = useState('demo@campaign.local');
   const [projectId, setProjectId] = useState('');
   const [projectName, setProjectName] = useState('未命名專案');
   const [projectList, setProjectList] = useState<ProjectSummary[]>([]);
@@ -88,6 +160,9 @@ export default function Page() {
     workspaceRef.current = workspace;
     setProjectList(projectSummaries(workspace));
     applyProject(activeProject);
+    if (window.localStorage.getItem(DEMO_SESSION_STORAGE_KEY) === 'active') {
+      setAppView('workshop');
+    }
     setHydrated(true);
   }, [applyProject]);
 
@@ -216,6 +291,11 @@ export default function Page() {
     applyProject(project);
   }, [applyProject]);
 
+  const handleOpenProject = useCallback((id: string) => {
+    handleSelectProject(id);
+    setAppView('editor');
+  }, [handleSelectProject]);
+
   const handleCreateProject = useCallback(() => {
     const project = createEmptyProject('未命名專案');
     const nextWorkspace = upsertProject(workspaceRef.current ?? createProjectWorkspace(project), project);
@@ -224,6 +304,11 @@ export default function Page() {
     setProjectList(projectSummaries(nextWorkspace));
     applyProject(project);
   }, [applyProject]);
+
+  const handleCreateAndOpenProject = useCallback(() => {
+    handleCreateProject();
+    setAppView('editor');
+  }, [handleCreateProject]);
 
   const handleDuplicateProject = useCallback(() => {
     const workspace = workspaceRef.current;
@@ -265,6 +350,20 @@ export default function Page() {
     selectedId,
   ]);
 
+  const handleDuplicateProjectById = useCallback((id: string) => {
+    const workspace = workspaceRef.current;
+    const project = workspace?.projects.find((item) => item.id === id);
+    if (!workspace || !project) return;
+
+    const copiedProject = duplicateProject(project);
+    const nextWorkspace = upsertProject(workspace, copiedProject);
+    workspaceRef.current = nextWorkspace;
+    saveProjectWorkspace(window.localStorage, nextWorkspace);
+    setProjectList(projectSummaries(nextWorkspace));
+    applyProject(copiedProject);
+    setAppView('editor');
+  }, [applyProject]);
+
   const handleDeleteProject = useCallback((id: string) => {
     const workspace = workspaceRef.current;
     if (!workspace) return;
@@ -284,14 +383,307 @@ export default function Page() {
   const exportedEmail = generateEmailHTML(emailModules, emailSettings);
 
   const canExport = pageMode === 'campaign' ? modules.length > 0 : emailModules.length > 0;
+  const currentProjectCount = projectList.length;
+
+  const getProjectModuleCount = useCallback((id: string) => {
+    const project = workspaceRef.current?.projects.find((item) => item.id === id);
+    if (!project) return 0;
+    return project.campaign.modules.length + project.email.modules.length;
+  }, []);
+
+  const handleDemoLogin = useCallback((event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    window.localStorage.setItem(DEMO_SESSION_STORAGE_KEY, 'active');
+    setAppView('workshop');
+  }, []);
+
+  const handleDemoLogout = useCallback(() => {
+    window.localStorage.removeItem(DEMO_SESSION_STORAGE_KEY);
+    setAppView('login');
+  }, []);
+
+  if (!hydrated) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-slate-100 text-sm font-semibold text-slate-500">
+        載入工作坊...
+      </div>
+    );
+  }
+
+  if (appView === 'login') {
+    return (
+      <main className="min-h-screen bg-slate-100 text-slate-950 animate-[fadeIn_0.45s_ease-out]">
+        <div className="grid min-h-screen lg:grid-cols-[0.95fr_1.05fr]">
+          <section className="flex flex-col justify-between bg-[#172033] px-8 py-8 text-white lg:px-12">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500">
+                <Layers size={20} />
+              </div>
+              <div>
+                <p className="text-base font-bold">工作區</p>
+                <p className="text-xs font-semibold text-indigo-100">受邀測試版本</p>
+              </div>
+            </div>
+
+            <div className="my-12 max-w-xl">
+              <p className="mb-4 inline-flex rounded-full border border-indigo-300/30 bg-indigo-400/10 px-3 py-1 text-xs font-bold text-indigo-100">
+                行銷活動工具平台
+              </p>
+              <h1 className="text-4xl font-black leading-tight tracking-tight text-white lg:text-6xl">
+                登入工作區
+              </h1>
+              <p className="mt-5 text-base leading-8 text-slate-200">
+                從同一個後台建立、管理與匯出活動頁工具。現在先開放 Campaign Builder，後續可以加入更多行銷與營運工具。
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.08] p-5 text-sm leading-7 text-slate-200">
+              <p className="font-bold text-white">受邀測試版本</p>
+              <p className="mt-1">目前專案會儲存在此瀏覽器，不會影響正式 CMS 貼碼與 ZIP 匯出功能。</p>
+            </div>
+          </section>
+
+          <section className="flex items-center justify-center px-6 py-12">
+            <form
+              onSubmit={handleDemoLogin}
+              className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/80 animate-[panelFloatIn_0.5s_ease-out]"
+            >
+              <div className="mb-6">
+                <p className="text-2xl font-black text-slate-950">歡迎回來</p>
+                <p className="mt-2 text-sm leading-6 text-slate-500">輸入測試帳號即可進入工作區。</p>
+              </div>
+
+              <label className="mb-4 block">
+                <span className="mb-2 block text-xs font-bold text-slate-500">帳號</span>
+                <input
+                  value={demoEmail}
+                  onChange={(event) => setDemoEmail(event.target.value)}
+                  className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold text-slate-950 outline-none transition-colors focus:border-indigo-400 focus:bg-white"
+                  placeholder="demo@campaign.local"
+                />
+              </label>
+
+              <label className="mb-6 block">
+                <span className="mb-2 block text-xs font-bold text-slate-500">密碼</span>
+                <input
+                  type="password"
+                  defaultValue="demo1234"
+                  className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold text-slate-950 outline-none transition-colors focus:border-indigo-400 focus:bg-white"
+                  placeholder="demo1234"
+                />
+              </label>
+
+              <button
+                type="submit"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 text-sm font-black text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-indigo-500 hover:shadow-lg hover:shadow-indigo-200"
+              >
+                進入工作區
+                <Sparkles size={16} />
+              </button>
+
+              <p className="mt-4 text-center text-xs leading-5 text-slate-500">
+                第一版僅示意產品流程，之後可改為真正帳號與資料庫。
+              </p>
+            </form>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
+  if (appView === 'workshop') {
+    return (
+      <div className="flex h-screen min-h-screen overflow-hidden bg-slate-100 text-slate-950 animate-[fadeIn_0.45s_ease-out]">
+        <aside className="flex w-64 flex-shrink-0 flex-col justify-between bg-[#172033] px-4 py-5 text-slate-300">
+          <div>
+            <div className="mb-7 flex items-center gap-3 px-2">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-white">
+                <Layers size={20} />
+              </div>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-black text-white">工作區</p>
+                <p className="text-xs font-semibold text-slate-500">Beta Access</p>
+              </div>
+            </div>
+            <nav className="space-y-2">
+              <button className="relative flex w-full items-center gap-3 overflow-hidden rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-300 transition-all duration-200 hover:bg-white/[0.08] hover:text-white">
+                <Home size={18} />
+                首頁
+              </button>
+              <button className="relative flex w-full items-center gap-3 overflow-hidden rounded-xl bg-indigo-500/[0.18] px-3 py-3 text-left text-sm font-black text-white before:absolute before:left-0 before:top-2 before:h-[calc(100%-16px)] before:w-1 before:rounded-r-full before:bg-indigo-300">
+                <Wrench size={18} />
+                活動頁
+              </button>
+              <button className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-500 transition-all duration-200 hover:bg-white/5">
+                <span className="flex items-center gap-3">
+                  <FolderOpen size={18} />
+                  素材庫
+                </span>
+                <span className="rounded-full bg-white/[0.08] px-2 py-0.5 text-[10px] font-black text-slate-400">準備中</span>
+              </button>
+              <button className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-500 transition-all duration-200 hover:bg-white/5">
+                <span className="flex items-center gap-3">
+                  <Settings size={18} />
+                  設定
+                </span>
+                <span className="rounded-full bg-white/[0.08] px-2 py-0.5 text-[10px] font-black text-slate-400">準備中</span>
+              </button>
+            </nav>
+          </div>
+          <div className="space-y-3">
+            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.06] p-4">
+              <p className="truncate text-sm font-bold text-slate-200">{demoEmail || '測試帳號'}</p>
+              <p className="mt-1 text-xs leading-5 text-slate-500">專案暫存於此瀏覽器</p>
+            </div>
+            <button
+              onClick={handleDemoLogout}
+              className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold text-slate-500 transition-all duration-200 hover:bg-white/[0.08] hover:text-white"
+            >
+              <LogOut size={18} />
+              登出
+            </button>
+          </div>
+        </aside>
+
+        <main className="min-w-0 flex-1 overflow-y-auto animate-[fadeIn_0.45s_ease-out]">
+          <header className="flex items-center justify-between border-b border-slate-200 bg-white px-8 py-5">
+            <div>
+              <p className="text-sm font-bold text-indigo-600">Campaign Builder</p>
+              <h1 className="mt-1 text-2xl font-black text-slate-950">活動頁專案</h1>
+            </div>
+            <button
+              onClick={handleCreateAndOpenProject}
+              className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-black text-white transition-colors hover:bg-indigo-500"
+            >
+              <Plus size={17} />
+              新增活動頁
+            </button>
+          </header>
+
+          <section className="px-8 py-8">
+            <div className="mb-6 grid gap-4 lg:grid-cols-[1fr_240px]">
+              <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                <p className="text-sm font-bold text-indigo-600">目前工具</p>
+                <h2 className="mt-2 text-2xl font-black text-slate-950">Campaign Builder</h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+                  建立 CMS 可用的活動頁模組，並匯出貼碼或 ZIP。
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                <p className="text-sm font-bold text-slate-500">本機專案</p>
+                <p className="mt-2 text-3xl font-black text-slate-950">{currentProjectCount}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-500">儲存在此瀏覽器。</p>
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <button
+                onClick={handleCreateAndOpenProject}
+                className="flex min-h-[210px] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-white p-5 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-400 hover:bg-indigo-50"
+              >
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white">
+                  <Plus size={24} />
+                </span>
+                <span className="mt-4 text-lg font-black text-slate-950">新增活動頁</span>
+                <span className="mt-2 text-sm leading-6 text-slate-500">建立空白畫布並進入編輯器</span>
+              </button>
+
+              {projectList.map((project) => {
+                const workspaceProject = workspaceRef.current?.projects.find((item) => item.id === project.id);
+                const heroPreview = workspaceProject ? getProjectHeroPreview(workspaceProject) : null;
+
+                return (
+                <article
+                  key={project.id}
+                  className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-lg"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+                    {heroPreview?.image ? (
+                      <img
+                        src={heroPreview.image}
+                        alt={heroPreview.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top_left,#4f46e5_0,#1e1b4b_38%,#020617_100%)] px-5 text-center text-white transition-transform duration-500 group-hover:scale-105">
+                        <div>
+                          <p className="text-xs font-black uppercase tracking-[0.2em] text-indigo-200">Hero Preview</p>
+                          <p className="mt-2 text-base font-black">{heroPreview?.title || '尚未設定主視覺'}</p>
+                          <p className="mt-1 text-xs font-semibold text-slate-300">{heroPreview?.subtitle || '點擊開啟後新增 KV 模組'}</p>
+                        </div>
+                      </div>
+                    )}
+                    <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-black text-slate-950 shadow-sm">
+                      {heroPreview?.hasHero ? 'KV 預覽' : '空白畫布'}
+                    </div>
+                  </div>
+
+                  <div className="p-4">
+                    <div className="mb-4 flex items-start justify-between gap-3">
+                      <div>
+                        <h3 className="line-clamp-2 text-lg font-black text-slate-950">{project.name}</h3>
+                        <p className="mt-1 text-sm font-semibold text-slate-500">{heroPreview?.title || '尚未設定主視覺'}</p>
+                      </div>
+                      <span className="shrink-0 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+                        本機儲存
+                      </span>
+                    </div>
+                    <div className="space-y-2 text-sm font-semibold text-slate-500">
+                      <p className="flex items-center gap-2">
+                        <CalendarClock size={15} />
+                        {formatProjectDate(project.updatedAt)}
+                      </p>
+                      <p>{getProjectModuleCount(project.id)} 個模組</p>
+                    </div>
+
+                  <div className="mt-5 flex items-center gap-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+                    <button
+                      onClick={() => handleOpenProject(project.id)}
+                      className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-slate-950 px-4 py-3 text-sm font-black text-white transition-colors hover:bg-indigo-600"
+                    >
+                      開啟
+                      <ArrowLeft size={15} className="rotate-180" />
+                    </button>
+                    <button
+                      onClick={() => handleDuplicateProjectById(project.id)}
+                      className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
+                      title="建立副本"
+                    >
+                      <Copy size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteProject(project.id)}
+                      className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                      title="刪除"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                  </div>
+                </article>
+              );
+              })}
+            </div>
+          </section>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <GlobalSettingsContext.Provider value={{ buttonColor, buttonTextColor, setButtonColor, setButtonTextColor, pageBackgroundColor, setPageBackgroundColor, pageBackgroundImage, setPageBackgroundImage }}>
       <EmailSettingsContext.Provider value={{ ...emailSettings, update: updateEmailSettings }}>
-        <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-slate-950">
+        <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-slate-950 animate-[fadeIn_0.35s_ease-out]">
           {/* Top bar */}
           <header className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-slate-900 border-b border-slate-800 z-20">
             <div className="flex min-w-0 items-center gap-3">
+              <button
+                onClick={() => setAppView('workshop')}
+                className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:bg-slate-700 hover:text-white"
+              >
+                <ArrowLeft size={14} />
+                回到工作坊
+              </button>
               <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
                 <Layers size={14} className="text-white" />
               </div>
@@ -300,7 +692,10 @@ export default function Page() {
                 <span className="max-w-[220px] truncate rounded-lg border border-slate-800 bg-slate-950/50 px-3 py-2 text-sm font-semibold text-slate-200">
                   {projectName || '未命名專案'}
                 </span>
-                <span className="text-xs font-medium text-emerald-400">{saveStatus || '本機自動儲存'}</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-300 transition-opacity duration-200">
+                  <span className={`h-1.5 w-1.5 rounded-full bg-emerald-300 ${saveStatus.includes('儲存中') ? 'animate-pulse' : ''}`} />
+                  {saveStatus || '本機自動儲存'}
+                </span>
               </div>
             </div>
             <div className="flex items-center gap-2">

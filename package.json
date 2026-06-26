@@ -20,6 +20,7 @@
     "verify:preview-placeholders": "node --no-warnings scripts/verify-preview-placeholders.mjs",
     "verify:design-system": "node --no-warnings scripts/verify-design-system.mjs",
     "verify:project-memory": "node --no-warnings scripts/verify-project-memory.mjs",
+    "verify:workshop-demo": "node --no-warnings scripts/verify-workshop-demo.mjs",
     "start": "next start",
     "lint": "next lint"
   },
