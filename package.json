@@ -23,6 +23,11 @@
     "verify:workshop-demo": "node --no-warnings scripts/verify-workshop-demo.mjs",
     "verify:auth-foundation": "node --no-warnings scripts/verify-auth-foundation.mjs",
     "verify:nexora-brand": "node --no-warnings scripts/verify-nexora-brand.mjs",
+    "verify:product-builder-demo": "node --no-warnings scripts/verify-product-builder-demo.mjs",
+    "verify:local-storage-quota": "node --no-warnings scripts/verify-local-storage-quota.mjs",
+    "verify:local-image-store": "node --no-warnings scripts/verify-local-image-store.mjs",
+    "verify:project-package": "node --no-warnings scripts/verify-project-package.mjs",
+    "verify:workspace-content": "node --no-warnings scripts/verify-workspace-content.mjs",
     "start": "next start",
     "lint": "next lint"
   },

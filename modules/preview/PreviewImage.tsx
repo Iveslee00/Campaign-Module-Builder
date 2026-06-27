@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { ImageSpec } from '@/lib/assets/imageSpecs';
+import { isLocalImageRef, resolveLocalImageUrl, revokeResolvedLocalImageUrl } from '@/lib/assets/localImageStore';
 
 interface ImagePlaceholderProps {
   label: string;
@@ -56,10 +57,32 @@ export function ImagePlaceholder({ label, spec, tone = 'light', state = 'empty' 
 
 export function PreviewImage({ src, alt = '', label, spec, tone = 'light', state = 'empty', objectFit = 'cover' }: PreviewImageProps) {
   const [failed, setFailed] = useState(false);
+  const [resolvedSrc, setResolvedSrc] = useState(src ?? '');
   const hasImage = Boolean(src?.trim());
 
   useEffect(() => {
+    let alive = true;
+    let objectUrl = '';
+
     setFailed(false);
+    if (!src || !isLocalImageRef(src)) {
+      setResolvedSrc(src ?? '');
+      return () => undefined;
+    }
+
+    resolveLocalImageUrl(src)
+      .then((value) => {
+        objectUrl = value;
+        if (alive) setResolvedSrc(value);
+      })
+      .catch(() => {
+        if (alive) setFailed(true);
+      });
+
+    return () => {
+      alive = false;
+      revokeResolvedLocalImageUrl(objectUrl);
+    };
   }, [src]);
 
   if (!hasImage || failed) {
@@ -68,7 +91,7 @@ export function PreviewImage({ src, alt = '', label, spec, tone = 'light', state
 
   return (
     <img
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit, display: 'block' }}
       onError={() => setFailed(true)}

@@ -22,6 +22,7 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
   const [campaignTab, setCampaignTab] = useState<CampaignTab>('embed');
   const [copied, setCopied] = useState<string | null>(null);
   const [packageInfo, setPackageInfo] = useState<{ fileCount: number; remoteImages: string[] } | null>(null);
+  const [packageLoading, setPackageLoading] = useState(false);
 
   const handleCopy = async (key: string, text: string) => {
     const success = await copyToClipboard(text);
@@ -31,17 +32,22 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
     }
   };
 
-  const handleDownloadPackage = () => {
-    const result = generateCampaignPackage(code.html, code.css);
-    const url = URL.createObjectURL(result.blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'campaign-page.zip';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    setPackageInfo({ fileCount: result.fileCount, remoteImages: result.remoteImages });
+  const handleDownloadPackage = async () => {
+    setPackageLoading(true);
+    try {
+      const result = await generateCampaignPackage(code.html, code.css);
+      const url = URL.createObjectURL(result.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'campaign-page.zip';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      setPackageInfo({ fileCount: result.fileCount, remoteImages: result.remoteImages });
+    } finally {
+      setPackageLoading(false);
+    }
   };
 
   const pasteHtml = stripDataImageUrlsForPaste(code.html);
@@ -220,11 +226,12 @@ export function ExportModal({ code, emailHTML, initialTab, onClose }: Props) {
                       </p>
                     </div>
                     <button
-                      onClick={handleDownloadPackage}
-                      className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-500"
+                      onClick={() => void handleDownloadPackage()}
+                      disabled={packageLoading}
+                      className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-500 disabled:cursor-wait disabled:opacity-70"
                     >
                       <Download size={14} />
-                      下載 ZIP
+                      {packageLoading ? '建立中...' : '下載 ZIP'}
                     </button>
                   </div>
                 </div>

@@ -164,13 +164,23 @@ campaign-builder-project-workspace-v1
 - 模組資料
 - 顏色設定
 - 圖片網址
-- 上傳圖片的 base64 暫存資料
+- 上傳圖片的 `local-image://...` 本機參照
 - 電子報模組
 - 目前選取狀態
 
 ### .cmb 專案檔
 
-`.cmb` 是本地專案檔，使用 JSON 格式。
+`.cmb` 是本地專案包，使用 ZIP 容器但保留 `.cmb` 副檔名。
+
+內容結構：
+
+```text
+project.cmb
+├─ project.json
+└─ images/
+   ├─ 01-hero.png
+   └─ 02-product-main.png
+```
 
 用途：
 
@@ -180,7 +190,10 @@ campaign-builder-project-workspace-v1
 
 原則：
 
-- `.cmb` 可以包含上傳圖片的 base64。
+- `.cmb` 會包含本機上傳圖片的原圖檔。
+- `project.json` 內圖片會以 `images/...` 相對路徑表示。
+- 匯入 `.cmb` 時，`images/` 會重新寫回 IndexedDB，並轉成新的 `local-image://...` 參照。
+- 舊版純 JSON `.cmb` 仍可匯入。
 - `.cmb` 不會上傳到 Neon。
 - `.cmb` 不會自動同步。
 
@@ -208,15 +221,52 @@ flowchart TD
   EmailGen --> Email
 ```
 
+## 從商品建立流程
+
+「從商品建立」是 NEXORA Builder 的快速生成入口。它不是另一套編輯器，也不是另一套匯出系統；它會把商品資料轉成既有活動頁模組，回到同一個畫布後仍可拖拉、刪除、編輯與匯出。
+
+目前第一版 demo 以清潔用品爆品頁為主，使用「水氧潔淨」視覺方向。
+
+```mermaid
+flowchart TD
+  ProductModal["ProductBuildModal 從商品建立"]
+  ProductInput["商品資料 / 圖片 / 賣點 / CTA"]
+  ProductBuilder["createProductLandingModules"]
+  ExistingModules["既有 PageModule[]"]
+  Canvas["PreviewCanvas 畫布"]
+  Export["CMS 貼碼 / ZIP 匯出"]
+
+  ProductModal --> ProductInput
+  ProductInput --> ProductBuilder
+  ProductBuilder --> ExistingModules
+  ExistingModules --> Canvas
+  Canvas --> Export
+```
+
+目前會產生的模組：
+
+- `hero`：商品主視覺
+- `anchor-nav`：錨點導覽
+- `title`：賣點段落標題
+- `product-banner`：單品主打
+- `split-section`：核心賣點
+- `article-text`：商品詳情
+- `faq`：購買 FAQ
+- `product-grid`：推薦搭配商品
+
+左側模組庫新增 `銷售頁模組` 分類，但仍共用既有模組型別，避免新增匯出風險。
+
 ## 圖片策略
 
 | 圖片來源 | 儲存位置 | 匯出方式 | 是否吃 Neon 容量 |
 |---|---|---|---|
 | 圖片連結 | 專案資料文字欄位 | CMS 貼碼直接使用 URL | 低，用量可忽略 |
-| 上傳圖片 | localStorage / `.cmb` | ZIP 匯出時放入 `images/` | 不吃 Neon |
+| 上傳圖片 | IndexedDB 本機暫存 | ZIP / `.cmb` 匯出時放入 `images/` | 不吃 Neon |
 | 雲端圖片 | 暫不支援 | 暫不支援 | 暫不支援 |
 
-目前不應把上傳圖片 base64 存到 Neon。
+目前不應把上傳圖片 base64 存到 Neon，也不應存進 localStorage。上傳圖片會在專案欄位保留 `local-image://...` 參照，實際原圖暫存在瀏覽器 IndexedDB。CMS 貼碼若遇到本地圖片會移除圖片本體並提示改用圖片網址；ZIP 與 `.cmb` 匯出會從 IndexedDB 取回原圖並放入 `images/`。
+
+商品頁 demo 的商品主圖規格以 `1000 x 1000` 去背 PNG 為主。
 
 ## Neon 資料表
 
@@ -288,6 +338,10 @@ DATABASE_URL
 | `npm run verify:auth-foundation` | 檢查 Neon auth 基礎架構 |
 | `npm run verify:project-memory` | 檢查本機專案與 `.cmb` 專案檔 |
 | `npm run verify:workshop-demo` | 檢查工作區入口與專案列表 |
+| `npm run verify:product-builder-demo` | 檢查從商品建立 demo 是否接線完整 |
+| `npm run verify:local-image-store` | 檢查 IndexedDB 圖片暫存、預覽、ZIP 與貼碼處理 |
+| `npm run verify:local-storage-quota` | 檢查 localStorage 爆容量時不會造成整站 crash |
+| `npm run verify:project-package` | 檢查 `.cmb` 專案包會帶圖片並支援匯入還原 |
 | `npm run build` | 檢查正式建置 |
 | `npm run typecheck` | 檢查 TypeScript |
 

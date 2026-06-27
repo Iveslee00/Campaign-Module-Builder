@@ -1,7 +1,9 @@
 import { createZip } from './zipGenerator';
+import { getLocalImage, isLocalImageRef } from '@/lib/assets/localImageStore';
 
 const encoder = new TextEncoder();
 const dataUrlPattern = /data:([^;]+);base64,([A-Za-z0-9+/=]+)/g;
+const localImagePattern = /local-image:\/\/[a-zA-Z0-9_-]+/g;
 const remoteImagePattern = /https?:\/\/[^"')\s]+\.(?:png|jpe?g|gif|webp|svg)(?:\?[^"')\s]*)?/gi;
 
 const extensionByMime: Record<string, string> = {
@@ -18,6 +20,15 @@ function bytesFromBase64(value: string) {
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
   return bytes;
+}
+
+async function bytesFromBlob(blob: Blob) {
+  return new Uint8Array(await blob.arrayBuffer());
+}
+
+function safeFileName(value: string, fallback: string) {
+  const cleaned = value.trim().replace(/[\\/:*?"<>|]+/g, '-').replace(/\s+/g, '-');
+  return cleaned || fallback;
 }
 
 function extractScripts(html: string) {
@@ -46,6 +57,28 @@ function rewriteDataImages(input: string, imageFiles: { name: string; bytes: Uin
   });
 }
 
+async function rewriteLocalImages(input: string, imageFiles: { name: string; bytes: Uint8Array }[]) {
+  const refs = Array.from(new Set(input.match(localImagePattern) ?? []));
+  let output = input;
+
+  for (const ref of refs) {
+    if (!isLocalImageRef(ref)) continue;
+    const record = await getLocalImage(ref);
+    if (!record) {
+      output = output.replaceAll(ref, '');
+      continue;
+    }
+
+    const fallbackExt = extensionByMime[record.mimeType] ?? 'bin';
+    const fileName = safeFileName(record.fileName, `${record.id}.${fallbackExt}`);
+    const path = `images/${String(imageFiles.length + 1).padStart(2, '0')}-${fileName}`;
+    imageFiles.push({ name: path, bytes: await bytesFromBlob(record.blob) });
+    output = output.replaceAll(ref, path);
+  }
+
+  return output;
+}
+
 function collectRemoteImages(...sources: string[]) {
   const urls = new Set<string>();
   for (const source of sources) {
@@ -65,11 +98,13 @@ export interface CampaignPackageResult {
   fileCount: number;
 }
 
-export function generateCampaignPackage(html: string, css: string): CampaignPackageResult {
+export async function generateCampaignPackage(html: string, css: string): Promise<CampaignPackageResult> {
   const imageFiles: { name: string; bytes: Uint8Array }[] = [];
   const extracted = extractScripts(html);
-  const htmlWithLocalImages = rewriteDataImages(extracted.html, imageFiles);
-  const cssWithLocalImages = rewriteDataImages(css, imageFiles);
+  const htmlWithDataImages = rewriteDataImages(extracted.html, imageFiles);
+  const cssWithDataImages = rewriteDataImages(css, imageFiles);
+  const htmlWithLocalImages = await rewriteLocalImages(htmlWithDataImages, imageFiles);
+  const cssWithLocalImages = await rewriteLocalImages(cssWithDataImages, imageFiles);
   const remoteImages = collectRemoteImages(htmlWithLocalImages, cssWithLocalImages);
 
   const indexHtml = `<!doctype html>

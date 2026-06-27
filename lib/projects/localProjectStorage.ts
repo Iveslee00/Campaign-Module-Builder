@@ -11,7 +11,7 @@ import type {
 
 export const PROJECT_WORKSPACE_STORAGE_KEY = 'campaign-builder-project-workspace-v1';
 export const PROJECT_FILE_EXTENSION = 'cmb';
-export const PROJECT_FILE_MIME_TYPE = 'application/json';
+export const PROJECT_FILE_MIME_TYPE = 'application/zip';
 const DEFAULT_PROJECT_NAME = '未命名專案';
 
 interface ProjectFilePayload {
@@ -34,6 +34,10 @@ export interface ProjectSnapshotInput {
   emailSettings: EmailSettings;
   createdAt?: string;
 }
+
+export type SaveProjectWorkspaceResult =
+  | { ok: true }
+  | { ok: false; reason: 'quota-exceeded' | 'unavailable' };
 
 export const defaultGlobalSettings = (): GlobalSettings => ({
   buttonColor: '#6366f1',
@@ -222,6 +226,17 @@ export function loadProjectWorkspace(storage: Storage): ProjectWorkspace {
   }
 }
 
-export function saveProjectWorkspace(storage: Storage, workspace: ProjectWorkspace) {
-  storage.setItem(PROJECT_WORKSPACE_STORAGE_KEY, JSON.stringify(workspace));
+export function saveProjectWorkspace(storage: Storage, workspace: ProjectWorkspace): SaveProjectWorkspaceResult {
+  try {
+    storage.setItem(PROJECT_WORKSPACE_STORAGE_KEY, JSON.stringify(workspace));
+    return { ok: true };
+  } catch (error) {
+    const candidate = error as { name?: string; code?: number };
+    const quotaExceeded = candidate.name === 'QuotaExceededError'
+      || candidate.name === 'NS_ERROR_DOM_QUOTA_REACHED'
+      || candidate.code === 22
+      || candidate.code === 1014;
+
+    return { ok: false, reason: quotaExceeded ? 'quota-exceeded' : 'unavailable' };
+  }
 }

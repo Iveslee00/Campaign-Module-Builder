@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ImagePlus, Link2, Palette, X } from 'lucide-react';
 import { formatImageSpec, ImageSpec } from '@/lib/assets/imageSpecs';
+import { isLocalImageRef, resolveLocalImageUrl, revokeResolvedLocalImageUrl, storeLocalImage } from '@/lib/assets/localImageStore';
 import {
   GRADIENT_DIRECTIONS,
   GRADIENT_PRESETS,
@@ -431,13 +432,6 @@ interface ImageFieldProps {
   spec?: ImageSpec;
 }
 
-const readFileAsDataUrl = (file: File) => new Promise<string>((resolve, reject) => {
-  const reader = new FileReader();
-  reader.onload = () => resolve(String(reader.result ?? ''));
-  reader.onerror = () => reject(reader.error);
-  reader.readAsDataURL(file);
-});
-
 const readImageSize = (src: string) => new Promise<{ width: number; height: number }>((resolve, reject) => {
   const image = new Image();
   image.onload = () => resolve({ width: image.naturalWidth, height: image.naturalHeight });
@@ -449,10 +443,38 @@ const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
 
 export function ImageField({ label, value, onChange, placeholder = 'https://…', spec }: ImageFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const isUploaded = value.startsWith('data:image/');
+  const isUploaded = value.startsWith('data:image/') || isLocalImageRef(value);
+  const [previewSrc, setPreviewSrc] = useState('');
   const [error, setError] = useState('');
   const [uploading, setUploading] = useState(false);
   const specLabel = spec ? formatImageSpec(spec) : '';
+
+  useEffect(() => {
+    let alive = true;
+    let objectUrl = '';
+
+    const resolvePreview = async () => {
+      if (!value || !isLocalImageRef(value)) {
+        setPreviewSrc(value);
+        return;
+      }
+
+      try {
+        const resolved = await resolveLocalImageUrl(value);
+        objectUrl = resolved;
+        if (alive) setPreviewSrc(resolved);
+      } catch {
+        if (alive) setPreviewSrc('');
+      }
+    };
+
+    void resolvePreview();
+
+    return () => {
+      alive = false;
+      revokeResolvedLocalImageUrl(objectUrl);
+    };
+  }, [value]);
 
   const handleUpload = async (file: File | undefined) => {
     if (!file) return;
@@ -466,20 +488,23 @@ export function ImageField({ label, value, onChange, placeholder = 'https://…'
     }
 
     setUploading(true);
+    const objectUrl = URL.createObjectURL(file);
     try {
-      const dataUrl = await readFileAsDataUrl(file);
       if (spec) {
-        const size = await readImageSize(dataUrl);
+        const size = await readImageSize(objectUrl);
         if (size.width !== spec.width || size.height !== spec.height) {
           setError(`請上傳 ${specLabel} 圖檔`);
           return;
         }
       }
+      const size = spec ? { width: spec.width, height: spec.height } : await readImageSize(objectUrl);
+      const localImage = await storeLocalImage(file, size);
       setError('');
-      onChange(dataUrl);
+      onChange(localImage.ref);
     } catch {
       setError('圖片讀取失敗，請重新上傳');
     } finally {
+      URL.revokeObjectURL(objectUrl);
       setUploading(false);
     }
   };
@@ -518,7 +543,7 @@ export function ImageField({ label, value, onChange, placeholder = 'https://…'
           <Link2 size={13} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" />
           <input
             type="url"
-            value={isUploaded ? '已使用上傳圖片，匯出 ZIP 時會放入 images/' : value}
+            value={isUploaded ? '已使用本機暫存圖片，ZIP 會放入 images/' : value}
             onChange={(e) => onChange(e.target.value)}
             disabled={isUploaded}
             placeholder={placeholder}
@@ -543,7 +568,7 @@ export function ImageField({ label, value, onChange, placeholder = 'https://…'
       {value && (
         <div className="overflow-hidden rounded-md border border-slate-700 bg-slate-950">
           <img
-            src={value}
+            src={previewSrc}
             alt=""
             className="block h-32 w-full object-contain p-2"
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}

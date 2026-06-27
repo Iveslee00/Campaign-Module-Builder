@@ -38,7 +38,7 @@ const iconMap: Record<string, React.ReactNode> = {
   star: <Star size={18} />,
 };
 
-const campaignCategories = ['版面區塊', '活動商品', '內容說明', '品牌素材'];
+const campaignCategories = ['版面區塊', '活動商品', '銷售頁模組', '內容說明', '品牌素材'];
 const emailCategories = ['標題', '圖片', 'KV', '商品', '圖片帶商品', '活動', '銀行資訊', '文章', '折價券'];
 
 // ── Color picker ─────────────────────────────────────────────────────────────
