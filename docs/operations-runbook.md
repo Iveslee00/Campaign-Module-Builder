@@ -1,8 +1,8 @@
-# Campaign Builder 正式站營運手冊
+# NEXORA 正式站營運手冊
 
 更新日期：2026-06-27
 
-這份文件記錄 Campaign Builder 正式站的日常營運流程。之後只要改到登入、帳號、Vercel、Neon、部署、回滾或專案儲存策略，都必須同步更新本文件。
+這份文件記錄 NEXORA 正式站的日常營運流程。之後只要改到登入、帳號、Vercel、Neon、部署、回滾或專案儲存策略，都必須同步更新本文件。
 
 ## 目前正式站狀態
 
@@ -17,7 +17,9 @@
 | 圖片資料 | 圖片連結用於 CMS 貼碼；上傳圖片只用於 ZIP 與 `.cmb` |
 | 圖片雲端 | 尚未支援 |
 
-目前 Neon 只儲存帳號與 session，不儲存 Campaign Builder 專案內容，也不儲存上傳圖片。
+目前 Neon 只儲存帳號與 session，不儲存 NEXORA Builder 專案內容，也不儲存上傳圖片。
+
+正式品牌名稱為 NEXORA，目前工具名稱為 NEXORA Builder。GitHub repo 與 Vercel project 名稱暫時保留原名稱，待確認正式站穩定後再另行改名。
 
 ## 帳號管理
 
@@ -278,7 +280,7 @@ CMS 貼碼使用則以圖片網址為主，不應輸出 base64。
 - [ ] 確認 GitHub push 成功。
 - [ ] 確認 Vercel 部署成功。
 - [ ] 正式站用 `client01` 測試登入。
-- [ ] 測試進入 Campaign Builder 工作區。
+- [ ] 測試進入 NEXORA Workspace。
 - [ ] 測試建立專案、重新整理後仍存在。
 - [ ] 測試匯出貼碼。
 

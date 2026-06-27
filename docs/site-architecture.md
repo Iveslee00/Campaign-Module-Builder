@@ -1,12 +1,12 @@
-# Campaign Builder 網站架構圖
+# NEXORA 網站架構圖
 
 更新日期：2026-06-27
 
-這份文件記錄目前 Campaign Builder 的網站架構、資料流與主要模組。之後新增登入、資料庫、匯出、專案檔、圖片策略或新工具時，必須同步更新本文件。
+這份文件記錄目前 NEXORA 的網站架構、資料流與主要模組。之後新增登入、資料庫、匯出、專案檔、圖片策略或新工具時，必須同步更新本文件。
 
 ## 產品定位
 
-Campaign Builder 是一個給行銷、營運人員使用的活動頁模組產生工具。
+NEXORA 是一個給行銷、營運與創作者使用的數位創作平台。目前第一個開放工具是 NEXORA Builder，也就是原本的 Campaign Builder 活動頁模組產生工具。
 
 目前產品策略：
 
@@ -22,7 +22,7 @@ Campaign Builder 是一個給行銷、營運人員使用的活動頁模組產生
 ```mermaid
 flowchart TD
   User["使用者"]
-  Browser["瀏覽器 / Campaign Builder UI"]
+  Browser["瀏覽器 / NEXORA UI"]
   Vercel["Vercel / Next.js App"]
   Neon["Neon Postgres"]
   LocalStorage["瀏覽器 localStorage"]
@@ -112,7 +112,7 @@ sequenceDiagram
   API->>DB: 建立 sessions token_hash
   API->>Cookie: 設定 campaign_builder_session
   API-->>UI: 回傳 user
-  UI->>UI: 進入工作區
+  UI->>UI: 進入 NEXORA Workspace
 ```
 
 ## Session 流程
@@ -137,7 +137,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart LR
-  Editor["Campaign Builder 編輯器"]
+  Editor["NEXORA Builder 編輯器"]
   LocalStorage["localStorage workspace"]
   CmbExport["匯出 .cmb"]
   CmbImport["匯入 .cmb"]

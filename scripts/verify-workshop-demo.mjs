@@ -9,16 +9,17 @@ function assert(condition, message) {
 }
 
 assert(app.includes('受邀測試版本'), 'Demo should explain this is an invited beta experience');
-assert(app.includes('登入工作區'), 'Login should use neutral workspace naming while platform name is undecided');
-assert(app.includes('進入工作區'), 'Login action should feel like entering a product workspace');
-assert(app.includes('工作區'), 'Demo should include the product workspace shell');
-assert(app.includes('Campaign Builder'), 'Demo should keep Campaign Builder as one workshop tool');
-assert(app.includes('活動頁專案'), 'Campaign Builder project list should use a clearer product title');
-assert(app.includes('回到工作坊'), 'Editor should provide a way back to the project canvas list');
+assert(app.includes('登入 NEXORA'), 'Login should use the NEXORA platform name');
+assert(app.includes('進入 NEXORA Workspace'), 'Login action should feel like entering the branded workspace');
+assert(app.includes('NEXORA Workspace'), 'Demo should include the branded product workspace shell');
+assert(app.includes('NEXORA Builder'), 'Campaign Builder should be presented as NEXORA Builder');
+assert(app.includes('Campaign Builder 是目前第一個開放工具'), 'Campaign Builder should remain as a continuity descriptor');
+assert(app.includes('NEXORA Builder 專案'), 'Project list should use the branded tool title');
+assert(app.includes('回到 Workspace'), 'Editor should provide a way back to the project canvas list');
 assert(app.includes('handleLogin'), 'Demo should include a login transition handler');
 assert(app.includes('handleLogout'), 'Demo should include a logout transition handler');
-assert(app.includes('活動頁'), 'Sidebar should use the clearer campaign page label');
-assert(app.includes('素材庫'), 'Workshop sidebar should include a clear assets entry');
+assert(app.includes('NEXORA Builder'), 'Sidebar should use the branded builder label');
+assert(app.includes('NEXORA Assets'), 'Workshop sidebar should include a clear branded assets entry');
 assert(app.includes('準備中'), 'Unavailable future tools should be labeled as preparing');
 assert(app.includes('getProjectHeroPreview'), 'Project cards should derive a hero preview from project modules');
 assert(app.includes('尚未設定主視覺'), 'Project cards should show an empty hero state when no KV exists');

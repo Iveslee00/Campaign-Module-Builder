@@ -1,5 +1,5 @@
 {
-  "name": "campaign-module-builder",
+  "name": "nexora",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -22,6 +22,7 @@
     "verify:project-memory": "node --no-warnings scripts/verify-project-memory.mjs",
     "verify:workshop-demo": "node --no-warnings scripts/verify-workshop-demo.mjs",
     "verify:auth-foundation": "node --no-warnings scripts/verify-auth-foundation.mjs",
+    "verify:nexora-brand": "node --no-warnings scripts/verify-nexora-brand.mjs",
     "start": "next start",
     "lint": "next lint"
   },

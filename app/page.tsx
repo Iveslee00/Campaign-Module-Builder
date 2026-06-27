@@ -509,7 +509,7 @@ export default function Page() {
   if (!hydrated) {
     return (
       <div className="flex h-screen items-center justify-center bg-slate-100 text-sm font-semibold text-slate-500">
-        載入工作坊...
+        載入 NEXORA...
       </div>
     );
   }
@@ -520,24 +520,24 @@ export default function Page() {
         <div className="grid min-h-screen lg:grid-cols-[0.95fr_1.05fr]">
           <section className="flex flex-col justify-between bg-[#172033] px-8 py-8 text-white lg:px-12">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500">
-                <Layers size={20} />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500 text-sm font-black tracking-tight">
+                NX
               </div>
               <div>
-                <p className="text-base font-bold">工作區</p>
+                <p className="text-base font-bold">NEXORA</p>
                 <p className="text-xs font-semibold text-indigo-100">受邀測試版本</p>
               </div>
             </div>
 
             <div className="my-12 max-w-xl">
               <p className="mb-4 inline-flex rounded-full border border-indigo-300/30 bg-indigo-400/10 px-3 py-1 text-xs font-bold text-indigo-100">
-                行銷活動工具平台
+                Build the Next Era.
               </p>
               <h1 className="text-4xl font-black leading-tight tracking-tight text-white lg:text-6xl">
-                登入工作區
+                登入 NEXORA
               </h1>
               <p className="mt-5 text-base leading-8 text-slate-200">
-                從同一個後台建立、管理與匯出活動頁工具。現在先開放 Campaign Builder，後續可以加入更多行銷與營運工具。
+                從同一個工作平台建立活動頁、管理行銷工具與匯出可用素材。現在先開放 NEXORA Builder，後續將加入更多 AI、行銷與營運工具。
               </p>
             </div>
 
@@ -554,7 +554,7 @@ export default function Page() {
             >
               <div className="mb-6">
                 <p className="text-2xl font-black text-slate-950">歡迎回來</p>
-                <p className="mt-2 text-sm leading-6 text-slate-500">輸入測試帳號即可進入工作區。</p>
+                <p className="mt-2 text-sm leading-6 text-slate-500">輸入受邀帳號即可進入 NEXORA Workspace。</p>
               </div>
 
               <label className="mb-4 block">
@@ -599,7 +599,7 @@ export default function Page() {
                 disabled={loginLoading}
                 className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 text-sm font-black text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-indigo-500 hover:shadow-lg hover:shadow-indigo-200"
               >
-                {loginLoading ? '登入中...' : '進入工作區'}
+                {loginLoading ? '登入中...' : '進入 NEXORA Workspace'}
                 <Sparkles size={16} />
               </button>
 
@@ -619,11 +619,11 @@ export default function Page() {
         <aside className="flex w-64 flex-shrink-0 flex-col justify-between bg-[#172033] px-4 py-5 text-slate-300">
           <div>
             <div className="mb-7 flex items-center gap-3 px-2">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-white">
-                <Layers size={20} />
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-sm font-black tracking-tight text-white">
+                NX
               </div>
               <div className="min-w-0">
-                <p className="truncate text-sm font-black text-white">工作區</p>
+                <p className="truncate text-sm font-black text-white">NEXORA</p>
                 <p className="text-xs font-semibold text-slate-500">Beta Access</p>
               </div>
             </div>
@@ -634,19 +634,19 @@ export default function Page() {
               </button>
               <button className="relative flex w-full items-center gap-3 overflow-hidden rounded-xl bg-indigo-500/[0.18] px-3 py-3 text-left text-sm font-black text-white before:absolute before:left-0 before:top-2 before:h-[calc(100%-16px)] before:w-1 before:rounded-r-full before:bg-indigo-300">
                 <Wrench size={18} />
-                活動頁
+                NEXORA Builder
               </button>
               <button className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-500 transition-all duration-200 hover:bg-white/5">
                 <span className="flex items-center gap-3">
                   <FolderOpen size={18} />
-                  素材庫
+                  NEXORA Assets
                 </span>
                 <span className="rounded-full bg-white/[0.08] px-2 py-0.5 text-[10px] font-black text-slate-400">準備中</span>
               </button>
               <button className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-500 transition-all duration-200 hover:bg-white/5">
                 <span className="flex items-center gap-3">
                   <Settings size={18} />
-                  設定
+                  NEXORA Settings
                 </span>
                 <span className="rounded-full bg-white/[0.08] px-2 py-0.5 text-[10px] font-black text-slate-400">準備中</span>
               </button>
@@ -670,8 +670,8 @@ export default function Page() {
         <main className="min-w-0 flex-1 overflow-y-auto animate-[fadeIn_0.45s_ease-out]">
           <header className="flex items-center justify-between border-b border-slate-200 bg-white px-8 py-5">
             <div>
-              <p className="text-sm font-bold text-indigo-600">Campaign Builder</p>
-              <h1 className="mt-1 text-2xl font-black text-slate-950">活動頁專案</h1>
+              <p className="text-sm font-bold text-indigo-600">NEXORA Workspace</p>
+              <h1 className="mt-1 text-2xl font-black text-slate-950">NEXORA Builder 專案</h1>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -704,9 +704,9 @@ export default function Page() {
             <div className="mb-6 grid gap-4 lg:grid-cols-[1fr_240px]">
               <div className="rounded-2xl border border-slate-200 bg-white p-5">
                 <p className="text-sm font-bold text-indigo-600">目前工具</p>
-                <h2 className="mt-2 text-2xl font-black text-slate-950">Campaign Builder</h2>
+                <h2 className="mt-2 text-2xl font-black text-slate-950">NEXORA Builder</h2>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-                  建立 CMS 可用的活動頁模組，並匯出貼碼、ZIP 或 .cmb 本地專案檔。
+                  Campaign Builder 是目前第一個開放工具，可建立 CMS 可用的活動頁模組，並匯出貼碼、ZIP 或 .cmb 本地專案檔。
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white p-5">
@@ -829,12 +829,12 @@ export default function Page() {
                 className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:bg-slate-700 hover:text-white"
               >
                 <ArrowLeft size={14} />
-                回到工作坊
+                回到 Workspace
               </button>
               <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
                 <Layers size={14} className="text-white" />
               </div>
-              <span className="hidden text-sm font-semibold tracking-tight text-slate-100 sm:inline">Campaign Builder</span>
+              <span className="hidden text-sm font-semibold tracking-tight text-slate-100 sm:inline">NEXORA Builder</span>
               <div className="ml-2 hidden min-w-0 items-center gap-2 lg:flex">
                 <span className="max-w-[220px] truncate rounded-lg border border-slate-800 bg-slate-950/50 px-3 py-2 text-sm font-semibold text-slate-200">
                   {projectName || '未命名專案'}
