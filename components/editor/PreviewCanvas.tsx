@@ -372,8 +372,9 @@ export function PreviewCanvas({
             </div>
           </div>
         )}
-        {specOpen && <SizeSpecGuide onClose={() => setSpecOpen(false)} />}
       </div>
+
+      {specOpen && <SizeSpecGuide onClose={() => setSpecOpen(false)} />}
 
       {/* ── Email canvas ──────────────────────────────────────────────────── */}
       {isEmail ? (
