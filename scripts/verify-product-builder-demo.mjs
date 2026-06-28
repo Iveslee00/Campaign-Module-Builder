@@ -18,7 +18,12 @@ const library = fs.readFileSync('components/editor/ModuleLibrary.tsx', 'utf8');
 
 [
   'createProductLandingModules',
-  'cleanFresh',
+  'buildProductPageModules',
+  'resolveProductPageRecipe',
+  'freshClean',
+  'luxury',
+  'promo',
+  'minimalCommerce',
   'product-showcase',
   'product-benefits',
   'product-features',
@@ -26,11 +31,13 @@ const library = fs.readFileSync('components/editor/ModuleLibrary.tsx', 'utf8');
   'product-purchase',
   'faq',
   'anchor-nav',
-  '水氧潔淨',
+  'Product Page Starter',
   '清潔用品',
+  '美妝保養',
+  '電商綜合',
 ].forEach((token) => {
   if (!builder.includes(token) && !modal.includes(token)) {
-    throw new Error(`Product builder demo missing token: ${token}`);
+    throw new Error(`Product builder starter missing token: ${token}`);
   }
 });
 
@@ -49,8 +56,8 @@ if (!library.includes('Product') || !library.includes('商品頁')) {
   "type: 'product-grid'",
 ].forEach((legacyToken) => {
   if (builder.includes(legacyToken)) {
-    throw new Error(`Product builder demo should not use campaign/content legacy module: ${legacyToken}`);
+    throw new Error(`Product builder starter should not use campaign/content legacy module: ${legacyToken}`);
   }
 });
 
-console.log('Product builder demo verification passed.');
+console.log('Product builder starter verification passed.');

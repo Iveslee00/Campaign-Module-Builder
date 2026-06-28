@@ -401,10 +401,16 @@ export default function Page() {
 
   const handleCreateFromProduct = useCallback((input: ProductBuilderInput) => {
     const createdModules = createProductLandingModules(input);
+    const themeButtonColor = {
+      freshClean: '#0ea5c6',
+      luxury: '#2f2a25',
+      promo: '#ef4444',
+      minimalCommerce: '#4f46e5',
+    }[input.theme];
     setPageMode('campaign');
     setModules((prev) => [...prev, ...createdModules]);
     setSelectedId(createdModules[0]?.id ?? null);
-    setButtonColor('#0ea5c6');
+    setButtonColor(themeButtonColor);
     setButtonTextColor('#ffffff');
     setPageBackgroundColor('#ffffff');
     setProductBuildOpen(false);
