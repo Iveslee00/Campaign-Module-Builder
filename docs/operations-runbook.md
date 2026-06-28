@@ -55,27 +55,58 @@ npm run setup:auth-db
 - 正式營運後，不建議反覆重建帳號。後續應改成單一新增帳號、停用帳號、重設密碼的管理腳本。
 - 不要把使用者密碼寫進 Git。
 
-### 停用帳號
+### 新增或更新單一帳號
 
-目前資料表有 `users.is_active` 欄位。若要停用帳號，可在 Neon SQL Editor 將該帳號改為 inactive。
+使用帳號管理腳本：
 
-概念：
-
-```sql
-update users
-set is_active = false
-where username = 'client01';
+```bash
+NEXORA_USER_PASSWORD='new-password' npm run manage:auth-user -- --action=upsert --username=client11 --displayName='Client 11'
 ```
 
-停用後，該帳號不應再允許登入。
+效果：
+
+- 若帳號不存在，會新增帳號。
+- 若帳號已存在，會更新顯示名稱、密碼與啟用狀態。
+- 密碼會用 `scrypt` 寫入 `users.password_hash`。
+- 不要在 Neon 直接存明碼。
+
+### 停用帳號
+
+使用腳本：
+
+```bash
+npm run manage:auth-user -- --action=deactivate --username=client01
+```
+
+效果：
+
+- `users.is_active` 會改為 `false`。
+- 該帳號既有 session 會被清除。
+- 停用後，該帳號不應再允許登入。
+
+若要重新啟用：
+
+```bash
+npm run manage:auth-user -- --action=activate --username=client01
+```
 
 ### 重設密碼
 
-目前尚未提供正式後台按鈕。若要重設密碼，應新增專用腳本來產生 hash，不要在 Neon 直接存明碼。
+目前尚未提供正式後台按鈕。若要重設密碼，使用腳本產生 hash，不要在 Neon 直接存明碼。
 
-短期建議：
+```bash
+NEXORA_USER_PASSWORD='new-password' npm run manage:auth-user -- --action=reset-password --username=client01
+```
 
-1. 先由開發端新增安全的重設密碼腳本。
+效果：
+
+- `users.password_hash` 會被更新。
+- 該帳號既有 session 會被清除。
+- 使用者需用新密碼重新登入。
+
+短期原則：
+
+1. 密碼只透過環境變數或 CLI 參數傳入，不寫進 Git。
 2. 重設後通知使用者新密碼。
 3. 中長期再做管理後台或邀請制帳號流程。
 

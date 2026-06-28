@@ -33,6 +33,8 @@
     "verify:product-mvp-modules": "node --no-warnings scripts/verify-product-mvp-modules.mjs",
     "verify:color-popover": "node --no-warnings scripts/verify-color-popover-behavior.mjs",
     "verify:global-background": "node --no-warnings scripts/verify-global-background.mjs",
+    "setup:auth-db": "node --no-warnings scripts/setup-auth-db.mjs",
+    "manage:auth-user": "node --no-warnings scripts/manage-auth-user.mjs",
     "start": "next start",
     "lint": "next lint"
   },

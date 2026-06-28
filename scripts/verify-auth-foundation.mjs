@@ -15,10 +15,13 @@ assert(existsSync('app/api/auth/login/route.ts'), 'Login API route should exist'
 assert(existsSync('app/api/auth/logout/route.ts'), 'Logout API route should exist');
 assert(existsSync('app/api/auth/me/route.ts'), 'Current-user API route should exist');
 assert(existsSync('scripts/setup-auth-db.mjs'), 'Database setup script should exist');
+assert(existsSync('scripts/manage-auth-user.mjs'), 'Account management script should exist');
 
 const password = readFileSync('lib/auth/password.ts', 'utf8');
 const session = readFileSync('lib/auth/session.ts', 'utf8');
 const login = readFileSync('app/api/auth/login/route.ts', 'utf8');
+const manager = readFileSync('scripts/manage-auth-user.mjs', 'utf8');
+const runbook = readFileSync('docs/operations-runbook.md', 'utf8');
 
 assert(password.includes('scrypt'), 'Password helper should hash passwords with scrypt');
 assert(password.includes('timingSafeEqual'), 'Password verification should use timingSafeEqual');
@@ -29,5 +32,20 @@ assert(app.includes('/api/auth/login'), 'Login form should call the real login A
 assert(app.includes('/api/auth/logout'), 'Logout should call the real logout API');
 assert(app.includes('/api/auth/me'), 'App should check current session on load');
 assert(!app.includes('DEMO_SESSION_STORAGE_KEY'), 'Fake localStorage login gate should be removed');
+
+[
+  '--action=upsert',
+  '--action=deactivate',
+  '--action=activate',
+  '--action=reset-password',
+  'password_hash',
+  'is_active',
+  'delete from sessions',
+].forEach((token) => {
+  assert(manager.includes(token), `Account manager missing token: ${token}`);
+});
+
+assert(runbook.includes('npm run manage:auth-user'), 'Runbook should document account manager usage');
+assert(runbook.includes('不要在 Neon 直接存明碼'), 'Runbook should warn against plain-text password writes');
 
 console.log('auth foundation verified');

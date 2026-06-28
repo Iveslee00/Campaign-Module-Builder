@@ -358,7 +358,12 @@ npm run verify:desktop-canvas
 npm run build
 ```
 
-Status：待做。
+Status：完成於目前工作分支。
+
+2026-06-28 驗證結果：
+
+- 已建立 `docs/nexora-release-checklist.md`。
+- Checklist 覆蓋 local verification、production smoke test、Builder、Product Starter、圖片與 `.cmb` / ZIP、release decision。
 
 ## Phase P4. 匯出與圖片
 
@@ -536,7 +541,16 @@ Acceptance：
 
 - 文件可讓你照步驟新增、停用、重設帳號。
 
-Status：待做。
+Status：完成於目前工作分支。
+
+2026-06-28 驗證結果：
+
+- 已新增 `scripts/manage-auth-user.mjs`。
+- 已新增 `npm run manage:auth-user` 與補回 `npm run setup:auth-db`。
+- `docs/operations-runbook.md` 已補新增 / 更新帳號、停用、啟用、重設密碼流程。
+- `npm run verify:auth-foundation`：通過。
+- `npm run typecheck`：通過。
+- `npm run build`：通過。
 
 ## Phase P7. QA / Release
 
