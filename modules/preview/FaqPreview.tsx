@@ -5,6 +5,7 @@ import { FaqData } from '@/types/modules';
 import { ChevronDown } from 'lucide-react';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
+import { hoverLift, moduleSurface, premiumShadow, softBorder } from './visualStyles';
 
 export function FaqPreview({ data }: { data: FaqData }) {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -14,13 +15,13 @@ export function FaqPreview({ data }: { data: FaqData }) {
   const textStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
 
   return (
-    <section style={{ background: data.backgroundColor || 'transparent', padding: isMobile ? '24px 16px 32px' : '36px 24px 44px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}>
+    <section style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '28px 16px 36px' : '56px 24px 64px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {data.items.map((item) => {
             const isOpen = openId === item.id;
             return (
-              <div key={item.id} style={{ border: '1px solid #e8e8f4', borderRadius: '10px', overflow: 'hidden' }}>
+              <div key={item.id} style={{ border: softBorder, borderRadius: '18px', overflow: 'hidden', background: '#ffffff', boxShadow: isOpen ? premiumShadow : '0 10px 28px rgba(15,23,42,0.06)', ...hoverLift }}>
                 <button
                   onClick={() => setOpenId(isOpen ? null : item.id)}
                   style={{

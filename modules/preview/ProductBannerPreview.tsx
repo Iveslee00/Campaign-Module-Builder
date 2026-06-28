@@ -5,6 +5,7 @@ import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { getProductBannerImageSpecs } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
+import { glassPanel, moduleSurface, premiumShadow } from './visualStyles';
 
 const heightPadding = {
   small: { desktop: '28px 24px 36px', mobile: '24px 16px 32px' },
@@ -15,7 +16,7 @@ const heightPadding = {
 export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
   const { isMobile } = useDevice();
   const { buttonColor, buttonTextColor } = useGlobalSettings();
-  const bg = { background: data.backgroundColor || 'transparent', color: '#1a1a2e' };
+  const bg = { ...moduleSurface(data.backgroundColor), color: '#1a1a2e' };
   const padding = heightPadding[data.height ?? 'medium'];
 
   const titleStyle: React.CSSProperties = data.titleColor ? { color: data.titleColor } : {};
@@ -37,7 +38,7 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
   const salePriceColor = '#e53e3e';
 
   const content = (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', borderRadius: 28, padding: isMobile ? 0 : '30px 32px', ...(!isMobile ? glassPanel : {}) }}>
       {data.kicker && (
         <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.6, ...textStyle }}>
           {data.kicker}
@@ -76,7 +77,7 @@ export function ProductBannerPreview({ data }: { data: ProductBannerData }) {
   );
 
   const media = (
-    <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', aspectRatio: `${mediaSpec.width} / ${mediaSpec.height}` }}>
+    <div style={{ position: 'relative', borderRadius: '26px', overflow: 'hidden', aspectRatio: `${mediaSpec.width} / ${mediaSpec.height}`, boxShadow: premiumShadow }}>
       <PreviewImage src={imageSrc} alt={data.productName || ''} label={isMobile ? '單品主打 M' : '單品主打 PC'} spec={mediaSpec} />
       {data.showBadge && data.badgeText && (
         <span style={{ position: 'absolute', top: '14px', right: '14px', background: '#e53e3e', color: '#fff', fontSize: '12px', fontWeight: 700, letterSpacing: '0.05em', padding: '5px 10px', borderRadius: '6px' }}>

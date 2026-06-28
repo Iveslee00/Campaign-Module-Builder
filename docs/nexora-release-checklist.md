@@ -27,6 +27,7 @@
 | NEXORA brand | `npm run verify:nexora-brand` |  |  |
 | Module taxonomy | `npm run verify:module-taxonomy` |  |  |
 | Product MVP modules | `npm run verify:product-mvp-modules` |  |  |
+| Module visual polish | `npm run verify:module-visual-polish` |  |  |
 | Product Starter | `npm run verify:product-page-starter` |  |  |
 | CMS export | `npm run verify:cms-consistency` |  |  |
 | Export modal | `npm run verify:export-modal` |  |  |
@@ -95,6 +96,7 @@
 | Product Starter visual differentiation | Pass | 四主題已補 preset token、預覽樣式與匯出 CSS 一致性。 |
 | Product Page Starter | Pass | `npm run verify:product-page-starter` |
 | Product MVP modules | Pass | `npm run verify:product-mvp-modules` |
+| Module visual polish | Pass | `npm run verify:module-visual-polish` |
 | CMS export consistency | Pass | `npm run verify:cms-consistency` |
 | Auth foundation | Pass | `npm run verify:auth-foundation` |
 | Workspace content | Pass | `npm run verify:workspace-content` |

@@ -5,6 +5,7 @@ import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
+import { glassPanel, moduleSurface, premiumShadow } from './visualStyles';
 
 export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
   const { isMobile } = useDevice();
@@ -21,7 +22,7 @@ export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
   };
 
   const content = (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', borderRadius: 28, padding: isMobile ? 0 : '30px 32px', ...(!isMobile ? glassPanel : {}) }}>
       <h2 style={{ fontSize: isMobile ? '1.6rem' : '2.1rem', fontWeight: 700, lineHeight: 1.2, letterSpacing: '-0.02em', color: '#1a1a2e', margin: 0, ...titleStyle }}>
         {data.title || '區塊標題'}
       </h2>
@@ -31,13 +32,13 @@ export function SplitSectionPreview({ data }: { data: SplitSectionData }) {
   );
 
   const media = (
-    <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', aspectRatio: '4 / 3' }}>
+    <div style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden', aspectRatio: '4 / 3', boxShadow: premiumShadow }}>
       <PreviewImage src={imageSrc} alt="" label={isMobile ? '圖文區塊 M' : '圖文區塊 PC'} spec={imageSpec} />
     </div>
   );
 
   return (
-    <section style={{ background: data.backgroundColor || 'transparent', padding: isMobile ? '24px 16px 32px' : '36px 24px 44px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '28px 16px 36px' : '56px 24px 64px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '28px' : '60px', alignItems: 'center' }}>
         {data.reverse ? <>{media}{content}</> : <>{content}{media}</>}
       </div>

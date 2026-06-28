@@ -31,6 +31,7 @@
     "verify:workspace-content": "node --no-warnings scripts/verify-workspace-content.mjs",
     "verify:module-taxonomy": "node --no-warnings scripts/verify-module-taxonomy.mjs",
     "verify:product-mvp-modules": "node --no-warnings scripts/verify-product-mvp-modules.mjs",
+    "verify:module-visual-polish": "node --no-warnings scripts/verify-module-visual-polish.mjs",
     "verify:color-popover": "node --no-warnings scripts/verify-color-popover-behavior.mjs",
     "verify:global-background": "node --no-warnings scripts/verify-global-background.mjs",
     "setup:auth-db": "node --no-warnings scripts/setup-auth-db.mjs",

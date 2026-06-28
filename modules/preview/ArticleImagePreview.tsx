@@ -4,6 +4,7 @@ import { ArticleImageData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { IMAGE_SPECS, getArticleImageSpec } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
+import { glassPanel, moduleSurface, premiumShadow } from './visualStyles';
 
 export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
   const { isMobile } = useDevice();
@@ -25,16 +26,17 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
       flexShrink: 0,
       width: isHorizontal ? '45%' : '100%',
       aspectRatio: isTopLayout ? topImageRatio : sideImageRatio,
-      borderRadius: '12px',
+      borderRadius: '24px',
       overflow: 'hidden',
       marginBottom: pos === 'top' ? '36px' : 0,
+      boxShadow: premiumShadow,
     }}>
       <PreviewImage src={imageSrc} alt={data.title || 'Article image'} label={isMobile ? '文章圖片 M' : '文章圖片 PC'} spec={imageSpec} />
     </div>
   );
 
   const textEl = (
-    <div style={{ flex: 1, minWidth: 0, textAlign: align }}>
+    <div style={{ flex: 1, minWidth: 0, textAlign: align, borderRadius: 26, padding: isHorizontal ? '26px 28px' : 0, ...(isHorizontal ? glassPanel : {}) }}>
       {data.eyebrow && (
         <p style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: data.textColor || '#9090b0', marginBottom: '12px' }}>
           {data.eyebrow}
@@ -66,8 +68,8 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
 
   return (
     <section style={{
-      background: data.backgroundColor || 'transparent',
-      padding: isMobile ? '24px 16px 32px' : '36px 24px 44px',
+      ...moduleSurface(data.backgroundColor),
+      padding: isMobile ? '28px 16px 36px' : '56px 24px 64px',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }}>
       <div style={{ maxWidth: pos === 'top' ? '1080px' : '1080px', margin: '0 auto' }}>
@@ -80,7 +82,7 @@ export function ArticleImagePreview({ data }: { data: ArticleImageData }) {
         <div style={{ display: 'flex', gap: isMobile ? '20px' : '48px', alignItems: 'flex-start', flexDirection: (isMobile || pos === 'left') ? 'row' : 'row-reverse' }}>
             {isMobile ? (
               <div style={{ width: '100%' }}>
-                <div style={{ position: 'relative', aspectRatio: topImageRatio, borderRadius: '12px', overflow: 'hidden', marginBottom: '18px' }}>
+                <div style={{ position: 'relative', aspectRatio: topImageRatio, borderRadius: '24px', overflow: 'hidden', marginBottom: '18px', boxShadow: premiumShadow }}>
                   <PreviewImage src={imageSrc} alt={data.title || 'Article image'} label="文章圖片 M" spec={IMAGE_SPECS.articleMobile} />
                 </div>
                 {textEl}

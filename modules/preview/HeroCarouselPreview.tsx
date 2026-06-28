@@ -7,6 +7,7 @@ import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
+import { premiumShadow } from './visualStyles';
 
 const heightMap = {
   small:  { desktopRatio: '1920 / 480', mobileFullRatio: '750 / 750', mobileImgRatio: '750 / 750' },
@@ -57,7 +58,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
     width: '36px', height: '36px', borderRadius: '50%',
     background: 'rgba(255,255,255,0.18)',
     border: '1px solid rgba(255,255,255,0.3)',
-    backdropFilter: 'blur(6px)',
+    backdropFilter: 'blur(10px)',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     cursor: 'pointer', zIndex: 3, color: '#fff',
   };
@@ -68,7 +69,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
 
   return (
     <section
-      style={{ position: 'relative', overflow: 'hidden', background: data.backgroundColor || '#1a1a2e', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto', ...frameStyle }}
+      style={{ position: 'relative', overflow: 'hidden', background: data.backgroundColor || '#1a1a2e', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto', boxShadow: 'inset 0 -80px 120px rgba(15,23,42,0.18)', ...frameStyle }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -136,7 +137,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
                     position: isMobile ? 'relative' : 'absolute',
                     inset: isMobile ? undefined : 0,
                     zIndex: 1,
-                    background: 'transparent',
+                    background: isMobile ? 'transparent' : 'linear-gradient(90deg, rgba(15,23,42,0.48), rgba(15,23,42,0.16) 48%, rgba(15,23,42,0.04))',
                     flex: isMobile ? '0 0 auto' : undefined,
                     display: 'flex',
                     flexDirection: 'column',
@@ -159,7 +160,7 @@ export function HeroCarouselPreview({ data }: { data: HeroCarouselData }) {
                         </p>
                       )}
                       {s.buttonText && (
-                        <span style={{ display: 'inline-flex', alignItems: 'center', padding: isMobile ? '8px 18px' : '10px 22px', background: buttonColor, color: buttonTextColor, borderRadius: '7px', fontWeight: 700, fontSize: isMobile ? '12px' : '13px', cursor: 'default' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', padding: isMobile ? '8px 18px' : '10px 22px', background: buttonColor, color: buttonTextColor, borderRadius: '999px', fontWeight: 700, fontSize: isMobile ? '12px' : '13px', cursor: 'default', boxShadow: premiumShadow }}>
                           {s.buttonText}
                         </span>
                       )}

@@ -6,6 +6,7 @@ import { useDevice } from '@/contexts/DeviceContext';
 import { IMAGE_SPECS, getBannerProductsImageSpecs } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
 import { ProductCardLabels } from './ProductCardLabels';
+import { hoverLift, premiumShadow, productCardSurface } from './visualStyles';
 
 export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
   const { isMobile } = useDevice();
@@ -57,7 +58,7 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
       <div ref={containerRef} style={{ maxWidth: '1080px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? '12px' : `${desktopGap}px`, alignItems: lockDesktopHeight ? 'stretch' : 'start' }}>
           {/* Banner */}
-          <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', background: '#1a1a2e', aspectRatio: lockDesktopHeight ? undefined : bannerAspectRatio, height: lockDesktopHeight ? '100%' : undefined, display: 'flex' }}>
+          <div style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden', background: '#1a1a2e', aspectRatio: lockDesktopHeight ? undefined : bannerAspectRatio, height: lockDesktopHeight ? '100%' : undefined, display: 'flex', boxShadow: premiumShadow }}>
             <PreviewImage src={bannerSrc} alt={data.bannerTitle} label={isMobile ? '活動 Banner M' : '活動 Banner PC'} spec={bannerSpec} tone="dark" />
             <div style={{ position: 'relative', zIndex: 1, padding: '24px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', width: '100%', background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)' }}>
               {data.bannerTitle && (
@@ -76,8 +77,8 @@ export function BannerProductsPreview({ data }: { data: BannerProductsData }) {
           <div style={{ display: 'grid', gridTemplateColumns: productGridCols, gap: isMobile ? '12px' : `${desktopGap}px`, alignItems: 'start', minHeight: 0 }}>
             {/* Product cards */}
             {data.products.map((product) => (
-              <div key={product.id} style={{ width: lockDesktopHeight ? `${productCardWidth}px` : undefined, minWidth: 0, minHeight: 0, background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
-                <div style={{ position: 'relative', ...productMediaStyle, flexShrink: 0, overflow: 'hidden', background: '#f5f5f5' }}>
+              <div key={product.id} style={{ width: lockDesktopHeight ? `${productCardWidth}px` : undefined, minWidth: 0, minHeight: 0, ...productCardSurface, ...hoverLift }}>
+                <div style={{ position: 'relative', ...productMediaStyle, flexShrink: 0, overflow: 'hidden', background: 'linear-gradient(135deg, #eef2ff, #f8fafc)' }}>
                   <PreviewImage src={product.image} alt={product.name} label="商品圖" spec={IMAGE_SPECS.product} />
                   <ProductCardLabels product={product} compact />
                 </div>

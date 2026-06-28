@@ -2,6 +2,7 @@
 
 import { BankPromoData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
+import { hoverLift, moduleSurface, premiumShadow } from './visualStyles';
 
 const DEFAULT_ACCENT = '#6366f1';
 
@@ -19,7 +20,7 @@ export function BankPromoPreview({ data }: { data: BankPromoData }) {
     : 4;
 
   return (
-    <section style={{ background: data.backgroundColor || 'transparent', padding: isMobile ? '24px 16px 32px' : '36px 24px 44px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '28px 16px 36px' : '48px 24px 56px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
 
         {/* Header */}
@@ -42,7 +43,7 @@ export function BankPromoPreview({ data }: { data: BankPromoData }) {
             {data.items.map((item) => {
               const accent = item.accentColor || DEFAULT_ACCENT;
               return (
-                <div key={item.id} style={{ background: '#ffffff', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+                <div key={item.id} style={{ background: 'rgba(255,255,255,0.92)', borderRadius: '20px', overflow: 'hidden', boxShadow: premiumShadow, border: '1px solid rgba(15,23,42,0.08)', display: 'flex', flexDirection: 'column', ...hoverLift }}>
                   {/* Accent bar */}
                   <div style={{ height: '4px', background: accent, flexShrink: 0 }} />
 

@@ -34,19 +34,23 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   margin-left: auto; margin-right: auto;
   padding-left: 24px; padding-right: 24px;
 }
-.cb-section { padding-top: 36px; padding-bottom: 44px; }
+.cb-section {
+  position: relative;
+  padding-top: 40px; padding-bottom: 48px;
+}
 .cb-module-anchor { scroll-margin-top: 16px; }
 
 /* Buttons */
 .cb-btn {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 14px 32px; background: ${btnColor}; color: ${btnTextColor};
-  border-radius: 8px; font-size: 16px; font-weight: 600; line-height: 1;
-  text-decoration: none; transition: background-color 0.2s ease, transform 0.1s ease, color 0.2s ease;
-  cursor: pointer; border: none; white-space: nowrap;
+  border-radius: 999px; font-size: 16px; font-weight: 800; line-height: 1;
+  text-decoration: none; transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer; border: 1px solid rgba(255,255,255,0.18); white-space: nowrap;
+  box-shadow: 0 14px 34px rgba(99,102,241,0.24);
 }
 .cb-page a.cb-btn { color: ${btnTextColor}; }
-.cb-btn:hover { background: ${btnHover}; transform: translateY(-1px); }
+.cb-btn:hover { background: ${btnHover}; transform: translateY(-2px); box-shadow: 0 18px 42px rgba(99,102,241,0.28); }
 .cb-page a.cb-btn:hover { color: ${btnTextColor}; }
 .cb-btn--white { background: ${btnColor}; color: ${btnTextColor}; }
 .cb-btn--white:hover { background: ${btnHover}; transform: translateY(-1px); }
@@ -66,7 +70,9 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   color: #ffffff;
   font-size: 15px; font-weight: 700; line-height: 1.2; text-decoration: none;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  box-shadow: 0 22px 60px rgba(15,23,42,0.10);
+  backdrop-filter: blur(14px);
+  transition: transform 0.2s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.2s ease;
 }
 .cb-anchor-nav__link:hover {
   transform: translateY(-2px);
@@ -81,7 +87,13 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    4. TITLE BLOCK MODULE
    ------------------------------------------------------------ */
-.cb-title-block { padding: 12px 0 4px; }
+.cb-title-block { padding: 22px 0 12px; }
+.cb-title-block::after {
+  content: ""; display: block; width: 56px; height: 4px; margin-top: 14px;
+  border-radius: 999px; background: linear-gradient(135deg, rgba(99,102,241,0.78), rgba(14,165,198,0.72));
+}
+.cb-title-block--center::after { margin-left: auto; margin-right: auto; }
+.cb-title-block--right::after { margin-left: auto; }
 .cb-title-block__cn {
   display: block; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700;
   letter-spacing: -0.02em; line-height: 1.2; color: #1a1a2e;
@@ -99,11 +111,16 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
    4. HERO MODULE
    ------------------------------------------------------------ */
 .cb-hero { position: relative; overflow: hidden; display: flex; align-items: center; background: #1a1a2e; color: #ffffff; }
+.cb-hero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(15,23,42,0.58), rgba(15,23,42,0.18) 48%, rgba(15,23,42,0.04));
+}
+.cb-hero--image-only::after { display: none; }
 .cb-hero--small { aspect-ratio: 1920 / 480; }
 .cb-hero--medium { aspect-ratio: 1920 / 640; }
 .cb-hero--large { aspect-ratio: 1920 / 800; }
 .cb-hero__content {
-  position: relative; z-index: 1; width: 100%; max-width: 1080px;
+  position: relative; z-index: 2; width: 100%; max-width: 1080px;
   margin-left: auto; margin-right: auto; padding: 0 40px;
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
   background: transparent;
@@ -121,16 +138,23 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    5. SPLIT CONTENT MODULE
    ------------------------------------------------------------ */
-.cb-split {}
+.cb-split { overflow: hidden; }
 .cb-split__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .cb-split__inner--reverse .cb-split__media { order: -1; }
-.cb-split__content { display: flex; flex-direction: column; gap: 20px; }
+.cb-split__content {
+  display: flex; flex-direction: column; gap: 20px;
+  padding: 28px; border-radius: 26px;
+  background: rgba(255,255,255,0.74);
+  border: 1px solid rgba(15,23,42,0.08);
+  box-shadow: 0 22px 60px rgba(15,23,42,0.10);
+  backdrop-filter: blur(14px);
+}
 .cb-split__title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: #1a1a2e; }
 .cb-split__description { font-size: 1rem; line-height: 1.75; color: #4a4a6a; }
 .cb-split__media {
-  position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 3;
+  position: relative; border-radius: 26px; overflow: hidden; aspect-ratio: 4 / 3;
   background: linear-gradient(135deg, #eef2ff, #f8fafc);
-  box-shadow: 0 18px 52px rgba(15,23,42,0.10), 0 0 0 1px rgba(15,23,42,0.06);
+  box-shadow: 0 22px 60px rgba(15,23,42,0.12), 0 0 0 1px rgba(15,23,42,0.08);
 }
 .cb-split__picture { position: absolute; inset: 0; display: block; }
 .cb-split__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -142,10 +166,10 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-card {
   background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.96)); border-radius: 16px; overflow: hidden;
   text-decoration: none; color: inherit; display: flex; flex-direction: column;
-  box-shadow: 0 14px 40px rgba(15,23,42,0.08), 0 0 0 1px rgba(15,23,42,0.06);
+  box-shadow: 0 14px 40px rgba(15,23,42,0.08), 0 0 0 1px rgba(15,23,42,0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-.cb-product-card:hover { transform: translateY(-4px); box-shadow: 0 22px 58px rgba(15,23,42,0.14), 0 0 0 1px rgba(99,102,241,0.16); }
+.cb-product-card:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(15,23,42,0.14), 0 0 0 1px rgba(99,102,241,0.16); }
 .cb-product-card__media { position: relative; aspect-ratio: 1/1; overflow: hidden; background: radial-gradient(circle at 30% 18%, #ffffff, #eef2ff 52%, #e0f2fe); }
 .cb-product-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
 .cb-product-card:hover .cb-product-card__media img { transform: scale(1.05); }
@@ -190,9 +214,9 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-banner-products__inner--3 { grid-template-columns: minmax(0, 520px) max-content; }
 .cb-banner-products__inner--4 { grid-template-columns: minmax(0, 328px) max-content; }
 .cb-banner-products__banner {
-  position: relative; border-radius: 18px; overflow: hidden;
+  position: relative; border-radius: 26px; overflow: hidden;
   background: radial-gradient(circle at 28% 18%, rgba(99,102,241,0.26), transparent 36%), #111827; height: 100%; display: flex;
-  box-shadow: 0 18px 52px rgba(15,23,42,0.16);
+  box-shadow: 0 22px 60px rgba(15,23,42,0.16);
 }
 .cb-banner-products__products { display: grid; gap: 16px; align-items: start; min-height: 0; }
 .cb-banner-products__products--0 { display: none; }
@@ -228,12 +252,12 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   position: absolute; top: 50%; transform: translateY(-50%);
   width: 40px; height: 40px; border-radius: 50%;
   background: #ffffff; border: 1px solid #e8e8f4;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 16px 42px rgba(15,23,42,0.14);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; z-index: 2; transition: box-shadow 0.2s ease;
   font-size: 18px; color: #1a1a2e;
 }
-.cb-carousel__btn:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.cb-carousel__btn:hover { box-shadow: 0 22px 60px rgba(15,23,42,0.18); }
 .cb-carousel__btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .cb-carousel__btn--prev { left: -20px; }
 .cb-carousel__btn--next { right: -20px; }
@@ -248,7 +272,14 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-banner--large { padding-top: 52px; padding-bottom: 60px; }
 .cb-product-banner__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 .cb-product-banner__inner--reverse .cb-product-banner__media { order: -1; }
-.cb-product-banner__content { display: flex; flex-direction: column; gap: 16px; }
+.cb-product-banner__content {
+  display: flex; flex-direction: column; gap: 16px;
+  padding: 30px; border-radius: 28px;
+  background: rgba(255,255,255,0.74);
+  border: 1px solid rgba(15,23,42,0.08);
+  box-shadow: 0 22px 60px rgba(15,23,42,0.10);
+  backdrop-filter: blur(14px);
+}
 .cb-product-banner__kicker { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.65; }
 .cb-product-banner__headline { font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
 .cb-product-banner__tagline { font-size: 1rem; line-height: 1.7; opacity: 0.75; max-width: 480px; }
@@ -260,7 +291,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-banner__original-price { font-size: 14px; font-weight: 500; opacity: 0.5; text-decoration: line-through; }
 .cb-product-banner__sale-price { font-size: 1.75rem; font-weight: 800; color: #e53e3e; letter-spacing: -0.02em; }
 .cb-product-banner--light .cb-product-banner__sale-price { color: #e53e3e; }
-.cb-product-banner__media { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 700 / 600; }
+.cb-product-banner__media { position: relative; border-radius: 28px; overflow: hidden; aspect-ratio: 700 / 600; box-shadow: 0 22px 60px rgba(15,23,42,0.12); background: linear-gradient(135deg, #eef2ff, #f8fafc); }
 .cb-product-banner--small .cb-product-banner__media { aspect-ratio: 700 / 460; }
 .cb-product-banner--large .cb-product-banner__media { aspect-ratio: 700 / 740; }
 .cb-product-banner__picture { position: absolute; inset: 0; display: block; }
@@ -274,8 +305,9 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-logo-wall__item {
   display: flex; align-items: center; justify-content: center; opacity: 1;
   min-width: 196px; min-height: 92px; padding: 16px 18px; border-radius: 18px;
-  background: rgba(255,255,255,0.76); border: 1px solid rgba(15,23,42,0.06);
+  background: rgba(255,255,255,0.78); border: 1px solid rgba(15,23,42,0.08);
   box-shadow: 0 12px 32px rgba(15,23,42,0.06);
+  backdrop-filter: blur(12px);
   transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .cb-logo-wall__item:hover { opacity: 1; transform: translateY(-2px); box-shadow: 0 18px 42px rgba(15,23,42,0.10); }
@@ -284,11 +316,18 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    12. CTA MODULE
    ------------------------------------------------------------ */
-.cb-cta { position: relative; }
+.cb-cta { position: relative; overflow: hidden; }
 .cb-cta--light { background-color: #f8f8fc; color: #1a1a2e; }
 .cb-cta--dark { background-color: #1a1a2e; color: #ffffff; }
 .cb-cta--gradient { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; }
 .cb-cta__inner { display: flex; flex-direction: column; gap: 20px; }
+.cb-cta--light .cb-cta__inner {
+  padding: 32px; border-radius: 28px;
+  background: rgba(255,255,255,0.74);
+  border: 1px solid rgba(15,23,42,0.08);
+  box-shadow: 0 22px 60px rgba(15,23,42,0.10);
+  backdrop-filter: blur(14px);
+}
 .cb-cta__inner--left { align-items: flex-start; text-align: left; }
 .cb-cta__inner--center { align-items: center; text-align: center; }
 .cb-cta__inner--right { align-items: flex-end; text-align: right; }
@@ -303,7 +342,9 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   border: 1px solid rgba(15,23,42,0.07); border-radius: 18px; overflow: hidden;
   background: rgba(255,255,255,0.86);
   box-shadow: 0 14px 36px rgba(15,23,42,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
+.cb-faq__item:hover { transform: translateY(-2px); border-color: rgba(99,102,241,0.18); box-shadow: 0 22px 60px rgba(15,23,42,0.10); }
 .cb-faq__item summary { list-style: none; }
 .cb-faq__item summary::-webkit-details-marker { display: none; }
 .cb-faq__question { padding: 20px 24px; font-size: 16px; font-weight: 600; color: #1a1a2e; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; transition: background-color 0.15s ease; user-select: none; }
@@ -427,7 +468,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-scenes__item-title { margin: 0 0 8px; font-size: 1.1rem; font-weight: 850; color: #0f172a; }
 .cb-product-scenes__item-text { margin: 0; font-size: 0.94rem; line-height: 1.7; color: #475569; }
 
-.cb-product-info__table { overflow: hidden; border: 1px solid rgba(15,23,42,0.08); border-radius: 18px; background: #ffffff; }
+.cb-product-info__table { overflow: hidden; border: 1px solid rgba(15,23,42,0.08); border-radius: 24px; background: #ffffff; box-shadow: 0 22px 60px rgba(15,23,42,0.10); }
 .cb-product-info__row { display: grid; grid-template-columns: 180px 1fr; gap: 18px; padding: 18px 20px; border-bottom: 1px solid rgba(15,23,42,0.08); }
 .cb-product-info__row:last-child { border-bottom: none; }
 .cb-product-info__label { margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b; }
@@ -459,7 +500,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-steps__item { border: 1px solid rgba(15,23,42,0.08); border-radius: 26px; padding: 22px; background: #ffffff; box-shadow: 0 16px 42px rgba(15,23,42,0.07); }
 .cb-product-steps--timeline .cb-product-steps__item { position: relative; display: grid; grid-template-columns: 120px 1fr; gap: 18px; }
 .cb-product-steps__number { display: inline-flex; width: 54px; height: 54px; align-items: center; justify-content: center; border-radius: 18px; background: linear-gradient(135deg, #e0f2fe, #eef2ff); font-size: 1.35rem; line-height: 1; font-weight: 900; color: #0f172a; }
-.cb-product-steps__media { position: relative; aspect-ratio: 900 / 640; margin: 16px 0; overflow: hidden; border-radius: 16px; background: #eef2ff; }
+.cb-product-steps__media { position: relative; aspect-ratio: 900 / 640; margin: 16px 0; overflow: hidden; border-radius: 20px; background: #eef2ff; box-shadow: 0 16px 42px rgba(15,23,42,0.08); }
 .cb-product-steps__picture { position: absolute; inset: 0; display: block; }
 .cb-product-steps__picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .cb-product-steps__title { margin: 0 0 8px; font-size: 1.1rem; font-weight: 850; color: #0f172a; }
@@ -493,7 +534,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-purchase__button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; border-radius: 999px; background: #ffffff; color: #0f172a; padding: 0 32px; font-weight: 850; text-decoration: none; box-shadow: 0 16px 36px rgba(0,0,0,0.18); }
 .cb-product-purchase--cta .cb-product-purchase__button { min-height: 56px; padding: 0 40px; box-shadow: none; }
 .cb-product-purchase__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.cb-product-purchase__card { overflow: hidden; border-radius: 22px; background: #ffffff; color: #0f172a; text-decoration: none; box-shadow: 0 18px 48px rgba(0,0,0,0.18); }
+.cb-product-purchase__card { overflow: hidden; border-radius: 22px; background: #ffffff; color: #0f172a; text-decoration: none; box-shadow: 0 18px 48px rgba(0,0,0,0.18); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.cb-product-purchase__card:hover { transform: translateY(-3px); box-shadow: 0 22px 60px rgba(0,0,0,0.22); }
 .cb-product-purchase__media { position: relative; display: block; aspect-ratio: 1 / 1; background: #eef2ff; }
 .cb-product-purchase__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
 .cb-product-purchase__body { display: block; padding: 16px; }
@@ -638,7 +680,14 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    16. ARTICLE TEXT MODULE
    ------------------------------------------------------------ */
-.cb-article__inner { max-width: 800px; margin-left: auto; margin-right: auto; }
+.cb-article__inner {
+  max-width: 800px; margin-left: auto; margin-right: auto;
+  padding: 30px; border-radius: 28px;
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(15,23,42,0.08);
+  box-shadow: 0 22px 60px rgba(15,23,42,0.10);
+  backdrop-filter: blur(14px);
+}
 .cb-article--center .cb-article__inner { text-align: center; }
 .cb-article--left .cb-article__inner { text-align: left; }
 .cb-article__eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #9090b0; margin-bottom: 12px; }
@@ -657,8 +706,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-article-img__picture { position: absolute; inset: 0; display: block; }
 .cb-article-img__img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
 .cb-article-img--top .cb-article-img__media--top {
-  border-radius: 22px; overflow: hidden; margin-bottom: 36px;
-  box-shadow: 0 18px 52px rgba(15,23,42,0.10), 0 0 0 1px rgba(15,23,42,0.06);
+  border-radius: 26px; overflow: hidden; margin-bottom: 36px;
+  box-shadow: 0 22px 60px rgba(15,23,42,0.12), 0 0 0 1px rgba(15,23,42,0.08);
 }
 .cb-article-img--top .cb-article-img__media--top { position: relative; aspect-ratio: 1200 / 420; }
 .cb-article-img__layout { display: grid; gap: 48px; align-items: flex-start; }
@@ -667,8 +716,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-article-img__layout--right .cb-article-img__media { order: 2; }
 .cb-article-img__layout--right .cb-article__inner { order: 1; }
 .cb-article-img__layout .cb-article-img__media {
-  position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 600 / 450;
-  box-shadow: 0 18px 52px rgba(15,23,42,0.10), 0 0 0 1px rgba(15,23,42,0.06);
+  position: relative; border-radius: 26px; overflow: hidden; aspect-ratio: 600 / 450;
+  box-shadow: 0 22px 60px rgba(15,23,42,0.12), 0 0 0 1px rgba(15,23,42,0.08);
 }
 
 @media (max-width: 768px) {
@@ -689,9 +738,13 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-kv--large  { aspect-ratio: 1920 / 800; }
 .cb-kv__track { display: flex; height: 100%; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
 .cb-kv__slide { flex: 0 0 100%; position: relative; height: 100%; overflow: hidden; }
+.cb-kv__slide:not(.cb-kv__slide--image-only)::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(90deg, rgba(15,23,42,0.48), rgba(15,23,42,0.16) 46%, rgba(15,23,42,0.04));
+}
 .cb-kv__slide--image-only { }
 .cb-kv__text {
-  position: relative; z-index: 1; width: 100%; max-width: 1080px; height: 100%;
+  position: relative; z-index: 2; width: 100%; max-width: 1080px; height: 100%;
   margin-left: auto; margin-right: auto; padding: 0 40px;
   display: flex; flex-direction: column; justify-content: center; overflow: hidden;
 }
@@ -706,7 +759,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-kv__title { font-size: 1.75rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: #ffffff; margin: 0 0 8px; }
 .cb-kv__subtitle { font-size: clamp(0.8rem, 1vw, 0.9rem); line-height: 1.6; color: #ffffff; margin: 0 0 16px; max-width: 320px; }
 .cb-kv__btn { }
-.cb-kv__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3; color: #fff; font-size: 16px; }
+.cb-kv__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3; color: #fff; font-size: 16px; box-shadow: 0 16px 42px rgba(15,23,42,0.18); transition: transform 0.2s ease, background 0.2s ease; }
+.cb-kv__nav:hover { transform: translateY(-50%) scale(1.04); background: rgba(255,255,255,0.26); }
 .cb-kv__nav--prev { left: 8px; }
 .cb-kv__nav--next { right: 14px; }
 .cb-kv__dots { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 3; }
@@ -754,9 +808,11 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-bank__grid--4 { grid-template-columns: repeat(4, 1fr); }
 .cb-bank-card {
   background: linear-gradient(180deg, #ffffff, #f8fafc); border-radius: 16px; overflow: hidden;
-  box-shadow: 0 14px 36px rgba(15,23,42,0.08), 0 0 0 1px rgba(15,23,42,0.06);
+  box-shadow: 0 14px 36px rgba(15,23,42,0.08), 0 0 0 1px rgba(15,23,42,0.08);
   display: flex; flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+.cb-bank-card:hover { transform: translateY(-3px); box-shadow: 0 22px 60px rgba(15,23,42,0.12), 0 0 0 1px rgba(99,102,241,0.16); }
 .cb-bank-card__accent { height: 4px; flex-shrink: 0; }
 .cb-bank-card__body { padding: 18px 20px; display: flex; flex-direction: column; gap: 5px; flex: 1; }
 .cb-bank-card__header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }

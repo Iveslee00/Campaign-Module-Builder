@@ -2,6 +2,7 @@
 
 import { ArticleTextData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
+import { glassPanel, moduleSurface } from './visualStyles';
 
 export function ArticleTextPreview({ data }: { data: ArticleTextData }) {
   const { isMobile } = useDevice();
@@ -11,11 +12,11 @@ export function ArticleTextPreview({ data }: { data: ArticleTextData }) {
 
   return (
     <section style={{
-      background: data.backgroundColor || 'transparent',
-      padding: isMobile ? '24px 16px 32px' : '36px 24px 44px',
+      ...moduleSurface(data.backgroundColor),
+      padding: isMobile ? '28px 16px 36px' : '56px 24px 64px',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: align }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: align, borderRadius: 28, padding: isMobile ? 0 : '36px 42px', ...(!isMobile ? glassPanel : {}) }}>
         {data.eyebrow && (
           <p style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: data.textColor || '#9090b0', marginBottom: '12px' }}>
             {data.eyebrow}

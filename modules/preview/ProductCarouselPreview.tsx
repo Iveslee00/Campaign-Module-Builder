@@ -7,6 +7,7 @@ import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { PreviewImage } from './PreviewImage';
 import { ProductCardLabels } from './ProductCardLabels';
+import { hoverLift, moduleSurface, premiumShadow, productCardSurface } from './visualStyles';
 
 export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) {
   const { isMobile } = useDevice();
@@ -51,7 +52,7 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
 
   return (
     <section
-      style={{ background: data.backgroundColor || 'transparent', padding: isMobile ? '24px 16px 32px' : '28px 0 44px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}
+      style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '28px 16px 36px' : '44px 0 56px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -64,7 +65,7 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
             position: 'absolute', left: isMobile ? '-4px' : '-16px', top: '50%', transform: 'translateY(-50%)',
             width: '36px', height: '36px', borderRadius: '50%',
             background: '#ffffff', border: '1px solid #e8e8f4',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+            boxShadow: premiumShadow,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: current === 0 ? 'not-allowed' : 'pointer',
             opacity: current === 0 ? 0.3 : 1,
@@ -82,8 +83,8 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
                 key={product.id}
                 style={{ flex: `0 0 ${itemWidth}px`, minWidth: 0 }}
               >
-                <div style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
-                  <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f5f5f5' }}>
+                <div style={{ ...productCardSurface, ...hoverLift }}>
+                  <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: 'linear-gradient(135deg, #eef2ff, #f8fafc)' }}>
                     <PreviewImage src={product.image} alt={product.name} label="商品圖" spec={IMAGE_SPECS.product} />
                     <ProductCardLabels product={product} compact={isMobile} />
                   </div>
@@ -119,7 +120,7 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
             position: 'absolute', right: isMobile ? '-4px' : '-16px', top: '50%', transform: 'translateY(-50%)',
             width: '36px', height: '36px', borderRadius: '50%',
             background: '#ffffff', border: '1px solid #e8e8f4',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+            boxShadow: premiumShadow,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: current >= max ? 'not-allowed' : 'pointer',
             opacity: current >= max ? 0.3 : 1,

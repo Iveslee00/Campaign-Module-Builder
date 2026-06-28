@@ -5,6 +5,7 @@ import { useDevice } from '@/contexts/DeviceContext';
 import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
 import { ProductCardLabels } from './ProductCardLabels';
+import { hoverLift, moduleSurface, productCardSurface } from './visualStyles';
 
 export function ProductGridPreview({ data }: { data: ProductGridData }) {
   const { isMobile } = useDevice();
@@ -13,12 +14,12 @@ export function ProductGridPreview({ data }: { data: ProductGridData }) {
   const nameStyle: React.CSSProperties = data.textColor ? { color: data.textColor } : {};
 
   return (
-    <section style={{ background: data.backgroundColor || 'transparent', padding: isMobile ? '24px 16px 32px' : '28px 24px 44px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '28px 16px 36px' : '44px 24px 56px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: isMobile ? '12px' : '20px' }}>
           {data.products.map((product) => (
-            <div key={product.id} style={{ background: '#ffffff', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05)' }}>
-              <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: '#f5f5f5' }}>
+            <div key={product.id} style={{ ...productCardSurface, ...hoverLift }}>
+              <div style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden', background: 'linear-gradient(135deg, #eef2ff, #f8fafc)' }}>
                 <PreviewImage src={product.image} alt={product.name} label="商品圖" spec={IMAGE_SPECS.product} />
                 <ProductCardLabels product={product} compact={isMobile} />
               </div>

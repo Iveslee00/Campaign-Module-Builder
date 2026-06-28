@@ -3,6 +3,7 @@
 import { CtaData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
+import { glassPanel, premiumShadow } from './visualStyles';
 
 const bgMap: Record<string, React.CSSProperties> = {
   light: { background: 'transparent', color: '#1a1a2e' },
@@ -31,14 +32,15 @@ export function CtaPreview({ data }: { data: CtaData }) {
     padding: '14px 32px',
     background: buttonColor,
     color: buttonTextColor,
-    borderRadius: '8px', fontWeight: 600, fontSize: '15px',
+    borderRadius: '999px', fontWeight: 750, fontSize: '15px',
     lineHeight: 1, cursor: 'default', whiteSpace: 'nowrap',
+    boxShadow: premiumShadow,
   };
 
   return (
     <section style={{ ...bg, padding: isMobile ? '32px 16px 40px' : '44px 24px 52px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', ...align }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', borderRadius: 30, padding: isMobile ? 0 : '36px 42px', ...(!isMobile && data.backgroundStyle === 'light' ? glassPanel : {}), ...align }}>
           <h2 style={{ fontSize: isMobile ? '1.75rem' : '2.5rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.03em', margin: 0, ...titleStyle }}>
             {data.title || '行動呼籲標題'}
           </h2>

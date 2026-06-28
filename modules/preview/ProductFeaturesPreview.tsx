@@ -2,6 +2,7 @@
 
 import { ProductFeaturesData } from '@/types/modules';
 import { useDevice } from '@/contexts/DeviceContext';
+import { hoverLift, moduleSurface, premiumShadow, softBorder } from './visualStyles';
 
 export function ProductFeaturesPreview({ data }: { data: ProductFeaturesData }) {
   const { isMobile } = useDevice();
@@ -25,14 +26,14 @@ export function ProductFeaturesPreview({ data }: { data: ProductFeaturesData }) 
       : 'linear-gradient(135deg, #e0f2fe, #eef2ff)';
 
   return (
-    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '36px 16px' : '56px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <section style={{ ...moduleSurface(data.backgroundColor || '#ffffff'), padding: isMobile ? '36px 16px' : '56px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
         {data.eyebrow && <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: textColor, opacity: 0.7 }}>{data.eyebrow}</p>}
         <h2 style={{ margin: 0, maxWidth: '720px', fontSize: isMobile ? '1.75rem' : '2.5rem', lineHeight: 1.12, fontWeight: 850, color: titleColor }}>{data.title}</h2>
         {data.subtitle && <p style={{ margin: '14px 0 0', maxWidth: '680px', fontSize: '1rem', lineHeight: 1.7, color: textColor }}>{data.subtitle}</p>}
         <div style={{ display: 'grid', gridTemplateColumns: columns, gap: isMobile ? '14px' : '18px', marginTop: isMobile ? '26px' : '34px' }}>
           {data.items.map((item) => (
-            <div key={item.id} style={{ minHeight: isIconText ? 112 : isGrid6 ? 142 : 164, borderRadius: isIconText ? 999 : 22, padding: isIconText ? '20px 24px' : '24px 22px', background: cardBg, border: '1px solid rgba(15,23,42,0.08)', boxShadow: isIconText ? '0 14px 34px rgba(47,42,37,0.07)' : '0 18px 46px rgba(15,23,42,0.08)', display: isIconText ? 'grid' : 'block', gridTemplateColumns: isIconText ? '52px 1fr' : undefined, gap: isIconText ? 16 : undefined, alignItems: isIconText ? 'center' : undefined }}>
+            <div key={item.id} style={{ minHeight: isIconText ? 112 : isGrid6 ? 142 : 164, borderRadius: isIconText ? 999 : 22, padding: isIconText ? '20px 24px' : '24px 22px', background: cardBg, border: softBorder, boxShadow: isIconText ? '0 14px 34px rgba(47,42,37,0.07)' : premiumShadow, display: isIconText ? 'grid' : 'block', gridTemplateColumns: isIconText ? '52px 1fr' : undefined, gap: isIconText ? 16 : undefined, alignItems: isIconText ? 'center' : undefined, ...hoverLift }}>
               <div style={{ width: 46, height: 46, borderRadius: isIconText ? 999 : 16, display: 'flex', alignItems: 'center', justifyContent: 'center', background: accentBackground, fontSize: isGrid6 ? 18 : 22, marginBottom: isIconText ? 0 : 16, boxShadow: 'inset 0 0 0 1px rgba(99,102,241,0.10)' }}>{item.icon}</div>
               <div>
               <h3 style={{ margin: '0 0 8px', fontSize: '1.05rem', lineHeight: 1.25, fontWeight: 800, color: titleColor }}>{item.title}</h3>

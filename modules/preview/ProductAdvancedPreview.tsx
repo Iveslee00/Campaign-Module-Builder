@@ -10,6 +10,7 @@ import {
 import { useDevice } from '@/contexts/DeviceContext';
 import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
+import { moduleSurface } from './visualStyles';
 
 const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
@@ -38,7 +39,7 @@ export function ProductBenefitsPreview({ data }: { data: ProductBenefitsData }) 
       ? 'rgba(255,255,255,0.82)'
       : 'linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.72))';
   return (
-    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
+    <section style={{ ...moduleSurface(data.backgroundColor || '#ffffff'), padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} />
         <div style={{ display: 'grid', gridTemplateColumns: columns, gap: 18 }}>
@@ -64,7 +65,7 @@ export function ProductStepsPreview({ data }: { data: ProductStepsData }) {
   const textColor = data.textColor || '#475569';
   const isTimeline = data.style === 'timeline';
   return (
-    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
+    <section style={{ ...moduleSurface(data.backgroundColor || '#ffffff'), padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} />
         <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTimeline ? '1fr' : `repeat(${Math.min(data.items.length, 3)}, 1fr)`, gap: 18 }}>
@@ -95,7 +96,7 @@ export function ProductComparisonPreview({ data }: { data: ProductComparisonData
   const textColor = data.textColor || '#475569';
   const isBeforeAfter = data.style === 'before-after';
   return (
-    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
+    <section style={{ ...moduleSurface(data.backgroundColor || '#ffffff'), padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} centered={isBeforeAfter} />
         <div style={{ overflow: 'hidden', borderRadius: 26, border: '1px solid rgba(15,23,42,0.08)', background: '#ffffff', boxShadow: '0 20px 56px rgba(15,23,42,0.09)' }}>
@@ -124,7 +125,7 @@ export function ProductProofPreview({ data }: { data: ProductProofData }) {
   const isGuarantee = data.style === 'guarantee';
   const isReviews = data.style === 'reviews';
   return (
-    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
+    <section style={{ ...moduleSurface(data.backgroundColor || '#ffffff'), padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} centered />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 18 }}>
@@ -147,7 +148,7 @@ export function ProductPurchasePreview({ data }: { data: ProductPurchaseData }) 
   const textColor = data.textColor || 'rgba(255,255,255,0.78)';
   const isCta = data.style === 'cta';
   return (
-    <section style={{ background: data.backgroundColor || '#0f172a', padding: isMobile ? '40px 16px' : '64px 24px', fontFamily }}>
+    <section style={{ ...moduleSurface(data.backgroundColor || '#0f172a'), padding: isMobile ? '40px 16px' : '64px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto', color: textColor }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} centered={isCta} />
         <div style={{ textAlign: isCta ? 'center' : 'left', marginBottom: 28 }}>

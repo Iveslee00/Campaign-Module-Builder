@@ -5,6 +5,7 @@ import { useDevice } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
 import { PreviewImage } from './PreviewImage';
+import { premiumShadow } from './visualStyles';
 
 const heightMap = {
   small: { desktopRatio: '1920 / 480', mobileFullRatio: '750 / 750', mobileImgRatio: '750 / 750' },
@@ -44,7 +45,8 @@ export function HeroPreview({ data }: { data: HeroData }) {
   const btnStyle: React.CSSProperties = {
     display: 'inline-flex', alignItems: 'center',
     padding: '12px 28px', background: buttonColor, color: buttonTextColor,
-    borderRadius: '8px', fontWeight: 600, fontSize: '15px', lineHeight: 1, cursor: 'default',
+    borderRadius: '999px', fontWeight: 750, fontSize: '15px', lineHeight: 1, cursor: 'default',
+    boxShadow: premiumShadow,
   };
 
   return (
@@ -69,7 +71,7 @@ export function HeroPreview({ data }: { data: HeroData }) {
               {heroImage}
             </div>
           )}
-          <div style={{ position: isMobile ? 'relative' : 'absolute', inset: isMobile ? undefined : 0, zIndex: 1, display: 'flex', alignItems: 'center', background: isMobile ? textBg : 'transparent', color: defaultTextColor }}>
+          <div style={{ position: isMobile ? 'relative' : 'absolute', inset: isMobile ? undefined : 0, zIndex: 1, display: 'flex', alignItems: 'center', background: isMobile ? textBg : 'linear-gradient(90deg, rgba(15,23,42,0.46), rgba(15,23,42,0.16) 48%, rgba(15,23,42,0.04))', color: defaultTextColor }}>
             <div style={{ width: '100%', maxWidth: '1080px', margin: '0 auto', padding: isMobile ? '20px 18px' : '0 40px' }}>
               <div style={{ maxWidth: isMobile ? 'none' : '430px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 {data.kicker && <span style={{ display: 'block', fontSize: '12px', fontWeight: 600, letterSpacing: '0.12em', opacity: 0.65, marginBottom: '14px', ...textStyle }}>{data.kicker}</span>}
