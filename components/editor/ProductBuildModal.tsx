@@ -193,6 +193,12 @@ export function ProductBuildModal({ onClose, onCreate }: ProductBuildModalProps)
   const selectedLength = lengths.find((item) => item.value === input.pageLength);
   const recipePreview = resolveProductPageRecipe(input);
   const visualTags = themeVisuals[input.theme];
+  const missingRequiredHints = [
+    !input.productName.trim() ? '缺少品名' : '',
+    !input.headline.trim() ? '缺少主標' : '',
+    !(input.mainImage || input.backgroundImage) ? '缺少商品主圖或背景圖' : '',
+    !input.ctaLink.trim() || input.ctaLink.trim() === '#' ? '缺少 CTA 連結' : '',
+  ].filter(Boolean);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm">
@@ -370,9 +376,24 @@ export function ProductBuildModal({ onClose, onCreate }: ProductBuildModalProps)
         </div>
 
         <div className="flex items-center justify-between gap-4 border-t border-white/10 px-6 py-4">
-          <p className="text-sm font-semibold text-slate-500">
-            產生的是既有模組組合，不是鎖死模板；後續仍可增減 General、Campaign、Product 模組。
-          </p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-slate-500">
+              產生的是既有模組組合，不是鎖死模板；後續仍可增減 General、Campaign、Product 模組。
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {missingRequiredHints.length > 0 ? (
+                missingRequiredHints.map((hint) => (
+                  <span key={hint} className="rounded-full border border-amber-300/25 bg-amber-300/10 px-3 py-1 text-xs font-black text-amber-100">
+                    {hint}
+                  </span>
+                ))
+              ) : (
+                <span className="rounded-full border border-emerald-300/25 bg-emerald-300/10 px-3 py-1 text-xs font-black text-emerald-100">
+                  資料已足夠，可建立商品頁
+                </span>
+              )}
+            </div>
+          </div>
           <button
             onClick={() => onCreate(input)}
             className="inline-flex h-11 items-center gap-2 rounded-xl bg-indigo-500 px-6 text-sm font-black text-white transition-all hover:-translate-y-0.5 hover:bg-indigo-400"

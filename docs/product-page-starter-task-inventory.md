@@ -119,7 +119,13 @@ Acceptance：
 - 缺 CTA 連結時顯示提示。
 - 完整填寫後提示消失或改成「可建立」。
 
-Status：待做。
+Status：完成於目前工作分支；已補建立前欄位完整度提示，缺資料只提醒不阻擋建立。
+
+驗證：
+
+- `npm run verify:product-page-starter` 通過。
+- `npm run typecheck` 通過。
+- `npm run build` 通過。
 
 ## Phase 2. Theme System
 

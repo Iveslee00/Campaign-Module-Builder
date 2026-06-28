@@ -83,11 +83,19 @@ const spec = fs.readFileSync(docsPath, 'utf8');
   'industrySwitchPolicy',
   '套用該產業範例文案',
   '保留價格、CTA 與圖片',
+  'missingRequiredHints',
+  '缺少商品主圖或背景圖',
+  '缺少 CTA 連結',
+  '資料已足夠，可建立商品頁',
 ].forEach((token) => {
   if (!modal.includes(token)) {
     throw new Error(`Product Page Starter modal missing recipe preview token: ${token}`);
   }
 });
+
+if (modal.includes('disabled={missingRequiredHints.length > 0}')) {
+  throw new Error('Product Page Starter should warn about missing fields without blocking creation.');
+}
 
 [
   'themeVisuals',
