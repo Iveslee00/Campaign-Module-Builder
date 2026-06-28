@@ -29,6 +29,8 @@
     "verify:project-package": "node --no-warnings scripts/verify-project-package.mjs",
     "verify:workspace-content": "node --no-warnings scripts/verify-workspace-content.mjs",
     "verify:module-taxonomy": "node --no-warnings scripts/verify-module-taxonomy.mjs",
+    "verify:product-mvp-modules": "node --no-warnings scripts/verify-product-mvp-modules.mjs",
+    "verify:color-popover": "node --no-warnings scripts/verify-color-popover-behavior.mjs",
     "start": "next start",
     "lint": "next lint"
   },

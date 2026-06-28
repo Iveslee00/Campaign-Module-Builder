@@ -17,6 +17,10 @@ import { ArticleImagePreview } from './ArticleImagePreview';
 import { HeroCarouselPreview } from './HeroCarouselPreview';
 import { BankPromoPreview } from './BankPromoPreview';
 import { AnchorNavPreview } from './AnchorNavPreview';
+import { ProductFeaturesPreview } from './ProductFeaturesPreview';
+import { ProductShowcasePreview } from './ProductShowcasePreview';
+import { ProductScenesPreview } from './ProductScenesPreview';
+import { ProductInfoPreview } from './ProductInfoPreview';
 
 export function ModulePreviewRenderer({ module, modules = [] }: { module: PageModule; modules?: PageModule[] }) {
   switch (module.type) {
@@ -36,6 +40,10 @@ export function ModulePreviewRenderer({ module, modules = [] }: { module: PageMo
     case 'hero-carousel':    return <HeroCarouselPreview data={module.data} />;
     case 'bank-promo':       return <BankPromoPreview data={module.data} />;
     case 'anchor-nav':       return <AnchorNavPreview data={module.data} moduleId={module.id} modules={modules} />;
+    case 'product-features': return <ProductFeaturesPreview data={module.data} />;
+    case 'product-showcase': return <ProductShowcasePreview data={module.data} />;
+    case 'product-scenes':   return <ProductScenesPreview data={module.data} />;
+    case 'product-info':     return <ProductInfoPreview data={module.data} />;
     default:                 return null;
   }
 }

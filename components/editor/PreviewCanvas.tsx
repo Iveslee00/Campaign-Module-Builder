@@ -42,6 +42,8 @@ const campaignLabels: Record<string, string> = {
   'sticky-sidebar': '浮動工具列', 'article-text': '文章內容',
   'article-image': '文章搭配圖片', 'hero-carousel': 'KV 輪播', 'bank-promo': '銀行優惠',
   'anchor-nav': '錨點導覽',
+  'product-features': '商品特色', 'product-showcase': '大圖展示',
+  'product-scenes': '商品情境', 'product-info': '商品資訊',
 };
 
 const getCampaignModuleLabel = (module: PageModule) => {

@@ -18,6 +18,10 @@ import { ArticleImageForm } from './ArticleImageForm';
 import { HeroCarouselForm } from './HeroCarouselForm';
 import { BankPromoForm } from './BankPromoForm';
 import { AnchorNavForm } from './AnchorNavForm';
+import { ProductFeaturesForm } from './ProductFeaturesForm';
+import { ProductShowcaseForm } from './ProductShowcaseForm';
+import { ProductScenesForm } from './ProductScenesForm';
+import { ProductInfoForm } from './ProductInfoForm';
 import { FormField } from '@/components/ui/FormField';
 
 interface Props {
@@ -87,6 +91,18 @@ export function FormRenderer({ module, modules, onChange }: Props) {
       break;
     case 'bank-promo':
       form = <BankPromoForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-features':
+      form = <ProductFeaturesForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-showcase':
+      form = <ProductShowcaseForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-scenes':
+      form = <ProductScenesForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-info':
+      form = <ProductInfoForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
       break;
     default:
       return null;

@@ -15,6 +15,10 @@ import { generateArticleImageHTML } from '@/modules/exporters/articleImageExport
 import { generateHeroCarouselHTML, generateHeroCarouselScript } from '@/modules/exporters/heroCarouselExporter';
 import { generateBankPromoHTML } from '@/modules/exporters/bankPromoExporter';
 import { generateAnchorNavHTML } from '@/modules/exporters/anchorNavExporter';
+import { generateProductFeaturesHTML } from '@/modules/exporters/productFeaturesExporter';
+import { generateProductShowcaseHTML } from '@/modules/exporters/productShowcaseExporter';
+import { generateProductScenesHTML } from '@/modules/exporters/productScenesExporter';
+import { generateProductInfoHTML } from '@/modules/exporters/productInfoExporter';
 import { generateCarouselScript } from '@/lib/export/cssGenerator';
 import { getModuleAnchorId } from '@/lib/modules/anchors';
 
@@ -37,6 +41,10 @@ function renderModuleHTML(module: PageModule, modules: PageModule[]): string {
     case 'hero-carousel':   return generateHeroCarouselHTML(module.data);
     case 'bank-promo':      return generateBankPromoHTML(module.data);
     case 'anchor-nav':      return generateAnchorNavHTML(module.data, module.id, modules);
+    case 'product-features':return generateProductFeaturesHTML(module.data);
+    case 'product-showcase':return generateProductShowcaseHTML(module.data);
+    case 'product-scenes':  return generateProductScenesHTML(module.data);
+    case 'product-info':    return generateProductInfoHTML(module.data);
     default:                return '';
     }
   })();

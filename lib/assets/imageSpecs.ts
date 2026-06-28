@@ -20,6 +20,10 @@ export const IMAGE_SPECS = {
   kvMobile: { width: 750, height: 850 },
   logo: { width: 160, height: 60 },
   bankLogo: { width: 160, height: 60 },
+  productShowcase: { width: 1000, height: 1000 },
+  productShowcaseMobile: { width: 750, height: 900 },
+  productScene: { width: 900, height: 640 },
+  productSceneMobile: { width: 750, height: 900 },
 } as const;
 
 export const KV_IMAGE_SPECS = {

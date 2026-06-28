@@ -89,14 +89,18 @@ Brand modules are narrative sections. They should share one consistent content m
 
 ## Current Implementation State
 
-The first implementation pass only reclassifies existing modules:
+Implemented product-page MVP modules:
 
-- Existing common modules are shown under `General`.
-- Existing campaign commerce modules are shown under `Campaign`.
-- Existing product-page demo modules are shown under `Product`.
-- `Brand` is reserved for the next module implementation pass.
+- `product-features`：商品特色，支援四宮格、六宮格、Icon + 文字、卡片式。
+- `product-showcase`：大圖展示，支援滿版圖片 + 文字、上下留白、左右排版、精品風。
+- `product-scenes`：商品情境，支援左圖右文、右圖左文、滿版情境、雙圖情境。
+- `product-info`：商品資訊，支援成分介紹、技術特色、商品規格、商品內容物。
 
-This avoids exposing unfinished modules before their inspector fields, preview rendering, export HTML, ZIP handling, and responsive behavior are complete.
+Existing product-page demo modules remain under `Product` until they are either merged into these base modules or kept as shortcuts.
+
+`Brand` is reserved for the next module implementation pass.
+
+New modules should only be exposed after their inspector fields, preview rendering, export HTML, ZIP handling, and responsive behavior are complete.
 
 ## Global Settings Placement
 

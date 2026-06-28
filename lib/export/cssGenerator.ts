@@ -322,6 +322,65 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-sticky-sidebar__icon { font-size: 18px; line-height: 1; }
 
 /* ------------------------------------------------------------
+   PRODUCT PAGE MVP MODULES
+   ------------------------------------------------------------ */
+.cb-product-block-head { max-width: 720px; margin-bottom: 32px; }
+.cb-product-block-head__eyebrow { margin: 0 0 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #64748b; }
+.cb-product-block-head__title { margin: 0; font-size: clamp(1.75rem, 4vw, 2.6rem); font-weight: 900; line-height: 1.08; color: #0f172a; }
+.cb-product-block-head__subtitle { margin: 14px 0 0; max-width: 680px; font-size: 1rem; line-height: 1.7; color: #475569; }
+
+.cb-product-features__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.cb-product-features--grid-6 .cb-product-features__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cb-product-features--icon-text .cb-product-features__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cb-product-features__item { min-height: 164px; border: 1px solid rgba(15,23,42,0.08); border-radius: 18px; padding: 22px 20px; background: rgba(255,255,255,0.58); }
+.cb-product-features--cards .cb-product-features__item { background: #ffffff; box-shadow: 0 14px 36px rgba(15,23,42,0.08); }
+.cb-product-features__icon { display: inline-flex; width: 42px; height: 42px; align-items: center; justify-content: center; border-radius: 14px; background: #eff6ff; font-size: 22px; margin-bottom: 16px; }
+.cb-product-features__item-title { margin: 0 0 8px; font-size: 1.05rem; line-height: 1.25; font-weight: 800; color: #0f172a; }
+.cb-product-features__item-text { margin: 0; font-size: 0.92rem; line-height: 1.65; color: #475569; }
+
+.cb-product-showcase { overflow: hidden; }
+.cb-product-showcase__inner { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; }
+.cb-product-showcase--spacious .cb-product-showcase__inner { grid-template-columns: 1fr; gap: 42px; }
+.cb-product-showcase--full-bleed { padding: 0; }
+.cb-product-showcase--full-bleed .cb-product-showcase__inner { max-width: none; padding: 0 0 56px; grid-template-columns: 1fr; }
+.cb-product-showcase__inner--reverse .cb-product-showcase__media { order: -1; }
+.cb-product-showcase__content { position: relative; z-index: 1; max-width: 520px; }
+.cb-product-showcase__title { margin: 0; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05; font-weight: 900; color: #0f172a; }
+.cb-product-showcase__subtitle { margin: 14px 0 0; font-size: 1.05rem; line-height: 1.65; font-weight: 650; color: #475569; }
+.cb-product-showcase__description { margin: 12px 0 0; font-size: 0.96rem; line-height: 1.75; color: #475569; opacity: 0.86; }
+.cb-product-showcase__btn { margin-top: 24px; border-radius: 999px; }
+.cb-product-showcase__media { position: relative; aspect-ratio: 1 / 1; border-radius: 28px; overflow: hidden; background: #eef2ff; }
+.cb-product-showcase--full-bleed .cb-product-showcase__media { border-radius: 0; min-height: 520px; }
+.cb-product-showcase__picture { position: absolute; inset: 0; display: block; }
+.cb-product-showcase__picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cb-product-showcase--luxury .cb-product-showcase__picture img { object-fit: contain; }
+
+.cb-product-scenes__single { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.cb-product-scenes--right-image .cb-product-scenes__single .cb-product-scenes__media { order: 2; }
+.cb-product-scenes--full-bleed .cb-container { max-width: none; padding-left: 0; padding-right: 0; }
+.cb-product-scenes__media { position: relative; aspect-ratio: 900 / 640; border-radius: 24px; overflow: hidden; background: #eef2ff; }
+.cb-product-scenes--full-bleed .cb-product-scenes__media { border-radius: 0; }
+.cb-product-scenes__picture { position: absolute; inset: 0; display: block; }
+.cb-product-scenes__picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cb-product-scenes__content { max-width: 520px; }
+.cb-product-scenes__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.cb-product-scenes__card { overflow: hidden; border: 1px solid rgba(15,23,42,0.08); border-radius: 24px; background: #ffffff; box-shadow: 0 16px 42px rgba(15,23,42,0.08); }
+.cb-product-scenes__body { padding: 20px 22px 22px; }
+.cb-product-scenes__item-title { margin: 0 0 8px; font-size: 1.1rem; font-weight: 850; color: #0f172a; }
+.cb-product-scenes__item-text { margin: 0; font-size: 0.94rem; line-height: 1.7; color: #475569; }
+
+.cb-product-info__table { overflow: hidden; border: 1px solid rgba(15,23,42,0.08); border-radius: 18px; background: #ffffff; }
+.cb-product-info__row { display: grid; grid-template-columns: 180px 1fr; gap: 18px; padding: 18px 20px; border-bottom: 1px solid rgba(15,23,42,0.08); }
+.cb-product-info__row:last-child { border-bottom: none; }
+.cb-product-info__label { margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b; }
+.cb-product-info__value { margin: 0; font-size: 1.05rem; font-weight: 850; color: #0f172a; }
+.cb-product-info__desc { margin: 6px 0 0; font-size: 0.9rem; line-height: 1.65; color: #475569; }
+.cb-product-info--ingredients .cb-product-info__table,
+.cb-product-info--technology .cb-product-info__table { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cb-product-info--ingredients .cb-product-info__row,
+.cb-product-info--technology .cb-product-info__row { display: block; border-bottom: none; border-right: 1px solid rgba(15,23,42,0.08); }
+
+/* ------------------------------------------------------------
    15. RESPONSIVE
    ------------------------------------------------------------ */
 @media (max-width: 1024px) {
@@ -331,6 +390,10 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-products__grid { grid-template-columns: repeat(3, 1fr); }
   .cb-carousel__item { flex: 0 0 calc(33.333% - 14px); }
   .cb-product-banner__inner { gap: 40px; }
+  .cb-product-features__grid,
+  .cb-product-features--grid-6 .cb-product-features__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cb-product-showcase__inner,
+  .cb-product-scenes__single { gap: 40px; }
   .cb-banner-products__inner { grid-template-columns: 1fr; height: auto; align-items: start; }
   .cb-banner-products__banner { aspect-ratio: 500 / 350; height: auto; }
   .cb-banner-products__inner--1 .cb-banner-products__banner { aspect-ratio: 880 / 350; }
@@ -394,6 +457,24 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-product-banner__media { aspect-ratio: 750 / 850; }
   .cb-product-banner--small .cb-product-banner__media { aspect-ratio: 750 / 750; }
   .cb-product-banner--large .cb-product-banner__media { aspect-ratio: 750 / 900; }
+  .cb-product-block-head { margin-bottom: 26px; }
+  .cb-product-block-head__title { font-size: 1.75rem; }
+  .cb-product-features__grid,
+  .cb-product-features--grid-6 .cb-product-features__grid,
+  .cb-product-features--icon-text .cb-product-features__grid,
+  .cb-product-scenes__grid,
+  .cb-product-info--ingredients .cb-product-info__table,
+  .cb-product-info--technology .cb-product-info__table { grid-template-columns: 1fr; }
+  .cb-product-showcase__inner,
+  .cb-product-showcase--spacious .cb-product-showcase__inner,
+  .cb-product-scenes__single { grid-template-columns: 1fr; gap: 28px; padding-left: 16px; padding-right: 16px; }
+  .cb-product-showcase--full-bleed .cb-product-showcase__inner { padding: 0 16px 38px; }
+  .cb-product-showcase__inner--reverse .cb-product-showcase__media,
+  .cb-product-scenes--right-image .cb-product-scenes__single .cb-product-scenes__media { order: 0; }
+  .cb-product-showcase__media,
+  .cb-product-showcase--full-bleed .cb-product-showcase__media,
+  .cb-product-scenes__media { aspect-ratio: 750 / 900; min-height: auto; }
+  .cb-product-info__row { grid-template-columns: 1fr; gap: 6px; }
   .cb-logo-wall__grid { gap: 24px 32px; }
   .cb-logo-wall__item img { width: 160px; height: 60px; }
   .cb-cta__title { font-size: 1.75rem; }

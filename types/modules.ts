@@ -14,7 +14,11 @@ export type ModuleType =
   | 'article-image'
   | 'hero-carousel'
   | 'bank-promo'
-  | 'anchor-nav';
+  | 'anchor-nav'
+  | 'product-features'
+  | 'product-showcase'
+  | 'product-scenes'
+  | 'product-info';
 
 export interface BaseModule {
   id: string;
@@ -369,6 +373,106 @@ export interface AnchorNavModule extends BaseModule {
   data: AnchorNavData;
 }
 
+// ── Product Page MVP Modules ────────────────────────────────────────────────
+export type ProductFeaturesStyle = 'grid-4' | 'grid-6' | 'icon-text' | 'cards';
+
+export interface ProductFeatureItem {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface ProductFeaturesData extends AnchorableData {
+  style: ProductFeaturesStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: ProductFeatureItem[];
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductFeaturesModule extends BaseModule {
+  type: 'product-features';
+  data: ProductFeaturesData;
+}
+
+export type ProductShowcaseStyle = 'full-bleed' | 'spacious' | 'split' | 'luxury';
+
+export interface ProductShowcaseData extends AnchorableData {
+  style: ProductShowcaseStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  mobileImage: string;
+  buttonText: string;
+  buttonLink: string;
+  reverse: boolean;
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductShowcaseModule extends BaseModule {
+  type: 'product-showcase';
+  data: ProductShowcaseData;
+}
+
+export type ProductScenesStyle = 'left-image' | 'right-image' | 'full-bleed' | 'double-image';
+
+export interface ProductSceneItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  mobileImage: string;
+}
+
+export interface ProductScenesData extends AnchorableData {
+  style: ProductScenesStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: ProductSceneItem[];
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductScenesModule extends BaseModule {
+  type: 'product-scenes';
+  data: ProductScenesData;
+}
+
+export type ProductInfoStyle = 'ingredients' | 'technology' | 'specs' | 'contents';
+
+export interface ProductInfoItem {
+  id: string;
+  label: string;
+  value: string;
+  description: string;
+}
+
+export interface ProductInfoData extends AnchorableData {
+  style: ProductInfoStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: ProductInfoItem[];
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductInfoModule extends BaseModule {
+  type: 'product-info';
+  data: ProductInfoData;
+}
+
 // ── Union & Export ────────────────────────────────────────────────────────────
 export type PageModule =
   | TitleModule
@@ -386,7 +490,11 @@ export type PageModule =
   | ArticleImageModule
   | HeroCarouselModule
   | BankPromoModule
-  | AnchorNavModule;
+  | AnchorNavModule
+  | ProductFeaturesModule
+  | ProductShowcaseModule
+  | ProductScenesModule
+  | ProductInfoModule;
 
 export interface ExportedCode {
   html: string;

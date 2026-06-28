@@ -12,6 +12,8 @@ import {
   isGradientValue,
 } from '@/lib/styles/colorStyles';
 
+const COLOR_POPOVER_OPEN_EVENT = 'nexora-color-popover-open';
+
 interface Option { value: string; label: string }
 
 interface FormFieldProps {
@@ -134,13 +136,25 @@ interface ColorFieldProps {
 }
 
 export function GradientPickerPopover({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const instanceId = useRef(`color-popover-${Math.random().toString(36).slice(2)}`);
   const [open, setOpen] = useState(false);
   const [colorTab, setColorTab] = useState<'solid' | 'gradient'>(isGradientValue(value) ? 'gradient' : 'solid');
   const [fromColor, setFromColor] = useState('#2563eb');
   const [toColor, setToColor] = useState('#7c3aed');
   const [direction, setDirection] = useState('135deg');
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 12, width: 280, maxHeight: 460 });
+
+  useEffect(() => {
+    const closeForSibling = (event: Event) => {
+      const detail = (event as CustomEvent<{ id: string }>).detail;
+      if (detail?.id && detail.id !== instanceId.current) setOpen(false);
+    };
+
+    window.addEventListener(COLOR_POPOVER_OPEN_EVENT, closeForSibling);
+    return () => window.removeEventListener(COLOR_POPOVER_OPEN_EVENT, closeForSibling);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -151,7 +165,7 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
       const margin = 12;
       const width = Math.min(280, window.innerWidth - margin * 2);
       const panelHeight = Math.min(460, window.innerHeight - margin * 2);
-      const left = Math.min(Math.max(margin, rect.right - width), window.innerWidth - width - margin);
+      const left = Math.min(Math.max(margin, rect.left), window.innerWidth - width - margin);
       const belowTop = rect.bottom + 8;
       const aboveTop = rect.top - panelHeight - 8;
       const top = belowTop + panelHeight <= window.innerHeight - margin
@@ -163,9 +177,26 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
     updatePosition();
     window.addEventListener('resize', updatePosition);
     window.addEventListener('scroll', updatePosition, true);
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node | null;
+      if (!target) return;
+      if (buttonRef.current?.contains(target)) return;
+      if (popoverRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('resize', updatePosition);
       window.removeEventListener('scroll', updatePosition, true);
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [open]);
 
@@ -179,7 +210,13 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
       <button
         ref={buttonRef}
         type="button"
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => {
+          const nextOpen = !open;
+          if (nextOpen) {
+            window.dispatchEvent(new CustomEvent(COLOR_POPOVER_OPEN_EVENT, { detail: { id: instanceId.current } }));
+          }
+          setOpen(nextOpen);
+        }}
         aria-label="選擇顏色"
         className={`inline-flex h-8 w-8 items-center justify-center rounded-md border text-xs font-semibold transition-colors ${
           isGradientValue(value)
@@ -192,18 +229,13 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
       </button>
       {open && (
         <div
+          ref={popoverRef}
           className="fixed z-50 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 p-3 shadow-2xl shadow-black/40"
           style={popoverPosition}
         >
           <div className="mb-3 flex items-center justify-between">
             <p className="text-xs font-semibold text-slate-300">選擇顏色</p>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="text-xs text-slate-500 transition-colors hover:text-slate-200"
-            >
-              關閉
-            </button>
+            <p className="text-[11px] text-slate-600">點旁邊關閉</p>
           </div>
           <div className="mb-3 grid grid-cols-2 rounded-md border border-slate-700 bg-slate-800 p-0.5">
             {[
