@@ -148,6 +148,26 @@ npm run verify:project-memory
 npm run verify:workshop-demo
 ```
 
+### 正式站 Smoke Test
+
+每次推正式站後，至少檢查以下項目：
+
+1. 正式站首頁可開啟。
+2. 測試帳號可登入。
+3. 登入後可看到 NEXORA Workspace。
+4. 可從 Workspace 進入 NEXORA Builder。
+5. Builder 可看到既有專案或新增專案入口。
+
+本機可先跑：
+
+```bash
+npm run build
+npm run verify:auth-foundation
+npm run verify:workshop-demo
+```
+
+若 shell 無法解析正式站網域，但瀏覽器可開啟，請以瀏覽器結果為正式站人工驗證依據，並記錄當次 commit 與 Vercel deployment。
+
 ### 手動重新部署
 
 修改 Vercel 環境變數後，需要手動 redeploy。

@@ -161,7 +161,14 @@ npm run verify:auth-foundation
 npm run verify:workshop-demo
 ```
 
-Status：待做。
+Status：本機驗證完成；正式站 HTTP 檢查待可解析 DNS 的環境補驗。
+
+2026-06-28 驗證結果：
+
+- `npm run build`：通過。
+- `npm run verify:auth-foundation`：通過。
+- `npm run verify:workshop-demo`：通過。
+- `curl https://campaignbuilder-coral.vercel.app/`：目前本機 shell 回傳 `Could not resolve host`，需改由瀏覽器或可正常 DNS 解析的環境補驗正式站首頁、登入與 Builder 入口。
 
 ### NX-004：Vercel 部署與回滾流程驗證
 
