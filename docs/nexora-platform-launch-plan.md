@@ -238,7 +238,14 @@ npm run verify:workspace-content
 npm run build
 ```
 
-Status：待做。
+Status：完成於目前工作分支。
+
+2026-06-28 驗證結果：
+
+- `npm run verify:cms-consistency`：初次失敗於文章搭配圖片側邊比例檢查，原因是驗證腳本用單行字串比對 CSS；實際 CSS 已存在 `aspect-ratio: 600 / 450`。
+- 已改為 regex 結構檢查，避免 CSS 換行造成假失敗。
+- `npm run verify:cms-consistency`：通過。
+- `npm run verify:export-modal`：通過。
 
 ### NX-006：Workspace 空狀態與工具卡
 

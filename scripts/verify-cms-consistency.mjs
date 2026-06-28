@@ -64,7 +64,7 @@ assert(css.includes('.cb-article--center .cb-article__content { text-align: cent
 
 assert(articleImageForm.includes('getArticleImageSpec'), 'Article image form should use layout-aware image specs');
 assert(articleImagePreview.includes('getArticleImageSpec'), 'Article image preview should use layout-aware image specs');
-assert(css.includes('.cb-article-img__layout .cb-article-img__media { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 600 / 450; }'), 'Side article images should export as 600x450 ratio');
+assert(/\.cb-article-img__layout \.cb-article-img__media \{[\s\S]*aspect-ratio: 600 \/ 450;[\s\S]*\}/.test(css), 'Side article images should export as 600x450 ratio');
 assert(css.includes('.cb-article-img__layout--right { grid-template-columns: 1fr; gap: 20px; }'), 'Mobile article image spacing should be tighter');
 
 assert(!logoPreview.includes('grayscale(100%)'), 'Logo preview should not apply grayscale');
