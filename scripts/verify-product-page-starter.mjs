@@ -80,6 +80,9 @@ const spec = fs.readFileSync(docsPath, 'utf8');
   'modules.map',
   'moduleLabels',
   '預估產生',
+  'industrySwitchPolicy',
+  '套用該產業範例文案',
+  '保留價格、CTA 與圖片',
 ].forEach((token) => {
   if (!modal.includes(token)) {
     throw new Error(`Product Page Starter modal missing recipe preview token: ${token}`);

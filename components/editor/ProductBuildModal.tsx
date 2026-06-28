@@ -53,6 +53,12 @@ const lengths: Array<SelectOption<ProductPageLength>> = [
   { value: 'complete', label: '完整版', description: '約 10-12 個模組，完整說服' },
 ];
 
+const industrySwitchPolicy = {
+  title: '切換產業會套用該產業範例文案',
+  description: '已輸入的價格、CTA 與圖片會保留；品牌、品名、分類、主標、副標、賣點與詳情會換成該產業範例，方便快速起稿。',
+  preserved: '保留價格、CTA 與圖片',
+};
+
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
@@ -119,18 +125,23 @@ export function ProductBuildModal({ onClose, onCreate }: ProductBuildModalProps)
 
   const changeIndustry = (industry: ProductIndustry) => {
     const next = defaultInputForIndustry(industry);
-    setInput((prev) => ({
-      ...next,
-      goal: prev.goal,
-      pageLength: prev.pageLength,
-      originalPrice: prev.originalPrice,
-      salePrice: prev.salePrice,
-      ctaText: prev.ctaText,
-      ctaLink: prev.ctaLink,
-      mainImage: prev.mainImage,
-      mobileImage: prev.mobileImage,
-      backgroundImage: prev.backgroundImage,
-    }));
+    setInput((prev) => {
+      const preservedProductFields = {
+        goal: prev.goal,
+        pageLength: prev.pageLength,
+        originalPrice: prev.originalPrice,
+        salePrice: prev.salePrice,
+        ctaText: prev.ctaText,
+        ctaLink: prev.ctaLink,
+        mainImage: prev.mainImage,
+        mobileImage: prev.mobileImage,
+        backgroundImage: prev.backgroundImage,
+      };
+      return {
+        ...next,
+        ...preservedProductFields,
+      };
+    });
   };
 
   const handleImage = async (key: 'mainImage' | 'mobileImage' | 'backgroundImage', event: ChangeEvent<HTMLInputElement>) => {
@@ -209,6 +220,13 @@ export function ProductBuildModal({ onClose, onCreate }: ProductBuildModalProps)
         <div className="grid min-h-0 flex-1 overflow-y-auto lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-4 p-6">
             <OptionGrid label="產業 / 線別" value={input.industry} options={industries} onChange={changeIndustry} />
+            <div className="rounded-2xl border border-cyan-300/20 bg-cyan-400/10 px-4 py-3">
+              <p className="text-sm font-black text-cyan-100">{industrySwitchPolicy.title}</p>
+              <p className="mt-1 text-xs font-semibold leading-5 text-cyan-100/70">{industrySwitchPolicy.description}</p>
+              <span className="mt-2 inline-flex rounded-full bg-cyan-300/15 px-3 py-1 text-[11px] font-black text-cyan-100">
+                {industrySwitchPolicy.preserved}
+              </span>
+            </div>
             <OptionGrid label="商品頁目的" value={input.goal} options={goals} onChange={(value) => update('goal', value)} />
             <OptionGrid label="視覺主題" value={input.theme} options={themes} onChange={(value) => update('theme', value)} />
             <OptionGrid label="頁面長度" value={input.pageLength} options={lengths} onChange={(value) => update('pageLength', value)} />

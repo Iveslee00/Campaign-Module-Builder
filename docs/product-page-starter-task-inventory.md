@@ -92,7 +92,7 @@ Acceptance：
 - UI 文案清楚說明哪些資料會被範例覆蓋。
 - `npm run typecheck`、`npm run verify:product-page-starter` 通過。
 
-Status：待做。
+Status：完成於目前工作分支；已補產業切換提示與保留欄位策略。
 
 ### Task PS-003：建立前欄位完整度提示
 
