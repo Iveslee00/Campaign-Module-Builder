@@ -242,10 +242,13 @@ Status：完成於目前工作分支。
 
 2026-06-28 驗證結果：
 
-- `npm run verify:cms-consistency`：初次失敗於文章搭配圖片側邊比例檢查，原因是驗證腳本用單行字串比對 CSS；實際 CSS 已存在 `aspect-ratio: 600 / 450`。
-- 已改為 regex 結構檢查，避免 CSS 換行造成假失敗。
-- `npm run verify:cms-consistency`：通過。
-- `npm run verify:export-modal`：通過。
+- 先補 `verify:workspace-content` 紅燈測試，確認舊 `Campaign Builder` 主文案會被擋下。
+- `npm run verify:workspace-content`：通過。
+- `npm run verify:workshop-demo`：通過。
+- `npm run verify:nexora-brand`：通過。
+- `npm run build`：通過。
+- Workspace 首頁、設定與多語系工具主名已統一為 `NEXORA Builder`。
+- Builder 專用的「匯入專案檔 / 新增活動頁」仍只在 `workspaceSection === 'builder'` 顯示。
 
 ### NX-006：Workspace 空狀態與工具卡
 
@@ -385,7 +388,14 @@ npm run verify:cms-consistency
 npm run verify:export-modal
 ```
 
-Status：待做。
+Status：完成於目前工作分支。
+
+2026-06-28 驗證結果：
+
+- `npm run verify:cms-consistency`：初次失敗於文章搭配圖片側邊比例檢查，原因是驗證腳本用單行字串比對 CSS；實際 CSS 已存在 `aspect-ratio: 600 / 450`。
+- 已改為 regex 結構檢查，避免 CSS 換行造成假失敗。
+- `npm run verify:cms-consistency`：通過。
+- `npm run verify:export-modal`：通過。
 
 ### NX-010：ZIP 與 `.cmb` 圖片完整性驗證
 
@@ -421,7 +431,13 @@ npm run verify:local-image-store
 npm run verify:project-package
 ```
 
-Status：待做。
+Status：完成於目前工作分支。
+
+2026-06-28 驗證結果：
+
+- `npm run verify:local-image-store`：通過。
+- `npm run verify:project-package`：通過。
+- 已確認上傳圖片走 IndexedDB / `local-image://`，ZIP 會改寫到 `images/`，`.cmb` 會包含 `project.json` 與 `images/` 並支援匯入還原。
 
 ## Phase P5. Product Starter
 
