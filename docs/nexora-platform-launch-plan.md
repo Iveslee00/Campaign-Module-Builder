@@ -311,7 +311,13 @@ npm run verify:module-taxonomy
 npm run verify:product-mvp-modules
 ```
 
-Status：待做。
+Status：完成於目前工作分支。
+
+2026-06-28 驗證結果：
+
+- `npm run verify:module-taxonomy`：通過。
+- `npm run verify:product-mvp-modules`：通過。
+- 已確認模組庫具備 General、Campaign、Product、Brand 分類，KV 與 KV 輪播順序有效，FAQ 單一來源，商品頁 wrapper 重複模組未回流。
 
 ### NX-008：全站 UI / 模組 UI QA
 
