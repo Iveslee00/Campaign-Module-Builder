@@ -26,9 +26,13 @@ assert(app.includes('素材'), 'Workshop sidebar should include a compact assets
 assert(app.includes('設定'), 'Workshop sidebar should include a compact settings entry');
 assert(app.includes('準備中'), 'Unavailable future tools should be labeled as preparing');
 assert(app.includes('getProjectHeroPreview'), 'Project cards should derive a hero preview from project modules');
+assert(app.includes('function ProjectHeroImage'), 'Project cards should resolve local KV preview images before rendering.');
+assert(app.includes('<ProjectHeroImage image={heroPreview.image} title={heroPreview.title} />'), 'Project cards should not render raw local-image URLs.');
 assert(app.includes('尚未設定主視覺'), 'Project cards should show an empty hero state when no KV exists');
 assert(app.includes('xl:grid-cols-4'), 'Project list should use smaller cards on wide screens');
 assert(app.includes('group-hover:scale-105'), 'Hero preview should have a subtle hover animation');
+assert(app.includes('h-9 w-9'), 'Project card icon buttons should use compact button height.');
+assert(app.includes('px-3 py-2 text-xs'), 'Project card primary action should use compact height.');
 assert(app.includes('animate-[fadeIn_0.45s_ease-out]'), 'Workspace screens should fade in subtly');
 assert(app.includes('before:absolute before:left-0'), 'Active sidebar item should have a clear indicator strip');
 assert(app.includes('opacity-0 transition-all duration-200 group-hover:opacity-100'), 'Project card actions should fade in on hover');

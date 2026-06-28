@@ -38,6 +38,7 @@ import { ExportModal } from '@/components/editor/ExportModal';
 import { PreviewModal } from '@/components/editor/PreviewModal';
 import { ProductBuildModal } from '@/components/editor/ProductBuildModal';
 import { ProductBuilderInput, createProductLandingModules } from '@/lib/productBuilder/productPageBuilder';
+import { isLocalImageRef, resolveLocalImageUrl, revokeResolvedLocalImageUrl } from '@/lib/assets/localImageStore';
 
 import {
   ArrowLeft,
@@ -75,6 +76,63 @@ interface ProjectHeroPreview {
   subtitle: string;
   image: string;
   hasHero: boolean;
+}
+
+function ProjectHeroImage({ image, title }: { image: string; title: string }) {
+  const [resolvedImage, setResolvedImage] = useState(image);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    let objectUrl = '';
+
+    setFailed(false);
+    if (!image || !isLocalImageRef(image)) {
+      setResolvedImage(image);
+      return () => undefined;
+    }
+
+    setResolvedImage('');
+    resolveLocalImageUrl(image)
+      .then((value) => {
+        objectUrl = value;
+        if (alive) {
+          if (value) {
+            setResolvedImage(value);
+          } else {
+            setFailed(true);
+          }
+        }
+      })
+      .catch(() => {
+        if (alive) setFailed(true);
+      });
+
+    return () => {
+      alive = false;
+      revokeResolvedLocalImageUrl(objectUrl);
+    };
+  }, [image]);
+
+  if (!resolvedImage || failed) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top_left,#4f46e5_0,#1e1b4b_38%,#020617_100%)] px-5 text-center text-white">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-indigo-200">KV Preview</p>
+          <p className="mt-2 text-base font-black">{failed ? '圖片載入失敗' : title}</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={resolvedImage}
+      alt={title}
+      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      onError={() => setFailed(true)}
+    />
+  );
 }
 
 const NEXORA_WORKSPACE_LANGUAGE_KEY = 'nexora-workspace-language-v1';
@@ -984,11 +1042,7 @@ export default function Page() {
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
                     {heroPreview?.image ? (
-                      <img
-                        src={heroPreview.image}
-                        alt={heroPreview.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      <ProjectHeroImage image={heroPreview.image} title={heroPreview.title} />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top_left,#4f46e5_0,#1e1b4b_38%,#020617_100%)] px-5 text-center text-white transition-transform duration-500 group-hover:scale-105">
                         <div>
@@ -1021,31 +1075,31 @@ export default function Page() {
                       <p>{getProjectModuleCount(project.id)} 個模組</p>
                     </div>
 
-                  <div className="mt-5 flex items-center gap-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+                  <div className="mt-4 flex items-center gap-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
                     <button
                       onClick={() => handleOpenProject(project.id)}
-                      className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-slate-950 px-4 py-3 text-sm font-black text-white transition-colors hover:bg-indigo-600"
+                      className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-slate-950 px-3 py-2 text-xs font-black text-white transition-colors hover:bg-indigo-600"
                     >
                       開啟
                       <ArrowLeft size={15} className="rotate-180" />
                     </button>
                     <button
                       onClick={() => handleDuplicateProjectById(project.id)}
-                      className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
                       title="建立副本"
                     >
                       <Copy size={16} />
                     </button>
                     <button
                       onClick={() => handleExportProjectFile(project.id)}
-                      className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600"
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600"
                       title="匯出專案檔"
                     >
                       <FileDown size={16} />
                     </button>
                     <button
                       onClick={() => handleDeleteProject(project.id)}
-                      className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
                       title="刪除"
                     >
                       <Trash2 size={16} />
