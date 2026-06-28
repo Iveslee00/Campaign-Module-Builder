@@ -18,7 +18,12 @@ export type ModuleType =
   | 'product-features'
   | 'product-showcase'
   | 'product-scenes'
-  | 'product-info';
+  | 'product-info'
+  | 'product-benefits'
+  | 'product-steps'
+  | 'product-comparison'
+  | 'product-proof'
+  | 'product-purchase';
 
 export interface BaseModule {
   id: string;
@@ -473,6 +478,130 @@ export interface ProductInfoModule extends BaseModule {
   data: ProductInfoData;
 }
 
+export type ProductBenefitsStyle = 'metric-cards' | 'pain-solution' | 'stacked';
+
+export interface ProductBenefitItem {
+  id: string;
+  metric: string;
+  title: string;
+  description: string;
+}
+
+export interface ProductBenefitsData extends AnchorableData {
+  style: ProductBenefitsStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: ProductBenefitItem[];
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductBenefitsModule extends BaseModule {
+  type: 'product-benefits';
+  data: ProductBenefitsData;
+}
+
+export type ProductStepsStyle = 'numbered' | 'timeline' | 'image-cards';
+
+export interface ProductStepItem {
+  id: string;
+  step: string;
+  title: string;
+  description: string;
+  image: string;
+  mobileImage: string;
+}
+
+export interface ProductStepsData extends AnchorableData {
+  style: ProductStepsStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: ProductStepItem[];
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductStepsModule extends BaseModule {
+  type: 'product-steps';
+  data: ProductStepsData;
+}
+
+export type ProductComparisonStyle = 'before-after' | 'product-table';
+
+export interface ProductComparisonItem {
+  id: string;
+  label: string;
+  before: string;
+  after: string;
+}
+
+export interface ProductComparisonData extends AnchorableData {
+  style: ProductComparisonStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  beforeTitle: string;
+  afterTitle: string;
+  items: ProductComparisonItem[];
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductComparisonModule extends BaseModule {
+  type: 'product-comparison';
+  data: ProductComparisonData;
+}
+
+export type ProductProofStyle = 'reviews' | 'guarantee' | 'certifications';
+
+export interface ProductProofItem {
+  id: string;
+  badge: string;
+  title: string;
+  description: string;
+}
+
+export interface ProductProofData extends AnchorableData {
+  style: ProductProofStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: ProductProofItem[];
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductProofModule extends BaseModule {
+  type: 'product-proof';
+  data: ProductProofData;
+}
+
+export type ProductPurchaseStyle = 'cta' | 'bundle' | 'related';
+
+export interface ProductPurchaseData extends AnchorableData {
+  style: ProductPurchaseStyle;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  buttonLink: string;
+  products: Product[];
+  backgroundColor: string;
+  titleColor: string;
+  textColor: string;
+}
+
+export interface ProductPurchaseModule extends BaseModule {
+  type: 'product-purchase';
+  data: ProductPurchaseData;
+}
+
 // ── Union & Export ────────────────────────────────────────────────────────────
 export type PageModule =
   | TitleModule
@@ -494,7 +623,12 @@ export type PageModule =
   | ProductFeaturesModule
   | ProductShowcaseModule
   | ProductScenesModule
-  | ProductInfoModule;
+  | ProductInfoModule
+  | ProductBenefitsModule
+  | ProductStepsModule
+  | ProductComparisonModule
+  | ProductProofModule
+  | ProductPurchaseModule;
 
 export interface ExportedCode {
   html: string;

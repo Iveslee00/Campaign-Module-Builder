@@ -11,6 +11,7 @@ import {
   Megaphone, HelpCircle, Plus, Package, Star,
   Type, GalleryHorizontal, LayoutPanelLeft, Pin, FileText, FileImage,
   CreditCard, Tag, GalleryHorizontalEnd, ChevronDown, SlidersHorizontal,
+  ListOrdered, BadgeCheck, ShoppingBag,
 } from 'lucide-react';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { useEmailSettings } from '@/contexts/EmailSettingsContext';
@@ -36,6 +37,9 @@ const iconMap: Record<string, React.ReactNode> = {
   'credit-card': <CreditCard size={18} />,
   tag: <Tag size={18} />,
   star: <Star size={18} />,
+  'list-ordered': <ListOrdered size={18} />,
+  'badge-check': <BadgeCheck size={18} />,
+  'shopping-bag': <ShoppingBag size={18} />,
 };
 
 const campaignCategories = [
@@ -126,7 +130,7 @@ export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-widest px-1 mb-2">{cat}</p>
                 <div className="space-y-1">
                   {items.map((schema) => (
-                    <button key={schema.key} onClick={() => onAddEmail(schema)} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left hover:bg-slate-800 active:bg-slate-700 transition-colors group">
+                    <button key={schema.key} onClick={() => onAddEmail(schema)} className="grid h-16 w-full grid-cols-[2rem_1fr_0.875rem] items-center gap-3 rounded-lg px-3 text-left transition-colors hover:bg-slate-800 active:bg-slate-700 group">
                       <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-md bg-slate-800 group-hover:bg-amber-600/20 text-slate-400 group-hover:text-amber-400 transition-colors">
                         {iconMap[schema.icon] ?? <Layout size={18} />}
                       </span>
@@ -153,7 +157,7 @@ export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
                 </div>
                 <div className="space-y-1">
                   {items.map((schema) => (
-                    <button key={schema.key} onClick={() => onAdd(schema)} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left hover:bg-slate-800 active:bg-slate-700 transition-colors group">
+                    <button key={schema.key} onClick={() => onAdd(schema)} className="grid h-16 w-full grid-cols-[2rem_1fr_0.875rem] items-center gap-3 rounded-lg px-3 text-left transition-colors hover:bg-slate-800 active:bg-slate-700 group">
                       <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-md bg-slate-800 group-hover:bg-indigo-600/20 text-slate-400 group-hover:text-indigo-400 transition-colors">
                         {iconMap[schema.icon] ?? <Layout size={18} />}
                       </span>

@@ -44,6 +44,9 @@ const campaignLabels: Record<string, string> = {
   'anchor-nav': '錨點導覽',
   'product-features': '商品特色', 'product-showcase': '大圖展示',
   'product-scenes': '商品情境', 'product-info': '商品資訊',
+  'product-benefits': '核心賣點', 'product-steps': '使用步驟',
+  'product-comparison': '商品比較', 'product-proof': '信任證明',
+  'product-purchase': '購買轉換',
 };
 
 const getCampaignModuleLabel = (module: PageModule) => {

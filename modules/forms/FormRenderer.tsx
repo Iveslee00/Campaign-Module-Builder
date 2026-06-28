@@ -22,6 +22,13 @@ import { ProductFeaturesForm } from './ProductFeaturesForm';
 import { ProductShowcaseForm } from './ProductShowcaseForm';
 import { ProductScenesForm } from './ProductScenesForm';
 import { ProductInfoForm } from './ProductInfoForm';
+import {
+  ProductBenefitsForm,
+  ProductComparisonForm,
+  ProductProofForm,
+  ProductPurchaseForm,
+  ProductStepsForm,
+} from './ProductAdvancedForms';
 import { FormField } from '@/components/ui/FormField';
 
 interface Props {
@@ -103,6 +110,21 @@ export function FormRenderer({ module, modules, onChange }: Props) {
       break;
     case 'product-info':
       form = <ProductInfoForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-benefits':
+      form = <ProductBenefitsForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-steps':
+      form = <ProductStepsForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-comparison':
+      form = <ProductComparisonForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-proof':
+      form = <ProductProofForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
+      break;
+    case 'product-purchase':
+      form = <ProductPurchaseForm data={module.data} onChange={onChange as (d: typeof module.data) => void} />;
       break;
     default:
       return null;

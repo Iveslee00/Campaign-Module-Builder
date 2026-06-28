@@ -144,7 +144,7 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
   const [direction, setDirection] = useState('135deg');
   const buttonRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 12, width: 280, maxHeight: 460 });
+  const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 12, width: 280, maxHeight: 360 });
 
   useEffect(() => {
     const closeForSibling = (event: Event) => {
@@ -164,13 +164,16 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
       if (!rect) return;
       const margin = 12;
       const width = Math.min(280, window.innerWidth - margin * 2);
-      const panelHeight = Math.min(460, window.innerHeight - margin * 2);
-      const left = Math.min(Math.max(margin, rect.left), window.innerWidth - width - margin);
-      const belowTop = rect.bottom + 8;
-      const aboveTop = rect.top - panelHeight - 8;
-      const top = belowTop + panelHeight <= window.innerHeight - margin
-        ? belowTop
-        : Math.max(margin, aboveTop);
+      const panelHeight = Math.min(360, window.innerHeight - margin * 2);
+      const gap = 8;
+      const canPlaceRight = rect.right + gap + width <= window.innerWidth - margin;
+      const canPlaceLeft = rect.left - gap - width >= margin;
+      const left = canPlaceRight
+        ? rect.right + gap
+        : canPlaceLeft
+          ? rect.left - width - gap
+          : Math.min(Math.max(margin, rect.left), window.innerWidth - width - margin);
+      const top = Math.min(Math.max(margin, rect.top), window.innerHeight - panelHeight - margin);
       setPopoverPosition({ top, left, width, maxHeight: panelHeight });
     };
 

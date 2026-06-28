@@ -5,14 +5,17 @@ const requiredFiles = [
   'modules/forms/ProductShowcaseForm.tsx',
   'modules/forms/ProductScenesForm.tsx',
   'modules/forms/ProductInfoForm.tsx',
+  'modules/forms/ProductAdvancedForms.tsx',
   'modules/preview/ProductFeaturesPreview.tsx',
   'modules/preview/ProductShowcasePreview.tsx',
   'modules/preview/ProductScenesPreview.tsx',
   'modules/preview/ProductInfoPreview.tsx',
+  'modules/preview/ProductAdvancedPreview.tsx',
   'modules/exporters/productFeaturesExporter.ts',
   'modules/exporters/productShowcaseExporter.ts',
   'modules/exporters/productScenesExporter.ts',
   'modules/exporters/productInfoExporter.ts',
+  'modules/exporters/productAdvancedExporter.ts',
 ];
 
 for (const file of requiredFiles) {
@@ -32,6 +35,11 @@ const taxonomy = readFileSync('docs/module-taxonomy.md', 'utf8');
   'product-showcase',
   'product-scenes',
   'product-info',
+  'product-benefits',
+  'product-steps',
+  'product-comparison',
+  'product-proof',
+  'product-purchase',
 ].forEach((type) => {
   if (!types.includes(`'${type}'`)) throw new Error(`Module type missing: ${type}`);
   if (!schemas.includes(`type: '${type}'`)) throw new Error(`Schema missing: ${type}`);
@@ -45,6 +53,11 @@ const taxonomy = readFileSync('docs/module-taxonomy.md', 'utf8');
   '大圖展示',
   '商品情境',
   '商品資訊',
+  '核心賣點',
+  '使用步驟',
+  '商品比較',
+  '信任證明',
+  '購買轉換',
   '四宮格',
   '精品風',
   '雙圖情境',
@@ -60,8 +73,24 @@ const taxonomy = readFileSync('docs/module-taxonomy.md', 'utf8');
   '.cb-product-showcase',
   '.cb-product-scenes',
   '.cb-product-info',
+  '.cb-product-benefits',
+  '.cb-product-steps',
+  '.cb-product-comparison',
+  '.cb-product-proof',
+  '.cb-product-purchase',
 ].forEach((selector) => {
   if (!css.includes(selector)) throw new Error(`CSS selector missing: ${selector}`);
+});
+
+[
+  "key: 'sales-product-hero'",
+  "key: 'sales-benefits'",
+  "key: 'sales-detail'",
+  "key: 'sales-faq'",
+].forEach((duplicateKey) => {
+  if (schemas.includes(duplicateKey)) {
+    throw new Error(`Duplicate product page wrapper should be removed: ${duplicateKey}`);
+  }
 });
 
 console.log('Product MVP modules verification passed.');

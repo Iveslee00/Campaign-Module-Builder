@@ -196,7 +196,7 @@ export function ProductBuildModal({ onClose, onCreate }: ProductBuildModalProps)
 
         <div className="flex items-center justify-between gap-4 border-t border-slate-800 px-6 py-4">
           <p className="text-sm font-semibold text-slate-500">
-            會產生 KV、錨點、單品主打、賣點、詳情、FAQ 與推薦商品，回到畫布後仍可拖拉編輯。
+            會產生 KV、錨點、商品展示、核心賣點、商品特色、商品資訊、FAQ 與購買轉換，回到畫布後仍可拖拉編輯。
           </p>
           <button
             onClick={() => onCreate(input)}

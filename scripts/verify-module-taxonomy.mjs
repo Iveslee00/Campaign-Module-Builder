@@ -23,4 +23,15 @@ if (!library.includes('globalSettingsOpen') || !library.includes('SlidersHorizon
   throw new Error('Global settings is not using the compact collapsible control.');
 }
 
+const heroIndex = schemas.indexOf("key: 'hero'");
+const carouselIndex = schemas.indexOf("key: 'hero-carousel'");
+if (heroIndex === -1 || carouselIndex === -1 || carouselIndex < heroIndex) {
+  throw new Error('KV and KV carousel order is invalid.');
+}
+
+const faqKeyCount = (schemas.match(/key: 'faq'/g) ?? []).length;
+if (faqKeyCount !== 1) {
+  throw new Error(`FAQ should have one source module only. Found ${faqKeyCount}.`);
+}
+
 console.log('Module taxonomy verification passed.');

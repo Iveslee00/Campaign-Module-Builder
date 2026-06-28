@@ -11,6 +11,8 @@ const formField = readFileSync('components/ui/FormField.tsx', 'utf8');
   'popoverRef',
   'buttonRef.current?.contains',
   'popoverRef.current?.contains',
+  'rect.right + gap',
+  'rect.left - width - gap',
   "Escape",
 ].forEach((token) => {
   if (!formField.includes(token)) {

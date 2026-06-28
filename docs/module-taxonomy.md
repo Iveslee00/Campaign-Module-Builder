@@ -59,25 +59,28 @@ Product-page modules should be fewer than the visible section names. Each base m
   - 右圖左文
   - 滿版情境
   - 雙圖情境
-- 使用說明
+- 使用步驟
   - 使用步驟
-  - 適用場景
 - 商品資訊
   - 成分介紹
   - 技術特色
   - 商品規格
   - 商品內容物
-- 比較證明
+- 商品比較
   - 使用前後比較
   - 商品比較
+- 信任證明
   - 商品評價
   - 品牌保證
   - 認證標章
-- 轉換區塊
-  - 商品 FAQ
+- 購買轉換
   - 購買資訊 CTA
   - 推薦組合
   - 相關商品
+
+Product FAQ does not get its own module. Use the General FAQ module and style/copy it for product questions.
+
+Product scenes cover 適用場景. Product info covers 成分介紹、技術特色、商品規格、商品內容物.
 
 ### Brand 品牌
 
@@ -89,14 +92,24 @@ Brand modules are narrative sections. They should share one consistent content m
 
 ## Current Implementation State
 
-Implemented product-page MVP modules:
+Implemented product-page modules:
 
 - `product-features`：商品特色，支援四宮格、六宮格、Icon + 文字、卡片式。
 - `product-showcase`：大圖展示，支援滿版圖片 + 文字、上下留白、左右排版、精品風。
 - `product-scenes`：商品情境，支援左圖右文、右圖左文、滿版情境、雙圖情境。
 - `product-info`：商品資訊，支援成分介紹、技術特色、商品規格、商品內容物。
+- `product-benefits`：核心賣點，支援數據卡、痛點解法、堆疊式。
+- `product-steps`：使用步驟，支援編號、時間軸、圖卡。
+- `product-comparison`：商品比較，支援使用前後與商品差異表。
+- `product-proof`：信任證明，支援評價、品牌保證、認證標章。
+- `product-purchase`：購買轉換，支援 CTA、推薦組合、相關商品。
 
-Existing product-page demo modules remain under `Product` until they are either merged into these base modules or kept as shortcuts.
+Removed duplicate Product wrappers:
+
+- `sales-product-hero` was too close to Campaign `單品主打`.
+- `sales-benefits` was replaced by `product-benefits`.
+- `sales-detail` was replaced by `product-info`.
+- `sales-faq` was removed because General `FAQ` is the single FAQ source.
 
 `Brand` is reserved for the next module implementation pass.
 

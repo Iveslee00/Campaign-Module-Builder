@@ -19,6 +19,13 @@ import { generateProductFeaturesHTML } from '@/modules/exporters/productFeatures
 import { generateProductShowcaseHTML } from '@/modules/exporters/productShowcaseExporter';
 import { generateProductScenesHTML } from '@/modules/exporters/productScenesExporter';
 import { generateProductInfoHTML } from '@/modules/exporters/productInfoExporter';
+import {
+  generateProductBenefitsHTML,
+  generateProductComparisonHTML,
+  generateProductProofHTML,
+  generateProductPurchaseHTML,
+  generateProductStepsHTML,
+} from '@/modules/exporters/productAdvancedExporter';
 import { generateCarouselScript } from '@/lib/export/cssGenerator';
 import { getModuleAnchorId } from '@/lib/modules/anchors';
 
@@ -45,6 +52,11 @@ function renderModuleHTML(module: PageModule, modules: PageModule[]): string {
     case 'product-showcase':return generateProductShowcaseHTML(module.data);
     case 'product-scenes':  return generateProductScenesHTML(module.data);
     case 'product-info':    return generateProductInfoHTML(module.data);
+    case 'product-benefits':return generateProductBenefitsHTML(module.data);
+    case 'product-steps':   return generateProductStepsHTML(module.data);
+    case 'product-comparison': return generateProductComparisonHTML(module.data);
+    case 'product-proof':   return generateProductProofHTML(module.data);
+    case 'product-purchase':return generateProductPurchaseHTML(module.data);
     default:                return '';
     }
   })();

@@ -21,6 +21,13 @@ import { ProductFeaturesPreview } from './ProductFeaturesPreview';
 import { ProductShowcasePreview } from './ProductShowcasePreview';
 import { ProductScenesPreview } from './ProductScenesPreview';
 import { ProductInfoPreview } from './ProductInfoPreview';
+import {
+  ProductBenefitsPreview,
+  ProductComparisonPreview,
+  ProductProofPreview,
+  ProductPurchasePreview,
+  ProductStepsPreview,
+} from './ProductAdvancedPreview';
 
 export function ModulePreviewRenderer({ module, modules = [] }: { module: PageModule; modules?: PageModule[] }) {
   switch (module.type) {
@@ -44,6 +51,11 @@ export function ModulePreviewRenderer({ module, modules = [] }: { module: PageMo
     case 'product-showcase': return <ProductShowcasePreview data={module.data} />;
     case 'product-scenes':   return <ProductScenesPreview data={module.data} />;
     case 'product-info':     return <ProductInfoPreview data={module.data} />;
+    case 'product-benefits': return <ProductBenefitsPreview data={module.data} />;
+    case 'product-steps':    return <ProductStepsPreview data={module.data} />;
+    case 'product-comparison': return <ProductComparisonPreview data={module.data} />;
+    case 'product-proof':    return <ProductProofPreview data={module.data} />;
+    case 'product-purchase': return <ProductPurchasePreview data={module.data} />;
     default:                 return null;
   }
 }

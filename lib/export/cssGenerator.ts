@@ -380,6 +380,58 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-info--ingredients .cb-product-info__row,
 .cb-product-info--technology .cb-product-info__row { display: block; border-bottom: none; border-right: 1px solid rgba(15,23,42,0.08); }
 
+.cb-product-benefits__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.cb-product-benefits--stacked .cb-product-benefits__grid { grid-template-columns: 1fr; }
+.cb-product-benefits__item { border: 1px solid rgba(15,23,42,0.08); border-radius: 22px; padding: 26px; background: #ffffff; }
+.cb-product-benefits--metric-cards .cb-product-benefits__item { box-shadow: 0 16px 42px rgba(15,23,42,0.08); }
+.cb-product-benefits--pain-solution .cb-product-benefits__item { background: #f8fafc; }
+.cb-product-benefits__metric { margin: 0 0 18px; font-size: 2rem; line-height: 1; font-weight: 900; color: #0f172a; }
+.cb-product-benefits--pain-solution .cb-product-benefits__metric,
+.cb-product-benefits--stacked .cb-product-benefits__metric { font-size: 0.85rem; opacity: 0.64; }
+.cb-product-benefits__title { margin: 0 0 8px; font-size: 1.12rem; font-weight: 850; color: #0f172a; }
+.cb-product-benefits__text { margin: 0; font-size: 0.95rem; line-height: 1.7; color: #475569; }
+
+.cb-product-steps__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.cb-product-steps--timeline .cb-product-steps__grid { grid-template-columns: 1fr; }
+.cb-product-steps__item { border: 1px solid rgba(15,23,42,0.08); border-radius: 22px; padding: 20px; background: #ffffff; }
+.cb-product-steps--timeline .cb-product-steps__item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; }
+.cb-product-steps__number { font-size: 2rem; line-height: 1; font-weight: 900; color: #0f172a; }
+.cb-product-steps__media { position: relative; aspect-ratio: 900 / 640; margin: 16px 0; overflow: hidden; border-radius: 16px; background: #eef2ff; }
+.cb-product-steps__picture { position: absolute; inset: 0; display: block; }
+.cb-product-steps__picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cb-product-steps__title { margin: 0 0 8px; font-size: 1.1rem; font-weight: 850; color: #0f172a; }
+.cb-product-steps__text { margin: 0; font-size: 0.94rem; line-height: 1.7; color: #475569; }
+
+.cb-product-comparison__table { overflow: hidden; border: 1px solid rgba(15,23,42,0.08); border-radius: 22px; background: #ffffff; }
+.cb-product-comparison__head,
+.cb-product-comparison__row { display: grid; grid-template-columns: 1.1fr 1fr 1fr; }
+.cb-product-comparison__head { background: #f8fafc; color: #0f172a; font-weight: 850; }
+.cb-product-comparison__head > div,
+.cb-product-comparison__label,
+.cb-product-comparison__cell { padding: 16px 18px; }
+.cb-product-comparison__row { border-top: 1px solid rgba(15,23,42,0.08); }
+.cb-product-comparison__label { color: #0f172a; }
+.cb-product-comparison__cell { margin: 0; color: #475569; }
+
+.cb-product-proof__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.cb-product-proof__item { border: 1px solid rgba(15,23,42,0.08); border-radius: 22px; padding: 24px; background: #ffffff; text-align: center; }
+.cb-product-proof__badge { display: inline-flex; min-width: 56px; height: 56px; align-items: center; justify-content: center; margin-bottom: 16px; padding: 0 14px; border-radius: 999px; background: #eefaff; color: #0f172a; font-weight: 900; }
+.cb-product-proof__title { margin: 0 0 8px; font-size: 1.08rem; font-weight: 850; color: #0f172a; }
+.cb-product-proof__text { margin: 0; font-size: 0.94rem; line-height: 1.7; color: #475569; }
+
+.cb-product-purchase { color: rgba(255,255,255,0.78); }
+.cb-product-purchase .cb-product-block-head { margin-left: auto; margin-right: auto; text-align: center; }
+.cb-product-purchase__action { margin-bottom: 28px; text-align: center; }
+.cb-product-purchase__button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; border-radius: 999px; background: #ffffff; color: #0f172a; padding: 0 28px; font-weight: 850; text-decoration: none; }
+.cb-product-purchase__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.cb-product-purchase__card { overflow: hidden; border-radius: 18px; background: #ffffff; color: #0f172a; text-decoration: none; }
+.cb-product-purchase__media { position: relative; display: block; aspect-ratio: 1 / 1; background: #eef2ff; }
+.cb-product-purchase__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+.cb-product-purchase__body { display: block; padding: 16px; }
+.cb-product-purchase__brand { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 750; color: #64748b; }
+.cb-product-purchase__name { display: block; margin-bottom: 8px; font-size: 1rem; font-weight: 850; }
+.cb-product-purchase__price { display: block; font-weight: 900; color: #ef4444; }
+
 /* ------------------------------------------------------------
    15. RESPONSIVE
    ------------------------------------------------------------ */
@@ -391,7 +443,11 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-carousel__item { flex: 0 0 calc(33.333% - 14px); }
   .cb-product-banner__inner { gap: 40px; }
   .cb-product-features__grid,
-  .cb-product-features--grid-6 .cb-product-features__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cb-product-features--grid-6 .cb-product-features__grid,
+  .cb-product-benefits__grid,
+  .cb-product-steps__grid,
+  .cb-product-proof__grid,
+  .cb-product-purchase__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cb-product-showcase__inner,
   .cb-product-scenes__single { gap: 40px; }
   .cb-banner-products__inner { grid-template-columns: 1fr; height: auto; align-items: start; }
@@ -464,7 +520,15 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   .cb-product-features--icon-text .cb-product-features__grid,
   .cb-product-scenes__grid,
   .cb-product-info--ingredients .cb-product-info__table,
-  .cb-product-info--technology .cb-product-info__table { grid-template-columns: 1fr; }
+  .cb-product-info--technology .cb-product-info__table,
+  .cb-product-benefits__grid,
+  .cb-product-steps__grid,
+  .cb-product-proof__grid,
+  .cb-product-purchase__grid { grid-template-columns: 1fr; }
+  .cb-product-steps--timeline .cb-product-steps__item,
+  .cb-product-comparison__head,
+  .cb-product-comparison__row { grid-template-columns: 1fr; }
+  .cb-product-steps__media { aspect-ratio: 750 / 900; }
   .cb-product-showcase__inner,
   .cb-product-showcase--spacious .cb-product-showcase__inner,
   .cb-product-scenes__single { grid-template-columns: 1fr; gap: 28px; padding-left: 16px; padding-right: 16px; }

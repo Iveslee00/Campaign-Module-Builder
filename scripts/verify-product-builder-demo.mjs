@@ -19,11 +19,12 @@ const library = fs.readFileSync('components/editor/ModuleLibrary.tsx', 'utf8');
 [
   'createProductLandingModules',
   'cleanFresh',
-  'product-banner',
-  'split-section',
-  'article-text',
+  'product-showcase',
+  'product-benefits',
+  'product-features',
+  'product-info',
+  'product-purchase',
   'faq',
-  'product-grid',
   'anchor-nav',
   '水氧潔淨',
   '清潔用品',
@@ -40,5 +41,16 @@ if (!page.includes('ProductBuildModal') || !page.includes('handleCreateFromProdu
 if (!library.includes('Product') || !library.includes('商品頁')) {
   throw new Error('Module library does not include the product page category.');
 }
+
+[
+  "type: 'product-banner'",
+  "type: 'split-section'",
+  "type: 'article-text'",
+  "type: 'product-grid'",
+].forEach((legacyToken) => {
+  if (builder.includes(legacyToken)) {
+    throw new Error(`Product builder demo should not use campaign/content legacy module: ${legacyToken}`);
+  }
+});
 
 console.log('Product builder demo verification passed.');
