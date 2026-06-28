@@ -99,7 +99,23 @@ export const SIZE_SPEC_SECTIONS: SizeSpecSection[] = [
     notes: [],
   },
   {
-    title: '六、通用備註',
+    title: '六、全站背景圖',
+    description: [
+      '用於全站背景 repeat-y。M 端不另開圖，直接使用 PC 圖置中裁切。',
+      '建議製作為可上下重複銜接的背景圖，避免接縫明顯。',
+    ],
+    tables: [
+      {
+        headers: ['圖片類型', 'PC', 'M 端', '備註'],
+        rows: [
+          { cells: ['背景圖（repeat-y）', '1920 x 1200', '使用 PC 圖置中裁切', '不需另外上傳 M 版'] },
+        ],
+      },
+    ],
+    notes: [],
+  },
+  {
+    title: '七、通用備註',
     tables: [],
     notes: [
       '所有尺寸單位為 px。',

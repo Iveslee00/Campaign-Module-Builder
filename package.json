@@ -31,6 +31,7 @@
     "verify:module-taxonomy": "node --no-warnings scripts/verify-module-taxonomy.mjs",
     "verify:product-mvp-modules": "node --no-warnings scripts/verify-product-mvp-modules.mjs",
     "verify:color-popover": "node --no-warnings scripts/verify-color-popover-behavior.mjs",
+    "verify:global-background": "node --no-warnings scripts/verify-global-background.mjs",
     "start": "next start",
     "lint": "next lint"
   },

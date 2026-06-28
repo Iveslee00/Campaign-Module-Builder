@@ -15,7 +15,8 @@ import {
 } from 'lucide-react';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { useEmailSettings } from '@/contexts/EmailSettingsContext';
-import { GradientPickerPopover } from '@/components/ui/FormField';
+import { GradientPickerPopover, ImageField } from '@/components/ui/FormField';
+import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { colorSwatchStyle, isGradientValue } from '@/lib/styles/colorStyles';
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -225,19 +226,16 @@ export function ModuleLibrary({ pageMode, onAdd, onAddEmail }: Props) {
                 </div>
                 <div className="space-y-3">
                   <ColorPicker label="底色" value={pageBackgroundColor} onChange={setPageBackgroundColor} allowEmpty />
-                  <div className="space-y-1">
-                    <p className="text-xs text-slate-500">背景圖（repeat-y）</p>
-                    <input
-                      type="text"
-                      value={pageBackgroundImage}
-                      onChange={(e) => setPageBackgroundImage(e.target.value)}
-                      placeholder="https://… (圖片網址)"
-                      className="w-full bg-slate-800 border border-slate-700 rounded-md px-2 py-1 text-xs text-slate-300 focus:outline-none focus:border-indigo-500 placeholder-slate-600"
-                    />
-                    {pageBackgroundImage && (
-                      <button onClick={() => setPageBackgroundImage('')} className="text-xs text-slate-500 hover:text-slate-300">✕ 清除</button>
-                    )}
-                  </div>
+                  <ImageField
+                    label="背景圖（PC repeat-y）"
+                    value={pageBackgroundImage}
+                    onChange={setPageBackgroundImage}
+                    spec={IMAGE_SPECS.pageBackground}
+                    placeholder="https://… (圖片網址)"
+                  />
+                  <p className="-mt-1 text-[11px] leading-relaxed text-slate-600">
+                    M 版使用同一張 PC 背景圖置中裁切，不需另外上傳。
+                  </p>
                   <ColorPicker label="按鈕色" value={buttonColor} onChange={setButtonColor} onReset={() => setButtonColor('#6366f1')} />
                   <ColorPicker label="按鈕文字色" value={buttonTextColor} onChange={setButtonTextColor} onReset={() => setButtonTextColor('#ffffff')} />
                 </div>

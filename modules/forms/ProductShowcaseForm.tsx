@@ -7,10 +7,10 @@ import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 interface Props { data: ProductShowcaseData; onChange: (data: ProductShowcaseData) => void }
 
 const styleOptions = [
-  { value: 'full-bleed', label: '滿版' },
-  { value: 'spacious', label: '留白' },
-  { value: 'split', label: '左右' },
-  { value: 'luxury', label: '精品' },
+  { value: 'full-bleed', label: '滿版形象' },
+  { value: 'spacious', label: '留白展示' },
+  { value: 'split', label: '左右分欄' },
+  { value: 'luxury', label: '精品卡片' },
 ];
 
 export function ProductShowcaseForm({ data, onChange }: Props) {

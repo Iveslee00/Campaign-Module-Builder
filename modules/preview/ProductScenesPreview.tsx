@@ -12,14 +12,16 @@ export function ProductScenesPreview({ data }: { data: ProductScenesData }) {
   const first = data.items[0];
   const isSingleVisual = data.style === 'left-image' || data.style === 'right-image' || data.style === 'full-bleed';
   const singleImage = isMobile ? (first?.mobileImage || first?.image) : first?.image;
+  const isFull = data.style === 'full-bleed';
   const media = first ? (
-    <div style={{ position: 'relative', aspectRatio: isMobile ? '750 / 900' : '900 / 640', borderRadius: data.style === 'full-bleed' ? 0 : 24, overflow: 'hidden' }}>
+    <div style={{ position: 'relative', aspectRatio: isMobile ? '750 / 900' : isFull ? '1920 / 680' : '900 / 640', borderRadius: isFull ? 0 : 28, overflow: 'hidden', boxShadow: isFull ? undefined : '0 22px 64px rgba(15,23,42,0.12)' }}>
       <PreviewImage src={singleImage} alt="" label={isMobile ? '商品情境 M' : '商品情境 PC'} spec={isMobile ? IMAGE_SPECS.productSceneMobile : IMAGE_SPECS.productScene} />
+      {isFull && <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(15,23,42,0.56), rgba(15,23,42,0.12) 46%, transparent)' }} />}
     </div>
   ) : null;
 
   const intro = (
-    <div style={{ maxWidth: 520 }}>
+    <div style={{ maxWidth: 520, position: 'relative', zIndex: 1 }}>
       {data.eyebrow && <p style={{ margin: '0 0 10px', fontSize: 12, fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: textColor, opacity: 0.72 }}>{data.eyebrow}</p>}
       <h2 style={{ margin: 0, fontSize: isMobile ? '1.9rem' : '2.6rem', lineHeight: 1.08, fontWeight: 900, color: titleColor }}>{data.title}</h2>
       {data.subtitle && <p style={{ margin: '14px 0 0', fontSize: '1rem', lineHeight: 1.75, color: textColor }}>{data.subtitle}</p>}
@@ -33,11 +35,16 @@ export function ProductScenesPreview({ data }: { data: ProductScenesData }) {
   );
 
   return (
-    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '36px 16px' : data.style === 'full-bleed' ? '0' : '64px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
-      <div style={{ maxWidth: data.style === 'full-bleed' ? 'none' : '1080px', margin: '0 auto' }}>
+    <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '36px 16px' : isFull ? '0' : '64px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+      <div style={{ maxWidth: isFull ? 'none' : '1080px', margin: '0 auto', position: 'relative' }}>
         {isSingleVisual ? (
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 28 : 56, alignItems: 'center' }}>
-            {data.style === 'right-image' || isMobile ? <>{intro}{media}</> : <>{media}{intro}</>}
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isFull ? '1fr' : '1fr 1fr', gap: isMobile ? 28 : 56, alignItems: 'center' }}>
+            {isFull && !isMobile ? (
+              <>
+                {media}
+                <div style={{ position: 'absolute', left: 'calc(50% - 540px)', top: '50%', transform: 'translateY(-50%)', padding: '34px 36px', borderRadius: 28, background: 'rgba(255,255,255,0.82)', boxShadow: '0 22px 64px rgba(15,23,42,0.14)', backdropFilter: 'blur(10px)' }}>{intro}</div>
+              </>
+            ) : data.style === 'right-image' || isMobile ? <>{intro}{media}</> : <>{media}{intro}</>}
           </div>
         ) : (
           <>

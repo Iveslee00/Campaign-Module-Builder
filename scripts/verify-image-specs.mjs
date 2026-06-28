@@ -33,6 +33,7 @@ assert.deepEqual(IMAGE_SPECS.logo, spec(160, 60));
 assert.deepEqual(IMAGE_SPECS.bankLogo, spec(160, 60));
 assert.deepEqual(IMAGE_SPECS.hero, spec(1920, 640));
 assert.deepEqual(IMAGE_SPECS.heroMobile, spec(750, 850));
+assert.deepEqual(IMAGE_SPECS.pageBackground, spec(1920, 1200));
 assert.deepEqual(IMAGE_SPECS.kv, spec(1920, 640));
 assert.deepEqual(IMAGE_SPECS.kvMobile, spec(750, 850));
 

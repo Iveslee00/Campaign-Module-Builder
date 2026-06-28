@@ -254,7 +254,12 @@ export function PreviewCanvas({
   const isMobile = deviceMode === 'mobile';
   const campaignBackgroundStyle: React.CSSProperties = {
     background: pageBackgroundColor || '#ffffff',
-    ...(pageBackgroundImage ? { backgroundImage: `url("${pageBackgroundImage}")`, backgroundRepeat: 'repeat-y', backgroundSize: '100% auto' } : {}),
+    ...(pageBackgroundImage ? {
+      backgroundImage: `url("${pageBackgroundImage}")`,
+      backgroundRepeat: 'repeat-y',
+      backgroundSize: isMobile ? 'auto 100%' : '100% auto',
+      backgroundPosition: 'top center',
+    } : {}),
   };
   const desktopCanvasStyle: React.CSSProperties = {
     ...campaignBackgroundStyle,

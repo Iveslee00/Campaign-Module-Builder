@@ -63,7 +63,12 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
   const isMobile = deviceMode === 'mobile';
   const campaignBackgroundStyle: React.CSSProperties = {
     ...(pageBackgroundColor ? { background: pageBackgroundColor } : { background: '#ffffff' }),
-    ...(pageBackgroundImage ? { backgroundImage: `url("${pageBackgroundImage}")`, backgroundRepeat: 'repeat-y', backgroundSize: '100% auto' } : {}),
+    ...(pageBackgroundImage ? {
+      backgroundImage: `url("${pageBackgroundImage}")`,
+      backgroundRepeat: 'repeat-y',
+      backgroundSize: isMobile ? 'auto 100%' : '100% auto',
+      backgroundPosition: 'top center',
+    } : {}),
   };
   const desktopPreviewStyle: React.CSSProperties = {
     ...campaignBackgroundStyle,

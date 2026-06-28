@@ -6,6 +6,7 @@ export interface ImageSpec {
 export const IMAGE_SPECS = {
   hero: { width: 1920, height: 640 },
   heroMobile: { width: 750, height: 850 },
+  pageBackground: { width: 1920, height: 1200 },
   split: { width: 600, height: 450 },
   splitMobile: { width: 750, height: 562 },
   product: { width: 400, height: 400 },

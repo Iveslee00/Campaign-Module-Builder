@@ -36,7 +36,7 @@ export function ProductBenefitsPreview({ data }: { data: ProductBenefitsData }) 
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} />
         <div style={{ display: 'grid', gridTemplateColumns: columns, gap: 18 }}>
           {data.items.map((item) => (
-            <article key={item.id} style={{ borderRadius: 22, padding: isMobile ? 20 : 26, background: data.style === 'pain-solution' ? '#f8fafc' : '#ffffff', border: '1px solid rgba(15,23,42,0.08)', boxShadow: data.style === 'metric-cards' ? '0 16px 42px rgba(15,23,42,0.08)' : 'none' }}>
+            <article key={item.id} style={{ borderRadius: 26, padding: isMobile ? 20 : 28, background: data.style === 'pain-solution' ? 'linear-gradient(180deg, #f8fafc, #eef6ff)' : '#ffffff', border: '1px solid rgba(15,23,42,0.08)', boxShadow: '0 18px 48px rgba(15,23,42,0.08)' }}>
               <p style={{ margin: '0 0 18px', fontSize: data.style === 'metric-cards' ? '2rem' : '0.85rem', fontWeight: 900, color: titleColor, opacity: data.style === 'metric-cards' ? 1 : 0.64 }}>{item.metric}</p>
               <h3 style={{ margin: '0 0 8px', fontSize: '1.12rem', fontWeight: 850, color: titleColor }}>{item.title}</h3>
               <p style={{ margin: 0, fontSize: '0.95rem', lineHeight: 1.7, color: textColor }}>{item.description}</p>
@@ -58,8 +58,8 @@ export function ProductStepsPreview({ data }: { data: ProductStepsData }) {
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : data.style === 'timeline' ? '1fr' : `repeat(${Math.min(data.items.length, 3)}, 1fr)`, gap: 18 }}>
           {data.items.map((item) => (
-            <article key={item.id} style={{ display: data.style === 'timeline' && !isMobile ? 'grid' : 'block', gridTemplateColumns: '120px 1fr', gap: 18, borderRadius: 22, padding: 20, background: '#ffffff', border: '1px solid rgba(15,23,42,0.08)' }}>
-              <div style={{ fontSize: '2rem', lineHeight: 1, fontWeight: 900, color: titleColor }}>{item.step}</div>
+            <article key={item.id} style={{ display: data.style === 'timeline' && !isMobile ? 'grid' : 'block', gridTemplateColumns: '120px 1fr', gap: 18, borderRadius: 26, padding: 22, background: '#ffffff', border: '1px solid rgba(15,23,42,0.08)', boxShadow: '0 16px 42px rgba(15,23,42,0.07)' }}>
+              <div style={{ display: 'inline-flex', width: 54, height: 54, alignItems: 'center', justifyContent: 'center', borderRadius: 18, background: 'linear-gradient(135deg, #e0f2fe, #eef2ff)', fontSize: '1.35rem', lineHeight: 1, fontWeight: 900, color: titleColor }}>{item.step}</div>
               <div>
                 {data.style === 'image-cards' && (
                   <div style={{ position: 'relative', aspectRatio: isMobile ? '750 / 900' : '900 / 640', marginBottom: 16, overflow: 'hidden', borderRadius: 16 }}>
@@ -85,8 +85,8 @@ export function ProductComparisonPreview({ data }: { data: ProductComparisonData
     <section style={{ background: data.backgroundColor || '#ffffff', padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} centered={data.style === 'before-after'} />
-        <div style={{ overflow: 'hidden', borderRadius: 22, border: '1px solid rgba(15,23,42,0.08)', background: '#ffffff' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', background: '#f8fafc', color: titleColor, fontWeight: 850 }}>
+        <div style={{ overflow: 'hidden', borderRadius: 26, border: '1px solid rgba(15,23,42,0.08)', background: '#ffffff', boxShadow: '0 20px 56px rgba(15,23,42,0.09)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', background: 'linear-gradient(135deg, #f8fafc, #eef6ff)', color: titleColor, fontWeight: 850 }}>
             <div style={{ padding: '16px 18px' }}>項目</div>
             <div style={{ padding: '16px 18px' }}>{data.beforeTitle}</div>
             <div style={{ padding: '16px 18px' }}>{data.afterTitle}</div>
@@ -114,8 +114,8 @@ export function ProductProofPreview({ data }: { data: ProductProofData }) {
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} centered />
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 18 }}>
           {data.items.map((item) => (
-            <article key={item.id} style={{ borderRadius: 22, padding: 24, background: '#ffffff', border: '1px solid rgba(15,23,42,0.08)', textAlign: 'center' }}>
-              <div style={{ display: 'inline-flex', minWidth: 56, height: 56, alignItems: 'center', justifyContent: 'center', borderRadius: 999, background: '#eefaff', padding: '0 14px', fontWeight: 900, color: titleColor, marginBottom: 16 }}>{item.badge}</div>
+            <article key={item.id} style={{ borderRadius: 26, padding: 26, background: '#ffffff', border: '1px solid rgba(15,23,42,0.08)', textAlign: 'center', boxShadow: '0 18px 48px rgba(15,23,42,0.08)' }}>
+              <div style={{ display: 'inline-flex', minWidth: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 999, background: 'linear-gradient(135deg, #e0f2fe, #eef2ff)', padding: '0 14px', fontWeight: 900, color: titleColor, marginBottom: 16, boxShadow: 'inset 0 0 0 1px rgba(99,102,241,0.12)' }}>{item.badge}</div>
               <h3 style={{ margin: '0 0 8px', fontSize: '1.08rem', fontWeight: 850, color: titleColor }}>{item.title}</h3>
               <p style={{ margin: 0, fontSize: '0.94rem', lineHeight: 1.7, color: textColor }}>{item.description}</p>
             </article>
@@ -135,12 +135,12 @@ export function ProductPurchasePreview({ data }: { data: ProductPurchaseData }) 
       <div style={{ maxWidth: 1080, margin: '0 auto', color: textColor }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} centered={data.style === 'cta'} />
         <div style={{ textAlign: data.style === 'cta' ? 'center' : 'left', marginBottom: 28 }}>
-          <a href={data.buttonLink || '#'} style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 999, background: '#ffffff', color: '#0f172a', padding: '0 28px', fontWeight: 850, textDecoration: 'none' }}>{data.buttonText}</a>
+          <a href={data.buttonLink || '#'} style={{ display: 'inline-flex', minHeight: 48, alignItems: 'center', justifyContent: 'center', borderRadius: 999, background: '#ffffff', color: '#0f172a', padding: '0 32px', fontWeight: 850, textDecoration: 'none', boxShadow: '0 16px 36px rgba(0,0,0,0.18)' }}>{data.buttonText}</a>
         </div>
         {data.style !== 'cta' && (
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : `repeat(${Math.min(data.products.length, 3)}, 1fr)`, gap: 18 }}>
             {data.products.map((product) => (
-              <article key={product.id} style={{ overflow: 'hidden', borderRadius: 18, background: '#ffffff', color: '#0f172a' }}>
+              <article key={product.id} style={{ overflow: 'hidden', borderRadius: 22, background: '#ffffff', color: '#0f172a', boxShadow: '0 18px 48px rgba(0,0,0,0.18)' }}>
                 <div style={{ position: 'relative', aspectRatio: '1 / 1', background: '#eef2ff' }}>
                   <PreviewImage src={product.image} alt="" label="商品圖" spec={IMAGE_SPECS.product} objectFit="contain" />
                 </div>
