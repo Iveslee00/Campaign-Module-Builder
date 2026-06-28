@@ -191,7 +191,15 @@ Acceptance：
 - CMS 貼碼與 ZIP 匯出保持一致。
 - `npm run build` 通過。
 
-Status：部分完成於 `2019dc5d`，仍需補 exporter 一致性。
+Status：完成於目前工作分支；四主題已補主題 token、商品頁生成文案語氣、預覽樣式與 CMS/ZIP 匯出 CSS 一致性。
+
+驗證：
+
+- `npm run verify:product-page-starter` 通過。
+- `npm run verify:product-mvp-modules` 通過。
+- `npm run verify:cms-consistency` 通過。
+- `npm run typecheck` 通過。
+- `npm run build` 通過。
 
 ### Task PS-006：主題與全站樣式關係整理
 

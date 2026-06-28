@@ -18,12 +18,17 @@ export interface ProductThemePreset {
   sectionBackground: string;
   surface: string;
   softSurface: string;
+  cardBackground: string;
+  cardBorder: string;
   cardShadow: string;
   titleColor: string;
   textColor: string;
   accent: string;
   accentText: string;
   ctaBackground: string;
+  heroTone: string;
+  proofTone: string;
+  purchaseTone: string;
   placeholderTone: 'fresh' | 'luxury' | 'promo' | 'commerce';
   darkSurface: string;
   darkTitle: string;
@@ -46,17 +51,22 @@ export const productThemePresets: Record<ProductPageTheme, ProductThemePreset> =
     sectionBackground: '#f8fdff',
     surface: '#ffffff',
     softSurface: '#eefaff',
+    cardBackground: 'linear-gradient(180deg, rgba(255,255,255,0.94), rgba(239,250,255,0.76))',
+    cardBorder: '1px solid rgba(14,165,198,0.14)',
     cardShadow: '0 22px 58px rgba(14,165,198,0.12)',
     titleColor: '#0f2f3f',
     textColor: '#4f6b78',
     accent: '#0ea5c6',
     accentText: '#ffffff',
     ctaBackground: '#0ea5c6',
+    heroTone: '透亮藍白、柔光水感、商品去背圖置中放大',
+    proofTone: '溫和安心、日常可用、清爽可信任',
+    purchaseTone: '清楚導購、組合推薦、低壓轉換',
     placeholderTone: 'fresh',
     darkSurface: '#0f172a',
     darkTitle: '#ffffff',
     darkText: 'rgba(255,255,255,0.78)',
-    showcaseStyle: 'luxury',
+    showcaseStyle: 'spacious',
     benefitsStyle: 'metric-cards',
     featuresStyle: 'cards',
     scenesStyle: 'double-image',
@@ -72,12 +82,17 @@ export const productThemePresets: Record<ProductPageTheme, ProductThemePreset> =
     sectionBackground: '#fbfaf8',
     surface: '#ffffff',
     softSurface: '#f8f5f0',
+    cardBackground: 'linear-gradient(180deg, rgba(255,255,255,0.84), rgba(248,245,240,0.68))',
+    cardBorder: '1px solid rgba(47,42,37,0.12)',
     cardShadow: '0 26px 70px rgba(31,41,51,0.10)',
     titleColor: '#1f2933',
     textColor: '#667085',
     accent: '#2f2a25',
     accentText: '#ffffff',
     ctaBackground: '#2f2a25',
+    heroTone: '低飽和精品留白、霧面玻璃文字卡、細框質感',
+    proofTone: '品牌承諾、評價口碑、質感保證',
+    purchaseTone: '單一精品 CTA、低干擾購買決策',
     placeholderTone: 'luxury',
     darkSurface: '#211d1a',
     darkTitle: '#ffffff',
@@ -98,12 +113,17 @@ export const productThemePresets: Record<ProductPageTheme, ProductThemePreset> =
     sectionBackground: '#fff7ed',
     surface: '#ffffff',
     softSurface: '#fff7ed',
+    cardBackground: 'linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,247,237,0.90))',
+    cardBorder: '1px solid rgba(239,68,68,0.18)',
     cardShadow: '0 24px 66px rgba(239,68,68,0.16)',
     titleColor: '#7f1d1d',
     textColor: '#854d0e',
     accent: '#ef4444',
     accentText: '#ffffff',
     ctaBackground: '#ef4444',
+    heroTone: '強促銷視覺、限時標籤、價格與 CTA 優先',
+    proofTone: '折扣保證、檔期理由、立即購買信心',
+    purchaseTone: '推薦組合、醒目按鈕、清楚價格感',
     placeholderTone: 'promo',
     darkSurface: '#111827',
     darkTitle: '#ffffff',
@@ -124,12 +144,17 @@ export const productThemePresets: Record<ProductPageTheme, ProductThemePreset> =
     sectionBackground: '#f8fafc',
     surface: '#ffffff',
     softSurface: '#f8fafc',
+    cardBackground: 'linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.92))',
+    cardBorder: '1px solid rgba(79,70,229,0.12)',
     cardShadow: '0 18px 48px rgba(79,70,229,0.10)',
     titleColor: '#111827',
     textColor: '#64748b',
     accent: '#4f46e5',
     accentText: '#ffffff',
     ctaBackground: '#4f46e5',
+    heroTone: '白底電商、商品主圖突出、資訊規格化',
+    proofTone: '規格、物流、評價與售後降低疑慮',
+    purchaseTone: '相關商品、清楚比較、快速加入購買路徑',
     placeholderTone: 'commerce',
     darkSurface: '#111827',
     darkTitle: '#ffffff',

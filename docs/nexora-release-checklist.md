@@ -85,3 +85,28 @@
 | Required rollback point |  |  |
 | Known issues accepted |  |  |
 | Customer-facing note |  |  |
+
+## 7. 2026-06-28 Trial Hardening Snapshot
+
+本段記錄明天使用者試用前的本機自動檢查狀態。正式上線前仍需補瀏覽器人工 smoke test。
+
+| Check | Result | Note |
+|---|---|---|
+| Product Starter visual differentiation | Pass | 四主題已補 preset token、預覽樣式與匯出 CSS 一致性。 |
+| Product Page Starter | Pass | `npm run verify:product-page-starter` |
+| Product MVP modules | Pass | `npm run verify:product-mvp-modules` |
+| CMS export consistency | Pass | `npm run verify:cms-consistency` |
+| Auth foundation | Pass | `npm run verify:auth-foundation` |
+| Workspace content | Pass | `npm run verify:workspace-content` |
+| Workshop demo | Pass | `npm run verify:workshop-demo` |
+| Project package | Pass | `npm run verify:project-package` |
+| Color popover behavior | Pass | `npm run verify:color-popover` |
+| Desktop canvas behavior | Pass | `npm run verify:desktop-canvas` |
+| Export modal | Pass | `npm run verify:export-modal` |
+| Local image store | Pass | `npm run verify:local-image-store` |
+| Image specs | Pass | `npm run verify:image-specs` |
+| Module taxonomy | Pass | `npm run verify:module-taxonomy` |
+| Preview placeholders | Pass | `npm run verify:preview-placeholders` |
+| NEXORA brand | Pass | `npm run verify:nexora-brand` |
+| TypeScript | Pass | `npm run typecheck` |
+| Production build | Pass | `npm run build` |

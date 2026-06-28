@@ -284,9 +284,27 @@ function themeFor(input: ProductBuilderInput) {
   return productThemePresets[input.theme];
 }
 
+function visualDirectionFor(input: ProductBuilderInput) {
+  const theme = themeFor(input);
+  const cardMood = theme.cardBorder.includes('239,68,68')
+    ? '卡片會偏促購感，適合強調優惠、檔期和立即行動。'
+    : theme.cardBorder.includes('47,42,37')
+      ? '卡片會偏精品感，適合強調質感、留白和品牌信任。'
+      : theme.cardBorder.includes('79,70,229')
+        ? '卡片會偏電商感，適合強調規格、比較和清楚資訊。'
+        : '卡片會偏清爽感，適合強調潔淨、日常情境和安心使用。';
+  return {
+    hero: theme.heroTone,
+    cards: `${cardMood} 背景以 ${theme.cardBackground.includes('linear-gradient') ? '柔和層次' : '乾淨純色'} 呈現。`,
+    proof: theme.proofTone,
+    purchase: theme.purchaseTone,
+  };
+}
+
 function createModule(type: ProductModuleType, input: ProductBuilderInput): PageModule {
   const copy = copyFor(input);
   const theme = themeFor(input);
+  const direction = visualDirectionFor(input);
   const heroImage = input.backgroundImage || input.mainImage;
   const product = productFromInput(input);
 
@@ -336,8 +354,8 @@ function createModule(type: ProductModuleType, input: ProductBuilderInput): Page
           title: input.productName,
           subtitle: input.description,
           description: input.industry === 'ecommerce'
-            ? '適合放置 1000 x 1000 去背商品圖，快速呈現商品外觀、規格與購買理由。'
-            : '適合放置 1000 x 1000 去背商品圖，搭配主題背景建立商品頁質感。',
+            ? `適合放置 1000 x 1000 去背商品圖，快速呈現商品外觀、規格與購買理由。${direction.hero}`
+            : `適合放置 1000 x 1000 去背商品圖，搭配主題背景建立商品頁質感。${direction.hero}`,
           image: input.mainImage,
           mobileImage: input.mobileImage || input.mainImage,
           buttonText: input.ctaText,
@@ -358,7 +376,7 @@ function createModule(type: ProductModuleType, input: ProductBuilderInput): Page
           eyebrow: theme.eyebrow,
           title: input.goal === 'comparison' ? '先解決購買前最常見的疑慮' : '三個理由，讓商品更容易被選擇',
           subtitle: '以購買理由重新整理商品利益，而不是只列功能。',
-          backgroundColor: theme.surface,
+          backgroundColor: theme.cardBackground,
           titleColor: theme.titleColor,
           textColor: theme.textColor,
           items: [
@@ -378,11 +396,11 @@ function createModule(type: ProductModuleType, input: ProductBuilderInput): Page
           eyebrow: 'Features',
           title: `${copy.label}需要被快速理解`,
           subtitle: '用短句拆出功能特色，適合營運快速完成商品頁。',
-          backgroundColor: theme.surface,
+          backgroundColor: theme.cardBackground,
           titleColor: theme.titleColor,
           textColor: theme.textColor,
           items: [
-            { id: generateId(), icon: '01', title: input.benefitOne, description: '把功能翻成使用者能理解的利益。' },
+            { id: generateId(), icon: '01', title: input.benefitOne, description: `把功能翻成使用者能理解的利益。${direction.cards}` },
             { id: generateId(), icon: '02', title: input.benefitTwo, description: '補充商品差異與使用感。' },
             { id: generateId(), icon: '03', title: input.benefitThree, description: '說明適用對象或使用場景。' },
             { id: generateId(), icon: '04', title: input.category || copy.defaultCategory, description: '可改成商品分類、線別或檔期主題。' },
@@ -456,7 +474,7 @@ function createModule(type: ProductModuleType, input: ProductBuilderInput): Page
           subtitle: '比較模組用於處理猶豫、取代競品或說明升級價值。',
           beforeTitle: '一般狀態',
           afterTitle: input.productName,
-          backgroundColor: theme.surface,
+          backgroundColor: theme.cardBackground,
           titleColor: theme.titleColor,
           textColor: theme.textColor,
           items: [
@@ -480,7 +498,7 @@ function createModule(type: ProductModuleType, input: ProductBuilderInput): Page
           titleColor: theme.titleColor,
           textColor: theme.textColor,
           items: [
-            { id: generateId(), badge: '01', title: input.proofOne, description: '補充檢測、評價、使用者回饋或品牌承諾。' },
+            { id: generateId(), badge: '01', title: input.proofOne, description: `補充檢測、評價、使用者回饋或品牌承諾。${direction.proof}` },
             { id: generateId(), badge: '02', title: input.proofTwo, description: '補充售後、保固、安心成分或平台保障。' },
             { id: generateId(), badge: '03', title: copy.tag, description: '可替換成產業認證、銷售成績或合作通路。' },
           ],
@@ -507,7 +525,7 @@ function createModule(type: ProductModuleType, input: ProductBuilderInput): Page
           style: theme.purchaseStyle,
           eyebrow: input.goal === 'sales' ? 'Shop Now' : 'Next Step',
           title: input.goal === 'launch' ? `立即體驗 ${input.productName}` : '現在入手推薦組合',
-          subtitle: '用購買 CTA 承接最後轉換，也可改成相關商品、推薦組合或單一購買按鈕。',
+          subtitle: `用購買 CTA 承接最後轉換，也可改成相關商品、推薦組合或單一購買按鈕。${direction.purchase}`,
           buttonText: input.ctaText,
           buttonLink: input.ctaLink,
           backgroundColor: theme.darkSurface,

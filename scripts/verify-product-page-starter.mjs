@@ -55,8 +55,13 @@ const spec = fs.readFileSync(docsPath, 'utf8');
   'themeVisuals',
   'placeholderTone',
   'cardShadow',
+  'cardBackground',
+  'cardBorder',
   'sectionBackground',
   'ctaBackground',
+  'heroTone',
+  'proofTone',
+  'purchaseTone',
 ].forEach((token) => {
   if (!themes.includes(token)) {
     throw new Error(`Product Page Starter theme preset missing token: ${token}`);
@@ -123,6 +128,11 @@ if (modal.includes('disabled={missingRequiredHints.length > 0}')) {
   'luxuryFrame',
   'commerceGrid',
   'freshGlow',
+  'visualDirectionFor',
+  'theme.cardBackground',
+  'theme.cardBorder',
+  'theme.proofTone',
+  'theme.purchaseTone',
 ].forEach((token) => {
   if (!builder.includes(token) && !showcase.includes(token) && !features.includes(token)) {
     throw new Error(`Product Page Starter visual differentiation missing token: ${token}`);
