@@ -1,6 +1,6 @@
 # NEXORA Builder Module Taxonomy
 
-Last updated: 2026-06-28
+Last updated: 2026-06-29
 
 ## Core Rule
 
@@ -43,10 +43,10 @@ Campaign-oriented selling modules built around product cards, event banners, and
 Product-page modules should be fewer than the visible section names. Each base module can expose multiple styles.
 
 - 商品特色
-  - 四宮格
+  - 四宮格：4 個短賣點，快速掃描。
   - 六宮格
   - Icon + 文字
-  - 卡片式
+  - 卡片式：較長利益說明或情境式特色，卡片空間更大。
 - 核心賣點
   - 重點橫排
   - 重點直排
@@ -54,8 +54,8 @@ Product-page modules should be fewer than the visible section names. Each base m
 - 大圖展示
   - 滿版圖片 + 文字
   - 上下留白
-  - 左右排版
-  - 精品風
+  - 左右排版：電商導購型，圖片與文字同等重要。
+  - 精品風：玻璃文字卡與聚焦商品展示，適合高級感主推。
 - 商品情境
   - 左圖右文
   - 右圖左文
@@ -64,21 +64,21 @@ Product-page modules should be fewer than the visible section names. Each base m
 - 使用步驟
   - 使用步驟
 - 商品資訊
-  - 成分介紹
-  - 技術特色
-  - 商品規格
-  - 商品內容物
+  - 成分介紹：3 欄重點卡，適合成分、香調、材質等短內容。
+  - 技術特色：深色科技感規格板，適合專利、配方、測試數據。
+  - 商品規格：標準 key-value 表格，適合容量、尺寸、產地、保存方式。
+  - 商品內容物：包裝清單，適合套組、配件、贈品、盒內物。
 - 商品比較
   - 使用前後比較
   - 商品比較
 - 信任證明
-  - 商品評價
-  - 品牌保證
-  - 認證標章
+  - 商品評價：星等口碑卡。
+  - 品牌保證：印章式承諾卡。
+  - 認證標章：證書格狀卡。
 - 購買轉換
   - 購買資訊 CTA
-  - 推薦組合
-  - 相關商品
+  - 推薦組合：主推成套購買，第一張商品作為主組合。
+  - 相關商品：同系列延伸推薦，輕量卡片導購。
 
 Product FAQ does not get its own module. Use the General FAQ module and style/copy it for product questions.
 

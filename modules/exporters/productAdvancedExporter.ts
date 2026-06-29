@@ -68,10 +68,12 @@ ${items}
 export function generateProductComparisonHTML(data: ProductComparisonData): string {
   const title = textStyle(data.titleColor);
   const text = textStyle(data.textColor);
+  const beforeLabel = escapeHtml(data.beforeTitle || '一般商品');
+  const afterLabel = escapeHtml(data.afterTitle || '使用本商品');
   const rows = data.items.map((item) => `      <div class="cb-product-comparison__row">
         <strong class="cb-product-comparison__label"${title}>${escapeHtml(item.label)}</strong>
-        <p class="cb-product-comparison__cell"${text}>${escapeHtml(item.before)}</p>
-        <p class="cb-product-comparison__cell"${text}>${escapeHtml(item.after)}</p>
+        <p class="cb-product-comparison__cell"${text} data-label="${beforeLabel}">${escapeHtml(item.before)}</p>
+        <p class="cb-product-comparison__cell"${text} data-label="${afterLabel}">${escapeHtml(item.after)}</p>
       </div>`).join('\n');
 
   return `<section class="cb-product-comparison cb-product-comparison--${escapeHtml(data.style)} cb-section"${bgStyle(data.backgroundColor)}>
@@ -80,8 +82,8 @@ export function generateProductComparisonHTML(data: ProductComparisonData): stri
     <div class="cb-product-comparison__table">
       <div class="cb-product-comparison__head">
         <div>項目</div>
-        <div>${escapeHtml(data.beforeTitle)}</div>
-        <div>${escapeHtml(data.afterTitle)}</div>
+        <div>${beforeLabel}</div>
+        <div>${afterLabel}</div>
       </div>
 ${rows}
     </div>

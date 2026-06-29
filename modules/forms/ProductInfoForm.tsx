@@ -13,6 +13,13 @@ const styleOptions = [
   { value: 'contents', label: '內容物' },
 ];
 
+const styleDescriptions: Record<ProductInfoData['style'], string> = {
+  ingredients: '成分：用 3 欄重點卡呈現，適合有效成分、香調、材質等短內容。',
+  technology: '技術：用深色科技感規格板呈現，適合專利、配方、機能與測試數據。',
+  specs: '規格：標準 key-value 表格，適合容量、尺寸、產地、保存方式。',
+  contents: '內容物：用包裝清單呈現，適合組合包、盒內配件、贈品與套組內容。',
+};
+
 const createItem = (): ProductInfoItem => ({
   id: generateId(),
   label: '項目',
@@ -29,6 +36,7 @@ export function ProductInfoForm({ data, onChange }: Props) {
   return (
     <div className="space-y-4">
       <SegmentedField label="樣式" value={data.style} options={styleOptions} onChange={(v) => set('style', v as ProductInfoData['style'])} />
+      <p className="rounded-xl border border-cyan-300/15 bg-cyan-300/10 px-3 py-2 text-xs leading-5 text-cyan-100/80">{styleDescriptions[data.style]}</p>
       <div className="h-px bg-slate-700/60" />
       <FormField label="Eyebrow" value={data.eyebrow} onChange={(v) => set('eyebrow', v)} />
       <FormField label="標題" value={data.title} onChange={(v) => set('title', v)} />

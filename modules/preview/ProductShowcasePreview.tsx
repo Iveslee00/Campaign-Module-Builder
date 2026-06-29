@@ -24,16 +24,20 @@ export function ProductShowcasePreview({ data }: { data: ProductShowcaseData }) 
 
   const content = (
     <div style={{
-      position: 'relative',
+      position: isLuxury && !isMobile ? 'absolute' : 'relative',
+      left: isLuxury && !isMobile ? 0 : undefined,
+      top: isLuxury && !isMobile ? '50%' : undefined,
+      transform: isLuxury && !isMobile ? 'translateY(-50%)' : undefined,
       zIndex: 1,
-      maxWidth: isFull ? 540 : isSpacious ? 680 : 460,
+      maxWidth: isFull ? 540 : isSpacious ? 680 : isLuxury ? 430 : 460,
       margin: isSpacious ? '0 auto' : undefined,
       textAlign: isSpacious ? 'center' : 'left',
       padding: isLuxury && !isMobile ? '36px 34px' : undefined,
-      borderRadius: isLuxury && !isMobile ? 30 : undefined,
-      background: isLuxury && !isMobile ? 'rgba(255,255,255,0.78)' : commerceGrid && !isMobile ? 'rgba(255,255,255,0.66)' : undefined,
-      boxShadow: isLuxury && !isMobile ? '0 24px 70px rgba(15,23,42,0.10)' : commerceGrid && !isMobile ? '0 18px 54px rgba(79,70,229,0.10)' : undefined,
-      backdropFilter: isLuxury && !isMobile ? 'blur(12px)' : undefined,
+      borderRadius: isLuxury && !isMobile ? 34 : undefined,
+      background: isLuxury && !isMobile ? 'rgba(255,255,255,0.84)' : commerceGrid && !isMobile ? 'rgba(255,255,255,0.66)' : undefined,
+      boxShadow: isLuxury && !isMobile ? '0 28px 80px rgba(15,23,42,0.16)' : commerceGrid && !isMobile ? '0 18px 54px rgba(79,70,229,0.10)' : undefined,
+      backdropFilter: isLuxury && !isMobile ? 'blur(18px)' : undefined,
+      border: isLuxury && !isMobile ? '1px solid rgba(255,255,255,0.72)' : undefined,
     }}>
       {data.eyebrow && <p style={{ margin: '0 0 10px', fontSize: 12, fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: textColor, opacity: 0.72 }}>{data.eyebrow}</p>}
       <h2 style={{ margin: 0, fontSize: isMobile ? '2rem' : isFull ? '3.35rem' : '3rem', lineHeight: 1.05, fontWeight: 900, color: titleColor }}>{data.title}</h2>
@@ -46,7 +50,9 @@ export function ProductShowcasePreview({ data }: { data: ProductShowcaseData }) 
   const media = (
     <div style={{
       position: 'relative',
-      aspectRatio: isMobile ? '750 / 900' : isFull ? '1920 / 740' : '1 / 1',
+      width: isLuxury && !isMobile ? '72%' : undefined,
+      marginLeft: isLuxury && !isMobile ? 'auto' : undefined,
+      aspectRatio: isMobile ? '750 / 900' : isFull ? '1920 / 740' : isLuxury ? '920 / 760' : '1 / 1',
       borderRadius: isFull ? 0 : isLuxury ? 36 : 28,
       overflow: 'hidden',
       minHeight: isMobile ? undefined : isFull ? 520 : undefined,
@@ -68,7 +74,7 @@ export function ProductShowcasePreview({ data }: { data: ProductShowcaseData }) 
 
   return (
     <section style={{ background: sectionBackground, padding: isFull ? 0 : isMobile ? '36px 16px' : isLuxury ? '76px 24px' : '64px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
-      <div style={{ maxWidth: isFull ? 'none' : '1080px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isSplit ? (isLuxury ? '1fr 0.95fr' : '0.9fr 1.1fr') : '1fr', gap: isMobile ? 28 : isSpacious ? 42 : 56, alignItems: 'center', padding: isFull ? (isMobile ? '0 16px 38px' : '0 0 56px') : 0 }}>
+      <div style={{ maxWidth: isFull ? 'none' : '1080px', margin: '0 auto', position: isLuxury && !isMobile ? 'relative' : undefined, minHeight: isLuxury && !isMobile ? 620 : undefined, display: isLuxury && !isMobile ? 'block' : 'grid', gridTemplateColumns: isMobile ? '1fr' : isSplit ? (isLuxury ? '1fr 0.95fr' : '0.9fr 1.1fr') : '1fr', gap: isMobile ? 28 : isSpacious ? 42 : 56, alignItems: 'center', padding: isFull ? (isMobile ? '0 16px 38px' : '0 0 56px') : 0 }}>
         {layout}
       </div>
     </section>

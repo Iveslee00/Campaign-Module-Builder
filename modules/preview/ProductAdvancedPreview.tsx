@@ -95,21 +95,23 @@ export function ProductComparisonPreview({ data }: { data: ProductComparisonData
   const titleColor = data.titleColor || '#0f172a';
   const textColor = data.textColor || '#475569';
   const isBeforeAfter = data.style === 'before-after';
+  const beforeLabel = data.beforeTitle || '一般商品';
+  const afterLabel = data.afterTitle || '使用本商品';
   return (
     <section style={{ ...moduleSurface(data.backgroundColor || '#ffffff'), padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} centered={isBeforeAfter} />
         <div style={{ overflow: 'hidden', borderRadius: 26, border: '1px solid rgba(15,23,42,0.08)', background: '#ffffff', boxShadow: '0 20px 56px rgba(15,23,42,0.09)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', background: isBeforeAfter ? 'linear-gradient(135deg, #111827, #334155)' : 'linear-gradient(135deg, #f8fafc, #eef6ff)', color: isBeforeAfter ? '#ffffff' : titleColor, fontWeight: 850 }}>
+          <div style={{ display: isMobile ? 'none' : 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', background: isBeforeAfter ? 'linear-gradient(135deg, #111827, #334155)' : 'linear-gradient(135deg, #f8fafc, #eef6ff)', color: isBeforeAfter ? '#ffffff' : titleColor, fontWeight: 850 }}>
             <div style={{ padding: '16px 18px' }}>項目</div>
-            <div style={{ padding: '16px 18px' }}>{data.beforeTitle}</div>
-            <div style={{ padding: '16px 18px' }}>{data.afterTitle}</div>
+            <div style={{ padding: '16px 18px' }}>{beforeLabel}</div>
+            <div style={{ padding: '16px 18px' }}>{afterLabel}</div>
           </div>
           {data.items.map((item) => (
-            <div key={item.id} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.1fr 1fr 1fr', borderTop: '1px solid rgba(15,23,42,0.08)' }}>
-              <strong style={{ padding: '16px 18px', color: titleColor }}>{item.label}</strong>
-              <p style={{ margin: 0, padding: '16px 18px', color: textColor }}>{item.before}</p>
-              <p style={{ margin: 0, padding: '16px 18px', color: isBeforeAfter ? titleColor : textColor, fontWeight: isBeforeAfter ? 760 : undefined, background: isBeforeAfter ? 'rgba(14,165,198,0.08)' : undefined }}>{item.after}</p>
+            <div key={item.id} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.1fr 1fr 1fr', gap: isMobile ? 10 : 0, borderTop: '1px solid rgba(15,23,42,0.08)', padding: isMobile ? '14px' : 0 }}>
+              <strong style={{ padding: isMobile ? '0 4px' : '16px 18px', color: titleColor }}>{item.label}</strong>
+              <p style={{ margin: 0, padding: isMobile ? '12px 14px' : '16px 18px', borderRadius: isMobile ? 16 : 0, background: isMobile ? '#f8fafc' : undefined, color: textColor }}><span style={{ display: isMobile ? 'block' : 'none', marginBottom: 4, fontSize: 12, fontWeight: 850, letterSpacing: '0.08em', color: '#64748b' }}>{beforeLabel}</span>{item.before}</p>
+              <p style={{ margin: 0, padding: isMobile ? '12px 14px' : '16px 18px', borderRadius: isMobile ? 16 : 0, color: isBeforeAfter ? titleColor : textColor, fontWeight: isBeforeAfter ? 760 : undefined, background: isBeforeAfter ? 'rgba(14,165,198,0.08)' : isMobile ? '#f8fafc' : undefined }}><span style={{ display: isMobile ? 'block' : 'none', marginBottom: 4, fontSize: 12, fontWeight: 850, letterSpacing: '0.08em', color: '#0891b2' }}>{afterLabel}</span>{item.after}</p>
             </div>
           ))}
         </div>
@@ -122,16 +124,19 @@ export function ProductProofPreview({ data }: { data: ProductProofData }) {
   const { isMobile } = useDevice();
   const titleColor = data.titleColor || '#0f172a';
   const textColor = data.textColor || '#475569';
-  const isGuarantee = data.style === 'guarantee';
-  const isReviews = data.style === 'reviews';
+  const reviewStars = data.style === 'reviews';
+  const guaranteeSeal = data.style === 'guarantee';
+  const certificationGrid = data.style === 'certifications';
   return (
     <section style={{ ...moduleSurface(data.backgroundColor || '#ffffff'), padding: isMobile ? '36px 16px' : '58px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <ProductHead {...data} titleColor={titleColor} textColor={textColor} centered />
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 18 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : certificationGrid ? 'repeat(3, 1fr)' : 'repeat(3, 1fr)', gap: 18 }}>
           {data.items.map((item) => (
-            <article key={item.id} style={{ borderRadius: isGuarantee ? 999 : 26, padding: isGuarantee ? '26px 28px' : 26, background: isReviews ? 'linear-gradient(180deg, #ffffff, #f8fafc)' : '#ffffff', border: isGuarantee ? '1px solid rgba(245,158,11,0.26)' : '1px solid rgba(15,23,42,0.08)', textAlign: 'center', boxShadow: isGuarantee ? '0 18px 48px rgba(245,158,11,0.10)' : '0 18px 48px rgba(15,23,42,0.08)' }}>
-              <div style={{ display: 'inline-flex', minWidth: isGuarantee ? 74 : 60, height: isGuarantee ? 48 : 60, alignItems: 'center', justifyContent: 'center', borderRadius: 999, background: isGuarantee ? 'linear-gradient(135deg, #fef3c7, #ffffff)' : 'linear-gradient(135deg, #e0f2fe, #eef2ff)', padding: '0 14px', fontWeight: 900, color: titleColor, marginBottom: 16, boxShadow: 'inset 0 0 0 1px rgba(99,102,241,0.12)' }}>{item.badge}</div>
+            <article key={item.id} style={{ position: 'relative', overflow: 'hidden', borderRadius: guaranteeSeal ? 999 : certificationGrid ? 18 : 26, padding: guaranteeSeal ? '28px 30px' : certificationGrid ? '24px 22px 22px' : 26, background: reviewStars ? 'linear-gradient(180deg, #ffffff, #f8fafc)' : certificationGrid ? 'linear-gradient(180deg, #ffffff, #f8fafc)' : '#ffffff', border: guaranteeSeal ? '1px solid rgba(245,158,11,0.32)' : certificationGrid ? '1px solid rgba(15,23,42,0.12)' : '1px solid rgba(15,23,42,0.08)', textAlign: certificationGrid ? 'left' : 'center', boxShadow: guaranteeSeal ? '0 18px 48px rgba(245,158,11,0.10)' : certificationGrid ? '0 14px 32px rgba(15,23,42,0.07)' : '0 18px 48px rgba(15,23,42,0.08)' }}>
+              {reviewStars && <p style={{ margin: '0 0 12px', color: '#f59e0b', fontSize: 18, letterSpacing: 2 }}>★★★★★</p>}
+              {certificationGrid && <span style={{ position: 'absolute', right: 18, top: 18, width: 38, height: 48, borderRadius: 10, border: '1px solid rgba(15,23,42,0.12)', background: 'linear-gradient(180deg, #f8fafc, #ffffff)' }} />}
+              <div style={{ display: 'inline-flex', minWidth: guaranteeSeal ? 76 : certificationGrid ? 52 : 60, height: guaranteeSeal ? 52 : certificationGrid ? 36 : 60, alignItems: 'center', justifyContent: 'center', borderRadius: guaranteeSeal ? 999 : certificationGrid ? 12 : 999, background: guaranteeSeal ? 'linear-gradient(135deg, #fef3c7, #ffffff)' : certificationGrid ? 'linear-gradient(135deg, #111827, #334155)' : 'linear-gradient(135deg, #e0f2fe, #eef2ff)', padding: '0 14px', fontWeight: 900, color: certificationGrid ? '#ffffff' : titleColor, marginBottom: 16, boxShadow: 'inset 0 0 0 1px rgba(99,102,241,0.12)' }}>{item.badge}</div>
               <h3 style={{ margin: '0 0 8px', fontSize: '1.08rem', fontWeight: 850, color: titleColor }}>{item.title}</h3>
               <p style={{ margin: 0, fontSize: '0.94rem', lineHeight: 1.7, color: textColor }}>{item.description}</p>
             </article>
@@ -147,6 +152,8 @@ export function ProductPurchasePreview({ data }: { data: ProductPurchaseData }) 
   const titleColor = data.titleColor || '#ffffff';
   const textColor = data.textColor || 'rgba(255,255,255,0.78)';
   const isCta = data.style === 'cta';
+  const bundleHeroCard = data.style === 'bundle';
+  const relatedCompactCard = data.style === 'related';
   return (
     <section style={{ ...moduleSurface(data.backgroundColor || '#0f172a'), padding: isMobile ? '40px 16px' : '64px 24px', fontFamily }}>
       <div style={{ maxWidth: 1080, margin: '0 auto', color: textColor }}>
@@ -155,16 +162,17 @@ export function ProductPurchasePreview({ data }: { data: ProductPurchaseData }) 
           <a href={data.buttonLink || '#'} style={{ display: 'inline-flex', minHeight: isCta ? 56 : 48, alignItems: 'center', justifyContent: 'center', borderRadius: 999, background: '#ffffff', color: '#0f172a', padding: isCta ? '0 40px' : '0 32px', fontWeight: 850, textDecoration: 'none', boxShadow: isCta ? 'none' : '0 16px 36px rgba(0,0,0,0.18)' }}>{data.buttonText}</a>
         </div>
         {data.style !== 'cta' && (
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : `repeat(${Math.min(data.products.length, 3)}, 1fr)`, gap: 18 }}>
-            {data.products.map((product) => (
-              <article key={product.id} style={{ overflow: 'hidden', borderRadius: 22, background: '#ffffff', color: '#0f172a', boxShadow: '0 18px 48px rgba(0,0,0,0.18)' }}>
-                <div style={{ position: 'relative', aspectRatio: '1 / 1', background: '#eef2ff' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : bundleHeroCard ? '1.35fr 1fr 1fr' : `repeat(${Math.min(data.products.length, 4)}, 1fr)`, gap: relatedCompactCard ? 14 : 18, alignItems: 'stretch' }}>
+            {data.products.map((product, index) => (
+              <article key={product.id} style={{ overflow: 'hidden', borderRadius: bundleHeroCard && index === 0 ? 30 : relatedCompactCard ? 18 : 22, background: '#ffffff', color: '#0f172a', boxShadow: bundleHeroCard && index === 0 ? '0 26px 70px rgba(0,0,0,0.24)' : relatedCompactCard ? '0 12px 28px rgba(0,0,0,0.12)' : '0 18px 48px rgba(0,0,0,0.18)', transform: bundleHeroCard && index === 0 && !isMobile ? 'translateY(-10px)' : undefined }}>
+                <div style={{ position: 'relative', aspectRatio: relatedCompactCard ? '4 / 3' : '1 / 1', background: '#eef2ff' }}>
+                  {bundleHeroCard && index === 0 && <span style={{ position: 'absolute', left: 14, top: 14, zIndex: 1, borderRadius: 999, background: '#0f172a', color: '#ffffff', padding: '6px 10px', fontSize: 12, fontWeight: 850 }}>推薦組合</span>}
                   <PreviewImage src={product.image} alt="" label="商品圖" spec={IMAGE_SPECS.product} objectFit="contain" variant="product" />
                 </div>
-                <div style={{ padding: 16 }}>
+                <div style={{ padding: relatedCompactCard ? 14 : bundleHeroCard && index === 0 ? 22 : 16 }}>
                   <p style={{ margin: '0 0 4px', fontSize: 12, fontWeight: 750, color: '#64748b' }}>{product.brand}</p>
-                  <h3 style={{ margin: '0 0 8px', fontSize: '1rem', fontWeight: 850 }}>{product.name}</h3>
-                  <p style={{ margin: 0, fontWeight: 900, color: '#ef4444' }}>{product.salePrice}</p>
+                  <h3 style={{ margin: '0 0 8px', fontSize: bundleHeroCard && index === 0 ? '1.16rem' : relatedCompactCard ? '0.95rem' : '1rem', fontWeight: 850 }}>{product.name}</h3>
+                  <p style={{ margin: 0, fontWeight: 900, color: '#ef4444', fontSize: bundleHeroCard && index === 0 ? '1.1rem' : undefined }}>{product.salePrice}</p>
                 </div>
               </article>
             ))}

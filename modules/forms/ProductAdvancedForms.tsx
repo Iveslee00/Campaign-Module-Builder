@@ -36,17 +36,34 @@ const comparisonStyleOptions = [
   { value: 'product-table', label: '表格比較' },
 ];
 
+const comparisonStyleDescriptions: Record<ProductComparisonData['style'], string> = {
+  'before-after': '前後對比：用一般商品與使用本商品做直覺比較，適合轉換型商品頁。',
+  'product-table': '表格比較：適合多條件規格比較，文字較多時仍清楚。',
+};
+
 const proofStyleOptions = [
   { value: 'reviews', label: '評價' },
   { value: 'guarantee', label: '保證' },
   { value: 'certifications', label: '認證' },
 ];
 
+const proofStyleDescriptions: Record<ProductProofData['style'], string> = {
+  reviews: '評價：用星等與口碑卡呈現，適合社群回饋與使用者心得。',
+  guarantee: '保證：用印章式信任卡呈現，適合退換貨、品質保證與服務承諾。',
+  certifications: '認證：用證書格狀版呈現，適合標章、檢驗與第三方認證。',
+};
+
 const purchaseStyleOptions = [
   { value: 'cta', label: 'CTA' },
   { value: 'bundle', label: '推薦組合' },
   { value: 'related', label: '相關商品' },
 ];
+
+const purchaseStyleDescriptions: Record<ProductPurchaseData['style'], string> = {
+  cta: 'CTA：單一轉換區塊，適合頁尾收斂到購買、諮詢或領券。',
+  bundle: '推薦組合：主推成套購買，第一張商品會被放大成主組合。',
+  related: '相關商品：同系列延伸推薦，用較輕的卡片引導繼續逛。',
+};
 
 function SectionHeadFields<T extends {
   eyebrow: string; title: string; subtitle: string; backgroundColor: string; titleColor: string; textColor: string;
@@ -118,6 +135,7 @@ export function ProductComparisonForm({ data, onChange }: { data: ProductCompari
   return (
     <div className="space-y-4">
       <SegmentedField label="樣式" value={data.style} options={comparisonStyleOptions} onChange={(v) => set('style', v as ProductComparisonData['style'])} />
+      <p className="rounded-xl border border-cyan-300/15 bg-cyan-300/10 px-3 py-2 text-xs leading-5 text-cyan-100/80">{comparisonStyleDescriptions[data.style]}</p>
       <SectionHeadFields data={data} onChange={onChange} />
       <div className="grid grid-cols-2 gap-2">
         <FormField label="左欄標題" value={data.beforeTitle} onChange={(v) => set('beforeTitle', v)} />
@@ -142,6 +160,7 @@ export function ProductProofForm({ data, onChange }: { data: ProductProofData; o
   return (
     <div className="space-y-4">
       <SegmentedField label="樣式" value={data.style} options={proofStyleOptions} onChange={(v) => set('style', v as ProductProofData['style'])} />
+      <p className="rounded-xl border border-cyan-300/15 bg-cyan-300/10 px-3 py-2 text-xs leading-5 text-cyan-100/80">{proofStyleDescriptions[data.style]}</p>
       <SectionHeadFields data={data} onChange={onChange} />
       <EditableItems title="證明項目" onAdd={() => set('items', [...data.items, { id: generateId(), badge: 'NEW', title: '證明標題', description: '補充說明。' }])}>
         {data.items.map((item, index) => (
@@ -168,6 +187,7 @@ export function ProductPurchaseForm({ data, onChange }: { data: ProductPurchaseD
   return (
     <div className="space-y-4">
       <SegmentedField label="樣式" value={data.style} options={purchaseStyleOptions} onChange={(v) => set('style', v as ProductPurchaseData['style'])} />
+      <p className="rounded-xl border border-cyan-300/15 bg-cyan-300/10 px-3 py-2 text-xs leading-5 text-cyan-100/80">{purchaseStyleDescriptions[data.style]}</p>
       <SectionHeadFields data={data} onChange={onChange} />
       <FormField label="按鈕文字" value={data.buttonText} onChange={(v) => set('buttonText', v)} />
       <FormField label="按鈕連結" value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" />

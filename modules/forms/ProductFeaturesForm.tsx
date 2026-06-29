@@ -13,6 +13,13 @@ const styleOptions = [
   { value: 'cards', label: '卡片式' },
 ];
 
+const styleDescriptions: Record<ProductFeaturesData['style'], string> = {
+  'grid-4': '四宮格：適合 4 個核心特色，短標題、短說明，讓使用者快速掃描。',
+  'grid-6': '六宮格：適合較多功能點，資訊密度高，但每格文字要更短。',
+  'icon-text': 'Icon文字：適合清單式賣點，節奏較輕，像功能摘要。',
+  cards: '卡片式：適合較長文字，每張卡片空間更大，可放情境或利益說明。',
+};
+
 const createItem = (): ProductFeatureItem => ({
   id: generateId(),
   icon: '✨',
@@ -29,6 +36,7 @@ export function ProductFeaturesForm({ data, onChange }: Props) {
   return (
     <div className="space-y-4">
       <SegmentedField label="樣式" value={data.style} options={styleOptions} onChange={(v) => set('style', v as ProductFeaturesData['style'])} />
+      <p className="rounded-xl border border-cyan-300/15 bg-cyan-300/10 px-3 py-2 text-xs leading-5 text-cyan-100/80">{styleDescriptions[data.style]}</p>
       <div className="h-px bg-slate-700/60" />
       <FormField label="Eyebrow" value={data.eyebrow} onChange={(v) => set('eyebrow', v)} />
       <FormField label="標題" value={data.title} onChange={(v) => set('title', v)} type="textarea" rows={2} />
