@@ -8,7 +8,7 @@
 
 - `docs/module-taxonomy.md`：模組分類與重複模組判斷規則。
 - `docs/nexora-platform-launch-plan.md`：平台級架構、上線階段與 `NX-*` 任務池。
-- `docs/product-page-starter-spec.md`：從商品建立 / Product Page Starter 正式規格。
+- `docs/product-page-starter-spec.md`：快速建立 / Product Page Starter 正式規格。
 - `docs/product-page-starter-task-inventory.md`：Product Page Starter 後續任務池與驗收規則。
 
 ## 產品定位
@@ -98,7 +98,7 @@ flowchart TD
 | `components/editor/PreviewCanvas.tsx` | 中央畫布與排序 |
 | `components/editor/InspectorPanel.tsx` | 右側設定面板 |
 | `components/editor/ExportModal.tsx` | 貼碼、ZIP、電子報匯出 |
-| `components/editor/ProductBuildModal.tsx` | 從商品建立入口，收集產業、商品目的、視覺主題、商品資料 |
+| `components/editor/ProductBuildModal.tsx` | 快速建立入口，收集產業、商品目的、視覺主題、商品資料 |
 | `modules/forms/*` | 各活動頁模組的設定表單 |
 | `modules/preview/*` | 各活動頁模組的即時預覽 |
 | `modules/exporters/*` | 各活動頁模組的 HTML 匯出 |
@@ -234,15 +234,15 @@ flowchart TD
   EmailGen --> Email
 ```
 
-## 從商品建立 / Product Page Starter 流程
+## 快速建立 / Product Page Starter 流程
 
-「從商品建立」是 NEXORA Builder 的跨產業商品頁快速生成入口。它不是另一套編輯器，也不是固定模板庫；它會依照產業、商品頁目的、視覺主題與頁面長度，把商品資料轉成既有 PageModule[]。
+「快速建立」是 NEXORA Builder 的跨產業商品頁快速生成入口。它不是另一套編輯器，也不是固定模板庫；它會依照產業、商品頁目的、視覺主題與頁面長度，把商品資料轉成既有 PageModule[]。
 
 產生後仍回到同一個畫布，可拖拉、刪除、編輯與匯出。完整產品規格見 `docs/product-page-starter-spec.md`。
 
 ```mermaid
 flowchart TD
-  ProductModal["ProductBuildModal 從商品建立"]
+  ProductModal["ProductBuildModal 快速建立"]
   Industry["Industry 產業 / 線別"]
   Goal["Product Goal 商品頁目的"]
   Theme["Visual Theme 視覺主題"]
@@ -359,7 +359,7 @@ DATABASE_URL
 | `npm run verify:auth-foundation` | 檢查 Neon auth 基礎架構 |
 | `npm run verify:project-memory` | 檢查本機專案與 `.cmb` 專案檔 |
 | `npm run verify:workshop-demo` | 檢查工作區入口與專案列表 |
-| `npm run verify:product-builder-demo` | 檢查從商品建立 demo 是否接線完整 |
+| `npm run verify:product-builder-demo` | 檢查快速建立 demo 是否接線完整 |
 | `npm run verify:module-visual-polish` | 檢查 General、Campaign、Product 模組預覽與匯出 CSS 的視覺強化語彙 |
 | `npm run verify:local-image-store` | 檢查 IndexedDB 圖片暫存、預覽、ZIP 與貼碼處理 |
 | `npm run verify:local-storage-quota` | 檢查 localStorage 爆容量時不會造成整站 crash |

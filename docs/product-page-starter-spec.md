@@ -4,7 +4,7 @@
 
 ## 1. 功能定位
 
-「從商品建立」是 NEXORA Builder 的商品頁快速生成流程，正式名稱建議為 Product Page Starter。
+「快速建立」是 NEXORA Builder 的商品頁快速生成流程。對外名稱使用 Quick Builder / 快速建立；內部規格仍以 Product Page Starter 表示這套 recipe generator。
 
 它不是另一套 Builder，也不是固定模板庫。它的責任是把使用者輸入的商品資料，依照產業、商品頁目的、視覺主題與頁面長度，轉成一組可編輯的 NEXORA Builder 模組。
 
@@ -373,7 +373,7 @@ interface ProductPageRecipe {
 
 ```mermaid
 flowchart TD
-  Entry["從商品建立"]
+  Entry["快速建立"]
   Industry["選產業 / 線別"]
   Goal["選商品頁目的"]
   Theme["選視覺主題"]
@@ -416,4 +416,3 @@ flowchart TD
 - 產生後模組仍能被拖拉、編輯、刪除、複製。
 - 匯出 CMS 貼碼、ZIP、`.cmb` 不需新增另一套流程。
 - 不新增與既有 Product 模組重複的模組。
-

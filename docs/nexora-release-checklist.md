@@ -62,7 +62,7 @@
 
 | Check | Expected | Result | Note |
 |---|---|---|---|
-| Open modal | 可開啟「從商品建立」 |  |  |
+| Open modal | 可開啟「快速建立」 |  |  |
 | Industry switch | 切換產業時保留價格、CTA 與圖片 |  |  |
 | Readiness hints | 缺主圖或 CTA 連結時顯示提示，但不阻擋建立 |  |  |
 | Theme selection | 四個主題可選，Recipe Preview 會更新 |  |  |

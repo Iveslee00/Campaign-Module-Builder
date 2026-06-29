@@ -1165,7 +1165,7 @@ export default function Page() {
                 className="flex items-center gap-2 rounded-lg border border-cyan-400/30 bg-cyan-500/15 px-3 py-2 text-sm font-bold text-cyan-100 transition-colors hover:bg-cyan-500/25"
               >
                 <PackagePlus size={14} />
-                從商品建立
+                快速建立
               </button>
               <button
                 onClick={() => setPreviewOpen(true)}

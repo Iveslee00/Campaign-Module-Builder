@@ -207,11 +207,11 @@ export function ProductBuildModal({ onClose, onCreate }: ProductBuildModalProps)
           <div>
             <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-indigo-400/10 px-3 py-1 text-xs font-black text-indigo-200">
               <Sparkles size={14} />
-              Product Page Starter
+              Quick Builder
             </div>
-            <h2 className="text-2xl font-black text-white">從商品建立</h2>
+            <h2 className="text-2xl font-black text-white">快速建立</h2>
             <p className="mt-1 text-sm leading-6 text-slate-400">
-              先選產業、頁面目的、視覺主題與長度，再把商品資料轉成可編輯的 NEXORA Builder 模組。
+              先選產業、頁面目的、視覺主題與長度，再快速產生可編輯的 NEXORA Builder 頁面初稿。
             </p>
           </div>
           <button
