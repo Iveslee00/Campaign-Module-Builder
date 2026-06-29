@@ -1,7 +1,7 @@
 'use client';
 
 import { ProductBannerData } from '@/types/modules';
-import { FormField, SegmentedField, ToggleField, ColorSection, ImageField } from '@/components/ui/FormField';
+import { FormField, FormSection, SegmentedField, ToggleField, ColorSection, ImageField } from '@/components/ui/FormField';
 import { getProductBannerImageSpecs } from '@/lib/assets/imageSpecs';
 
 interface Props { data: ProductBannerData; onChange: (data: ProductBannerData) => void }
@@ -18,50 +18,47 @@ export function ProductBannerForm({ data, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <SegmentedField label="高度" value={data.height ?? 'medium'} onChange={(v) => set('height', v as ProductBannerData['height'])} options={heightOptions} />
-      <ToggleField label="左右對調" description="開啟後圖片在左、文字在右" value={data.reverse} onChange={(v) => set('reverse', v)} />
+      <FormSection title="樣式" description="控制模組高度、左右對調與文字色。">
+        <SegmentedField label="高度" value={data.height ?? 'medium'} onChange={(v) => set('height', v as ProductBannerData['height'])} options={heightOptions} />
+        <ToggleField label="左右對調" description="開啟後圖片在左、文字在右" value={data.reverse} onChange={(v) => set('reverse', v)} />
+        <ColorSection
+          backgroundColor={data.backgroundColor}
+          onBackgroundColorChange={(v) => set('backgroundColor', v)}
+          titleColor={data.titleColor}
+          textColor={data.textColor}
+          onTitleColorChange={(v) => set('titleColor', v)}
+          onTextColorChange={(v) => set('textColor', v)}
+        />
+      </FormSection>
 
-      <div className="h-px bg-slate-700/60" />
-      <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">文字內容</p>
-      <FormField label="小標" value={data.kicker} onChange={(v) => set('kicker', v)} placeholder="限時優惠" />
-      <FormField label="主標" value={data.headline} onChange={(v) => set('headline', v)} type="textarea" rows={2} placeholder="主打商品活動標題" />
-      <FormField label="說明文字" value={data.tagline} onChange={(v) => set('tagline', v)} type="textarea" rows={3} placeholder="用簡短文字說明商品賣點" />
+      <FormSection title="內容" description="主打商品文案、品名與價格。">
+        <FormField label="小標" value={data.kicker} onChange={(v) => set('kicker', v)} placeholder="限時優惠" />
+        <FormField label="主標" value={data.headline} onChange={(v) => set('headline', v)} type="textarea" rows={2} placeholder="主打商品活動標題" />
+        <FormField label="說明文字" value={data.tagline} onChange={(v) => set('tagline', v)} type="textarea" rows={3} placeholder="用簡短文字說明商品賣點" />
+        <FormField label="品牌" value={data.brand} onChange={(v) => set('brand', v)} placeholder="品牌名稱" />
+        <FormField label="品名" value={data.productName} onChange={(v) => set('productName', v)} placeholder="主打商品名稱" />
+        <div className="grid grid-cols-2 gap-2">
+          <FormField label="原價" value={data.originalPrice} onChange={(v) => set('originalPrice', v)} placeholder="$299.00" />
+          <FormField label="特價" value={data.salePrice} onChange={(v) => set('salePrice', v)} placeholder="$199.00" />
+        </div>
+        <ToggleField label="顯示標籤" value={data.showBadge} onChange={(v) => set('showBadge', v)} />
+        {data.showBadge && (
+          <FormField label="標籤文字" value={data.badgeText} onChange={(v) => set('badgeText', v)} placeholder="特賣 / 新品 / 熱銷" />
+        )}
+      </FormSection>
 
-      <div className="h-px bg-slate-700/60" />
-      <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">商品資訊</p>
-      <FormField label="品牌" value={data.brand} onChange={(v) => set('brand', v)} placeholder="品牌名稱" />
-      <FormField label="品名" value={data.productName} onChange={(v) => set('productName', v)} placeholder="主打商品名稱" />
-      <div className="grid grid-cols-2 gap-2">
-        <FormField label="原價" value={data.originalPrice} onChange={(v) => set('originalPrice', v)} placeholder="$299.00" />
-        <FormField label="特價" value={data.salePrice} onChange={(v) => set('salePrice', v)} placeholder="$199.00" />
-      </div>
-      <ToggleField label="顯示標籤" value={data.showBadge} onChange={(v) => set('showBadge', v)} />
-      {data.showBadge && (
-        <FormField label="標籤文字" value={data.badgeText} onChange={(v) => set('badgeText', v)} placeholder="特賣 / 新品 / 熱銷" />
-      )}
+      <FormSection title="行動" description="設定主要轉換按鈕。">
+        <FormField label="按鈕文字" value={data.buttonText} onChange={(v) => set('buttonText', v)} placeholder="立即選購" />
+        <FormField label="按鈕連結" value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" placeholder="https://" />
+      </FormSection>
 
-      <div className="h-px bg-slate-700/60" />
-      <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">按鈕</p>
-      <FormField label="按鈕文字" value={data.buttonText} onChange={(v) => set('buttonText', v)} placeholder="立即選購" />
-      <FormField label="按鈕連結" value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" placeholder="https://" />
-
-      <div className="h-px bg-slate-700/60" />
-      <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">圖片</p>
-      <ImageField label="商品主打圖片（PC）" value={data.image} onChange={(v) => set('image', v)} spec={imageSpecs.desktop} />
-      <button type="button" onClick={() => set('mobileImage', data.image)} className="text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-300">
-        同 PC 視覺
-      </button>
-      <ImageField label="商品主打圖片（M）" value={data.mobileImage ?? ''} onChange={(v) => set('mobileImage', v)} spec={imageSpecs.mobile} />
-
-      <div className="h-px bg-slate-700/60" />
-      <ColorSection
-        backgroundColor={data.backgroundColor}
-        onBackgroundColorChange={(v) => set('backgroundColor', v)}
-        titleColor={data.titleColor}
-        textColor={data.textColor}
-        onTitleColorChange={(v) => set('titleColor', v)}
-        onTextColorChange={(v) => set('textColor', v)}
-      />
+      <FormSection title="圖片" description="單品主打 PC/M 圖片尺寸會依高度切換。">
+        <ImageField label="商品主打圖片（PC）" value={data.image} onChange={(v) => set('image', v)} spec={imageSpecs.desktop} />
+        <button type="button" onClick={() => set('mobileImage', data.image)} className="text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-300">
+          同 PC 視覺
+        </button>
+        <ImageField label="商品主打圖片（M）" value={data.mobileImage ?? ''} onChange={(v) => set('mobileImage', v)} spec={imageSpecs.mobile} />
+      </FormSection>
     </div>
   );
 }

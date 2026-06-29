@@ -14,7 +14,7 @@ import {
   ProductStepItem,
   ProductStepsData,
 } from '@/types/modules';
-import { ColorSection, FormField, ImageField, SegmentedField, ToggleField } from '@/components/ui/FormField';
+import { ColorSection, FormField, FormSection, ImageField, SegmentedField, ToggleField } from '@/components/ui/FormField';
 import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { generateId } from '@/lib/utils';
 import { ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-react';
@@ -71,18 +71,21 @@ function SectionHeadFields<T extends {
   const setString = (key: keyof T, value: string) => onChange({ ...data, [key]: value } as T);
   return (
     <>
-      <FormField label="Eyebrow" value={data.eyebrow} onChange={(v) => setString('eyebrow', v)} />
-      <FormField label="標題" value={data.title} onChange={(v) => setString('title', v)} type="textarea" rows={2} />
-      <FormField label="副標" value={data.subtitle} onChange={(v) => setString('subtitle', v)} type="textarea" rows={3} />
-      <div className="h-px bg-slate-700/60" />
-      <ColorSection
-        backgroundColor={data.backgroundColor}
-        onBackgroundColorChange={(v) => setString('backgroundColor', v)}
-        titleColor={data.titleColor}
-        textColor={data.textColor}
-        onTitleColorChange={(v) => setString('titleColor', v)}
-        onTextColorChange={(v) => setString('textColor', v)}
-      />
+      <FormSection title="內容" description="設定區塊標題、副標與說明。">
+        <FormField label="Eyebrow" value={data.eyebrow} onChange={(v) => setString('eyebrow', v)} />
+        <FormField label="標題" value={data.title} onChange={(v) => setString('title', v)} type="textarea" rows={2} />
+        <FormField label="副標" value={data.subtitle} onChange={(v) => setString('subtitle', v)} type="textarea" rows={3} />
+      </FormSection>
+      <FormSection title="樣式" description="控制區塊底色、標題色與內文字色。">
+        <ColorSection
+          backgroundColor={data.backgroundColor}
+          onBackgroundColorChange={(v) => setString('backgroundColor', v)}
+          titleColor={data.titleColor}
+          textColor={data.textColor}
+          onTitleColorChange={(v) => setString('titleColor', v)}
+          onTextColorChange={(v) => setString('textColor', v)}
+        />
+      </FormSection>
     </>
   );
 }
@@ -189,8 +192,10 @@ export function ProductPurchaseForm({ data, onChange }: { data: ProductPurchaseD
       <SegmentedField label="樣式" value={data.style} options={purchaseStyleOptions} onChange={(v) => set('style', v as ProductPurchaseData['style'])} />
       <p className="rounded-xl border border-cyan-300/15 bg-cyan-300/10 px-3 py-2 text-xs leading-5 text-cyan-100/80">{purchaseStyleDescriptions[data.style]}</p>
       <SectionHeadFields data={data} onChange={onChange} />
-      <FormField label="按鈕文字" value={data.buttonText} onChange={(v) => set('buttonText', v)} />
-      <FormField label="按鈕連結" value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" />
+      <FormSection title="行動" description="設定主要轉換按鈕。">
+        <FormField label="按鈕文字" value={data.buttonText} onChange={(v) => set('buttonText', v)} />
+        <FormField label="按鈕連結" value={data.buttonLink} onChange={(v) => set('buttonLink', v)} type="url" />
+      </FormSection>
       <EditableItems title={`商品（${data.products.length}）`} onAdd={addProduct}>
         {data.products.map((product, index) => (
           <div key={product.id} className="overflow-hidden rounded-lg border border-slate-700">

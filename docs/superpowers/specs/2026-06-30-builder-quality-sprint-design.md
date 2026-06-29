@@ -459,6 +459,8 @@ Acceptance：
 
 - 選取任一模組時，右側不再是一整條無分區列表。
 
+Status：完成第一階段。已新增共用 `FormSection`、錨點進階區、檢查區 shell，並套用到 KV、KV 輪播、商品列表、商品輪播、活動 Banner + 商品、單品主打、商品資訊與商品頁進階表單。後續低密度模組可在視覺 polish 任務中補齊。
+
 ### BQ-004：Image field status and dimension hints
 
 Goal：讓圖片欄位清楚說明 PC/M、尺寸、CMS/ZIP差異。

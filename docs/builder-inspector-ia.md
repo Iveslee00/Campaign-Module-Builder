@@ -135,3 +135,27 @@ Check Group 和 Export Preflight 的差異：
 - 圖片欄位顯示 PC/M 尺寸與 CMS/ZIP 用途。
 - 任何模組欄位修改後，canvas preview 即時更新。
 - Export output 與 preview 不因欄位分組改變。
+
+## 9. Implementation Status
+
+### 2026-06-30
+
+已完成 `BQ-003` 第一階段 UI shell：
+
+- 新增共用 `FormSection`，作為右側設定的分區容器。
+- `FormRenderer` 已將錨點名稱移到「進階設定」。
+- `FormRenderer` 已加入「檢查」區塊 shell，後續接 `BQ-005` / `BQ-006` 匯出前檢查。
+- 第一批高密度模組已套用分區：
+  - KV
+  - KV 輪播
+  - 商品列表
+  - 商品輪播
+  - 活動 Banner + 商品
+  - 單品主打
+  - 商品資訊
+  - 商品頁進階模組共用區塊
+
+驗證：
+
+- `npm run verify:builder-inspector-ia`：通過。
+- `npm run typecheck`：通過。

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { ImagePlus, Link2, Palette, X } from 'lucide-react';
 import { formatImageSpec, ImageSpec } from '@/lib/assets/imageSpecs';
 import { isLocalImageRef, resolveLocalImageUrl, revokeResolvedLocalImageUrl, storeLocalImage } from '@/lib/assets/localImageStore';
@@ -123,6 +123,24 @@ export function SegmentedField({ label, value, onChange, options }: SegmentedFie
         ))}
       </div>
     </div>
+  );
+}
+
+interface FormSectionProps {
+  title: string;
+  description?: string;
+  children: ReactNode;
+}
+
+export function FormSection({ title, description, children }: FormSectionProps) {
+  return (
+    <section className="space-y-3 rounded-2xl border border-white/10 bg-white/[0.035] p-3">
+      <div>
+        <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-300">{title}</p>
+        {description && <p className="mt-1 text-xs leading-relaxed text-slate-500">{description}</p>}
+      </div>
+      <div className="space-y-3">{children}</div>
+    </section>
   );
 }
 

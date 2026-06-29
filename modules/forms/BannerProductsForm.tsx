@@ -1,7 +1,7 @@
 'use client';
 
 import { BannerProductsData, Product } from '@/types/modules';
-import { FormField, ToggleField, ColorField, ColorSection, ImageField } from '@/components/ui/FormField';
+import { FormField, FormSection, ToggleField, ColorField, ColorSection, ImageField } from '@/components/ui/FormField';
 import { IMAGE_SPECS, getBannerProductsImageSpecs } from '@/lib/assets/imageSpecs';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
@@ -19,20 +19,22 @@ export function BannerProductsForm({ data, onChange }: Props) {
   return (
     <div className="space-y-4">
       {/* Banner fields */}
-      <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">活動 Banner</p>
-      <FormField label="Banner 標題" value={data.bannerTitle} onChange={(v) => onChange({ ...data, bannerTitle: v })} placeholder="活動主標" />
-      <FormField label="Banner 副標" value={data.bannerSubtitle} onChange={(v) => onChange({ ...data, bannerSubtitle: v })} placeholder="限時優惠" />
-      <FormField label="Banner 連結" value={data.bannerLink} onChange={(v) => onChange({ ...data, bannerLink: v })} type="url" placeholder="https://" />
-      <ImageField label="活動 Banner 圖片（PC）" value={data.bannerImage} onChange={(v) => onChange({ ...data, bannerImage: v })} spec={bannerSpecs.desktop} />
-      <button type="button" onClick={() => onChange({ ...data, mobileBannerImage: data.bannerImage })} className="text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-300">
-        同 PC 視覺
-      </button>
-      <ImageField label="活動 Banner 圖片（M）" value={data.mobileBannerImage ?? ''} onChange={(v) => onChange({ ...data, mobileBannerImage: v })} spec={bannerSpecs.mobile} />
-      <ColorField label="Banner 標題色" value={data.bannerTitleColor} onChange={(v) => onChange({ ...data, bannerTitleColor: v })} />
+      <FormSection title="內容" description="活動 Banner 文案與固定商品內容。">
+        <FormField label="Banner 標題" value={data.bannerTitle} onChange={(v) => onChange({ ...data, bannerTitle: v })} placeholder="活動主標" />
+        <FormField label="Banner 副標" value={data.bannerSubtitle} onChange={(v) => onChange({ ...data, bannerSubtitle: v })} placeholder="限時優惠" />
+        <FormField label="Banner 連結" value={data.bannerLink} onChange={(v) => onChange({ ...data, bannerLink: v })} type="url" placeholder="https://" />
+      </FormSection>
 
-      <div className="h-px bg-slate-700/60" />
+      <FormSection title="圖片" description="活動 Banner 與商品圖片尺寸分開管理。">
+        <ImageField label="活動 Banner 圖片（PC）" value={data.bannerImage} onChange={(v) => onChange({ ...data, bannerImage: v })} spec={bannerSpecs.desktop} />
+        <button type="button" onClick={() => onChange({ ...data, mobileBannerImage: data.bannerImage })} className="text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-300">
+          同 PC 視覺
+        </button>
+        <ImageField label="活動 Banner 圖片（M）" value={data.mobileBannerImage ?? ''} onChange={(v) => onChange({ ...data, mobileBannerImage: v })} spec={bannerSpecs.mobile} />
+      </FormSection>
 
       {/* Product list */}
+      <FormSection title="內容" description="固定商品數量由版型決定，不在此新增商品。">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">固定商品（{data.products.length}）</span>
@@ -83,8 +85,10 @@ export function BannerProductsForm({ data, onChange }: Props) {
           </div>
         ))}
       </div>
+      </FormSection>
 
-      <div className="h-px bg-slate-700/60" />
+      <FormSection title="樣式" description="控制 Banner 標題色、商品文字色與區塊底色。">
+      <ColorField label="Banner 標題色" value={data.bannerTitleColor} onChange={(v) => onChange({ ...data, bannerTitleColor: v })} />
       <ColorSection
         backgroundColor={data.backgroundColor}
         onBackgroundColorChange={(v) => onChange({ ...data, backgroundColor: v })}
@@ -93,6 +97,7 @@ export function BannerProductsForm({ data, onChange }: Props) {
         onTitleColorChange={(v) => onChange({ ...data, titleColor: v })}
         onTextColorChange={(v) => onChange({ ...data, textColor: v })}
       />
+      </FormSection>
     </div>
   );
 }

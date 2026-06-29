@@ -1,7 +1,7 @@
 'use client';
 
 import { HeroCarouselData, KvSlide } from '@/types/modules';
-import { FormField, ColorField, ToggleField, SegmentedField, ImageField } from '@/components/ui/FormField';
+import { FormField, FormSection, ColorField, ToggleField, SegmentedField, ImageField } from '@/components/ui/FormField';
 import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
 import { generateId } from '@/lib/utils';
 import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
@@ -43,20 +43,23 @@ export function HeroCarouselForm({ data, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <SegmentedField
-        label="高度"
-        value={data.height ?? 'medium'}
-        options={[{ value: 'small', label: 'S' }, { value: 'medium', label: 'M' }, { value: 'large', label: 'L' }]}
-        onChange={(v) => onChange({ ...data, height: v as HeroCarouselData['height'] })}
-      />
-      <ToggleField
-        label="自動輪播"
-        value={data.autoPlay ?? true}
-        onChange={(v) => onChange({ ...data, autoPlay: v })}
-      />
-      <div className="h-px bg-slate-700/60" />
+      <FormSection title="樣式" description="控制輪播高度、自動播放與手機文字底色。">
+        <SegmentedField
+          label="高度"
+          value={data.height ?? 'medium'}
+          options={[{ value: 'small', label: 'S' }, { value: 'medium', label: 'M' }, { value: 'large', label: 'L' }]}
+          onChange={(v) => onChange({ ...data, height: v as HeroCarouselData['height'] })}
+        />
+        <ToggleField
+          label="自動輪播"
+          value={data.autoPlay ?? true}
+          onChange={(v) => onChange({ ...data, autoPlay: v })}
+        />
+        <ColorField label="M 端文字底色" value={data.backgroundColor} onChange={(v) => onChange({ ...data, backgroundColor: v })} defaultPreviewColor="#1a1a2e" placeholder="使用預設 #1a1a2e" />
+      </FormSection>
 
       {/* Slides */}
+      <FormSection title="內容" description="管理每一張 KV 的文字、連結與對齊。">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">輪播項目（{data.slides.length}）</span>
@@ -84,11 +87,13 @@ export function HeroCarouselForm({ data, onChange }: Props) {
             {expanded === slide.id && (
               <div className="px-3 pb-3 border-t border-slate-700/60">
                 <div className="pt-3 space-y-3">
-                  <ImageField label={showText ? 'KV 圖片（PC 右側）' : 'KV 圖片（PC 整張）'} value={slide.image} onChange={(v) => updateSlide(slide.id, 'image', v)} spec={imageSpecs.desktop} />
-                  <button type="button" onClick={() => updateSlide(slide.id, 'mobileImage', slide.image)} className="text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-300">
-                    同 PC 視覺
-                  </button>
-                  <ImageField label={showText ? 'KV 圖片（M 上方）' : 'KV 圖片（M 整張）'} value={slide.mobileImage ?? ''} onChange={(v) => updateSlide(slide.id, 'mobileImage', v)} spec={imageSpecs.mobile} />
+                  <FormSection title="圖片" description="單張輪播的 PC/M 圖片。">
+                    <ImageField label={showText ? 'KV 圖片（PC 右側）' : 'KV 圖片（PC 整張）'} value={slide.image} onChange={(v) => updateSlide(slide.id, 'image', v)} spec={imageSpecs.desktop} />
+                    <button type="button" onClick={() => updateSlide(slide.id, 'mobileImage', slide.image)} className="text-xs font-semibold text-indigo-400 transition-colors hover:text-indigo-300">
+                      同 PC 視覺
+                    </button>
+                    <ImageField label={showText ? 'KV 圖片（M 上方）' : 'KV 圖片（M 整張）'} value={slide.mobileImage ?? ''} onChange={(v) => updateSlide(slide.id, 'mobileImage', v)} spec={imageSpecs.mobile} />
+                  </FormSection>
                   <ToggleField label="顯示文字區" description="關閉後會成為純 Banner" value={slide.showText ?? true} onChange={(v) => updateSlide(slide.id, 'showText', v)} />
                   {showText && (
                     <>
@@ -116,9 +121,7 @@ export function HeroCarouselForm({ data, onChange }: Props) {
           })()
         ))}
       </div>
-
-      <div className="h-px bg-slate-700/60" />
-      <ColorField label="M 端文字底色" value={data.backgroundColor} onChange={(v) => onChange({ ...data, backgroundColor: v })} defaultPreviewColor="#1a1a2e" placeholder="使用預設 #1a1a2e" />
+      </FormSection>
     </div>
   );
 }

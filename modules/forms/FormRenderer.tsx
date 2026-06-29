@@ -29,7 +29,7 @@ import {
   ProductPurchaseForm,
   ProductStepsForm,
 } from './ProductAdvancedForms';
-import { FormField } from '@/components/ui/FormField';
+import { FormField, FormSection } from '@/components/ui/FormField';
 
 interface Props {
   module: PageModule;
@@ -45,11 +45,14 @@ export function FormRenderer({ module, modules, onChange }: Props) {
   const anchorName = 'anchorName' in module.data ? module.data.anchorName ?? '' : '';
   const updateAnchorName = (value: string) => onChange({ ...module.data, anchorName: value } as PageModule['data']);
   const anchorField = (
-    <>
+    <FormSection title="進階設定" description="錨點名稱填寫後，可被錨點導覽列為跳轉目標。">
       <FormField label="錨點名稱" value={anchorName} onChange={updateAnchorName} placeholder="例如：熱銷商品、活動說明" />
-      <p className="-mt-2 text-xs leading-relaxed text-slate-500">填寫後可被「錨點導覽」模組列為跳轉按鈕。</p>
-      <div className="h-px bg-slate-700/60" />
-    </>
+    </FormSection>
+  );
+  const checkField = (
+    <FormSection title="檢查" description="下一階段會在這裡顯示缺圖、空連結、尺寸與匯出風險。">
+      <p className="text-xs leading-relaxed text-slate-500">目前可正常編輯。匯出前檢查會在 BQ-005 / BQ-006 補上。</p>
+    </FormSection>
   );
 
   let form: React.ReactNode = null;
@@ -130,5 +133,5 @@ export function FormRenderer({ module, modules, onChange }: Props) {
       return null;
   }
 
-  return <div className="space-y-4">{anchorField}{form}</div>;
+  return <div className="space-y-4">{checkField}{form}{anchorField}</div>;
 }

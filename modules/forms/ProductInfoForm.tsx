@@ -1,7 +1,7 @@
 'use client';
 
 import { ProductInfoData, ProductInfoItem } from '@/types/modules';
-import { ColorSection, FormField, SegmentedField } from '@/components/ui/FormField';
+import { ColorSection, FormField, FormSection, SegmentedField } from '@/components/ui/FormField';
 import { generateId } from '@/lib/utils';
 
 interface Props { data: ProductInfoData; onChange: (data: ProductInfoData) => void }
@@ -35,14 +35,23 @@ export function ProductInfoForm({ data, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <SegmentedField label="樣式" value={data.style} options={styleOptions} onChange={(v) => set('style', v as ProductInfoData['style'])} />
-      <p className="rounded-xl border border-cyan-300/15 bg-cyan-300/10 px-3 py-2 text-xs leading-5 text-cyan-100/80">{styleDescriptions[data.style]}</p>
-      <div className="h-px bg-slate-700/60" />
-      <FormField label="Eyebrow" value={data.eyebrow} onChange={(v) => set('eyebrow', v)} />
-      <FormField label="標題" value={data.title} onChange={(v) => set('title', v)} />
-      <FormField label="副標" value={data.subtitle} onChange={(v) => set('subtitle', v)} type="textarea" rows={3} />
-      <div className="h-px bg-slate-700/60" />
-      <div className="space-y-3">
+      <FormSection title="樣式" description="成分、技術、規格與內容物會使用不同呈現方式。">
+        <SegmentedField label="樣式" value={data.style} options={styleOptions} onChange={(v) => set('style', v as ProductInfoData['style'])} />
+        <p className="rounded-xl border border-cyan-300/15 bg-cyan-300/10 px-3 py-2 text-xs leading-5 text-cyan-100/80">{styleDescriptions[data.style]}</p>
+        <ColorSection
+          backgroundColor={data.backgroundColor}
+          onBackgroundColorChange={(v) => set('backgroundColor', v)}
+          titleColor={data.titleColor}
+          textColor={data.textColor}
+          onTitleColorChange={(v) => set('titleColor', v)}
+          onTextColorChange={(v) => set('textColor', v)}
+        />
+      </FormSection>
+
+      <FormSection title="內容" description="設定區塊標題與商品資訊項目。">
+        <FormField label="Eyebrow" value={data.eyebrow} onChange={(v) => set('eyebrow', v)} />
+        <FormField label="標題" value={data.title} onChange={(v) => set('title', v)} />
+        <FormField label="副標" value={data.subtitle} onChange={(v) => set('subtitle', v)} type="textarea" rows={3} />
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">資訊項目</p>
           <button type="button" onClick={() => set('items', [...data.items, createItem()])} className="text-xs font-semibold text-indigo-400 hover:text-indigo-300">+ 新增</button>
@@ -60,16 +69,7 @@ export function ProductInfoForm({ data, onChange }: Props) {
             <FormField label="補充說明" value={item.description} onChange={(v) => updateItem(item.id, { description: v })} type="textarea" rows={2} />
           </div>
         ))}
-      </div>
-      <div className="h-px bg-slate-700/60" />
-      <ColorSection
-        backgroundColor={data.backgroundColor}
-        onBackgroundColorChange={(v) => set('backgroundColor', v)}
-        titleColor={data.titleColor}
-        textColor={data.textColor}
-        onTitleColorChange={(v) => set('titleColor', v)}
-        onTextColorChange={(v) => set('textColor', v)}
-      />
+      </FormSection>
     </div>
   );
 }

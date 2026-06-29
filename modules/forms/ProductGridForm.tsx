@@ -1,7 +1,7 @@
 'use client';
 
 import { ProductGridData, Product } from '@/types/modules';
-import { FormField, ToggleField, ColorField, ImageField } from '@/components/ui/FormField';
+import { FormField, FormSection, ToggleField, ColorField, ImageField } from '@/components/ui/FormField';
 import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
 import { generateId } from '@/lib/utils';
 import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
@@ -39,6 +39,7 @@ export function ProductGridForm({ data, onChange }: Props) {
 
   return (
     <div className="space-y-4">
+      <FormSection title="內容" description="管理商品名稱、價格、標籤與商品連結。">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">商品（{data.products.length}）</span>
@@ -93,14 +94,13 @@ export function ProductGridForm({ data, onChange }: Props) {
           </div>
         ))}
       </div>
+      </FormSection>
 
-      <div className="h-px bg-slate-700/60" />
-      <div className="space-y-3">
-        <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">顏色設定</p>
+      <FormSection title="樣式" description="控制商品卡文字與區塊底色。">
         <ColorField label="背景色" value={data.backgroundColor} onChange={(v) => onChange({ ...data, backgroundColor: v })} />
         <ColorField label="品牌名稱色" value={data.titleColor} onChange={(v) => onChange({ ...data, titleColor: v })} />
         <ColorField label="品名色" value={data.textColor} onChange={(v) => onChange({ ...data, textColor: v })} />
-      </div>
+      </FormSection>
     </div>
   );
 }
