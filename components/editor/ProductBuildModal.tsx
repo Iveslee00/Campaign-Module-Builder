@@ -31,6 +31,9 @@ const industries: Array<SelectOption<ProductIndustry>> = [
   { value: 'cleaning', label: '清潔用品', description: '洗衣精、清潔劑、除菌噴霧、居家用品' },
   { value: 'beauty', label: '美妝保養', description: '保養品、彩妝、面膜、洗沐保養' },
   { value: 'ecommerce', label: '電商綜合', description: '多線別商品、生活用品、一般電商商品' },
+  { value: 'food', label: '食品飲料', description: '飲品、零食、禮盒、冷凍食品、季節限定' },
+  { value: 'electronics', label: '3C 家電', description: '小家電、3C 配件、智慧裝置、居家科技' },
+  { value: 'fashion', label: '服飾配件', description: '服飾、鞋包、飾品、穿搭配件與生活風格' },
 ];
 
 const goals: Array<SelectOption<ProductGoal>> = [

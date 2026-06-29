@@ -3,7 +3,7 @@ import { generateId } from '@/lib/utils';
 import { productThemePresets, themeVisuals } from './productThemes';
 import type { ProductPageTheme } from './productThemes';
 
-export type ProductIndustry = 'cleaning' | 'beauty' | 'ecommerce';
+export type ProductIndustry = 'cleaning' | 'beauty' | 'ecommerce' | 'food' | 'electronics' | 'fashion';
 export type ProductGoal = 'sales' | 'launch' | 'comparison' | 'scenario';
 export type { ProductPageTheme } from './productThemes';
 export type ProductPageLength = 'quick' | 'standard' | 'complete';
@@ -143,6 +143,63 @@ const industryCopy: Record<ProductIndustry, {
       { question: '是否有保固或退換貨？', answer: '請依實際售後政策填寫，讓使用者購買前有清楚預期。' },
     ],
   },
+  food: {
+    label: '食品飲料',
+    tag: '人氣風味',
+    defaultProduct: '低糖氣泡果茶',
+    defaultBrand: 'NEXORA TASTE',
+    defaultCategory: '食品飲料',
+    headline: '把日常補水變成清爽享受',
+    subtitle: '低負擔、好入口，適合辦公、聚會與日常囤貨。',
+    description: '適合飲品、零食、禮盒、冷凍食品與季節限定商品，重點是口味、食用情境與安心資訊。',
+    details: '容量：330ml\n口味：蜜桃烏龍\n保存：常溫保存，開封後請冷藏\n特色：低糖、清爽氣泡、適合餐後與下午茶。',
+    benefits: ['清爽低負擔', '風味好入口', '適合多種情境'],
+    scenarios: ['辦公室下午茶', '聚會分享與日常囤貨'],
+    proof: ['嚴選原料', '安心保存標示'],
+    faq: [
+      { question: '保存方式是什麼？', answer: '請依實際商品填寫常溫、冷藏或冷凍保存條件，並補充開封後建議。' },
+      { question: '是否適合素食或過敏族群？', answer: '可補充成分、過敏原、素食標示與營養資訊。' },
+      { question: '可以大量訂購嗎？', answer: '若有箱購、組合或團購優惠，可在此補充購買方式。' },
+    ],
+  },
+  electronics: {
+    label: '3C 家電',
+    tag: '科技精選',
+    defaultProduct: '智慧除濕空氣循環機',
+    defaultBrand: 'NEXORA TECH',
+    defaultCategory: '3C 家電',
+    headline: '用一台設備改善居家空氣感',
+    subtitle: '規格清楚、情境明確，讓功能轉成看得懂的生活效益。',
+    description: '適合小家電、3C 配件、智慧裝置與居家科技商品，重點是規格、功能比較與售後保固。',
+    details: '尺寸：320 x 220 x 520mm\n適用坪數：8-12 坪\n功能：除濕、循環、智慧模式\n保固：依實際商品政策填寫。',
+    benefits: ['功能整合', '操作直覺', '規格清楚'],
+    scenarios: ['臥室與更衣間除濕', '梅雨季居家空氣管理'],
+    proof: ['原廠保固', '規格清楚可比較'],
+    faq: [
+      { question: '適合多大的空間？', answer: '請依實際坪數、功率或使用環境填寫，避免使用者期待落差。' },
+      { question: '耗電量與噪音如何？', answer: '可補充能源效率、分貝、模式差異與建議使用時間。' },
+      { question: '保固與維修方式？', answer: '請依平台與原廠政策補充保固期限、客服與維修流程。' },
+    ],
+  },
+  fashion: {
+    label: '服飾配件',
+    tag: '風格推薦',
+    defaultProduct: '輕量防潑水通勤包',
+    defaultBrand: 'NEXORA STYLE',
+    defaultCategory: '服飾配件',
+    headline: '讓日常穿搭多一點俐落感',
+    subtitle: '以材質、容量、搭配情境與細節設計完成轉換。',
+    description: '適合服飾、包款、鞋履、飾品與穿搭配件，重點是風格、材質、尺寸與搭配情境。',
+    details: '尺寸：依實際商品填寫\n材質：防潑水尼龍 / 五金配件\n容量：可放 13 吋筆電\n顏色：黑、灰、奶茶色。',
+    benefits: ['百搭風格', '輕量好收納', '細節質感'],
+    scenarios: ['通勤與日常外出', '週末短程旅行'],
+    proof: ['材質細節清楚', '多情境搭配'],
+    faq: [
+      { question: '尺寸如何選擇？', answer: '請補充尺寸表、模特身高或實際容量，降低購買猶豫。' },
+      { question: '材質如何保養？', answer: '可說明清潔方式、防水程度、是否可機洗或需乾洗。' },
+      { question: '顏色會有色差嗎？', answer: '可補充拍攝光線、螢幕色差與實際商品顏色說明。' },
+    ],
+  },
 };
 
 const recipeMap: Record<ProductGoal, ProductModuleType[]> = {
@@ -150,6 +207,15 @@ const recipeMap: Record<ProductGoal, ProductModuleType[]> = {
   launch: ['hero', 'anchor-nav', 'product-showcase', 'product-scenes', 'product-features', 'product-info', 'product-proof', 'faq', 'product-purchase'],
   comparison: ['hero', 'anchor-nav', 'product-showcase', 'product-benefits', 'product-comparison', 'product-info', 'product-proof', 'faq', 'product-purchase'],
   scenario: ['hero', 'anchor-nav', 'product-showcase', 'product-scenes', 'product-steps', 'product-features', 'product-info', 'faq', 'product-purchase'],
+};
+
+const industryRecipeBoosts: Record<ProductIndustry, ProductModuleType[]> = {
+  cleaning: ['product-scenes', 'product-steps', 'product-info'],
+  beauty: ['product-info', 'product-proof', 'product-steps'],
+  ecommerce: ['product-comparison', 'product-info', 'product-purchase'],
+  food: ['product-scenes', 'product-info', 'product-proof'],
+  electronics: ['product-info', 'product-comparison', 'product-proof'],
+  fashion: ['product-scenes', 'product-showcase', 'product-proof'],
 };
 
 const lengthTargets: Record<ProductPageLength, number> = {
@@ -192,7 +258,17 @@ export const defaultProductBuilderInput = (): ProductBuilderInput => {
 export function defaultInputForIndustry(industry: ProductIndustry): ProductBuilderInput {
   const base = defaultProductBuilderInput();
   const copy = industryCopy[industry];
-  const theme: ProductPageTheme = industry === 'beauty' ? 'luxury' : industry === 'ecommerce' ? 'minimalCommerce' : 'freshClean';
+  const theme: ProductPageTheme = industry === 'beauty'
+    ? 'luxury'
+    : industry === 'ecommerce'
+      ? 'minimalCommerce'
+      : industry === 'electronics'
+        ? 'minimalCommerce'
+        : industry === 'fashion'
+          ? 'luxury'
+          : industry === 'food'
+            ? 'promo'
+            : 'freshClean';
   return {
     ...base,
     industry,
@@ -216,13 +292,14 @@ export function defaultInputForIndustry(industry: ProductIndustry): ProductBuild
 
 const compact = <T>(items: Array<T | false | null | undefined>): T[] => items.filter(Boolean) as T[];
 
-export function resolveProductPageRecipe(input: Pick<ProductBuilderInput, 'goal' | 'pageLength'> & Partial<Pick<ProductBuilderInput, 'theme'>>): ProductPageRecipe {
-  const full = recipeMap[input.goal];
+export function resolveProductPageRecipe(input: Pick<ProductBuilderInput, 'goal' | 'pageLength'> & Partial<Pick<ProductBuilderInput, 'industry' | 'theme'>>): ProductPageRecipe {
+  const full = Array.from(new Set([...recipeMap[input.goal], ...(input.industry ? industryRecipeBoosts[input.industry] : [])]));
   const target = lengthTargets[input.pageLength];
   const priority: ProductModuleType[] = [
     'hero',
     'anchor-nav',
     'product-showcase',
+    ...(input.industry ? industryRecipeBoosts[input.industry] : []),
     'product-benefits',
     'product-features',
     'product-scenes',
