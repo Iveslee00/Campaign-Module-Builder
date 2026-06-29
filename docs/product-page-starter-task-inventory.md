@@ -1,6 +1,6 @@
 # Product Page Starter Task Inventory
 
-更新日期：2026-06-28
+更新日期：2026-06-29
 
 本文件是 `docs/product-page-starter-spec.md` 的執行任務池。後續 ChatGPT / Codex 接力時，應一次只處理一個 Task，不要跨 Task 擴張範圍。
 
@@ -257,7 +257,19 @@ Acceptance：
 - 匯出 HTML 正常。
 - `npm run verify:product-mvp-modules` 通過。
 
-Status：待做。
+Status：完成於 `e306b5a7`；已補 `product-info` 的 `contents` style，在表單、預覽與匯出 CSS 中改為包裝清單語意，並加入樣式差異驗證。
+
+驗證：
+
+- `npm run verify:product-style-distinction` 通過。
+- `npm run verify:product-mvp-modules` 通過。
+- `npm run typecheck` 通過。
+- `npm run build` 通過。
+
+剩餘人工 QA：
+
+- 使用 Quick Builder 產生商品頁後，確認「內容物」是否在正確情境出現。
+- 實際匯出 CMS 貼碼與 ZIP 後人工檢查版面。
 
 ### Task PS-008：適用場景補強
 
@@ -312,7 +324,19 @@ Acceptance：
 - 三種 proof style 肉眼可區分。
 - 匯出後樣式不斷版。
 
-Status：待做。
+Status：完成於 `e306b5a7`；`product-proof` 已將 `reviews`、`guarantee`、`certifications` 拆成星等口碑卡、印章式保證卡與證書格狀卡，表單也補上各 style 使用情境說明。
+
+驗證：
+
+- `npm run verify:product-style-distinction` 通過。
+- `npm run verify:product-mvp-modules` 通過。
+- `npm run typecheck` 通過。
+- `npm run build` 通過。
+
+剩餘人工 QA：
+
+- 實際在 PC / M 預覽中檢查三種 proof style 是否足夠可辨識。
+- 實際 CMS 貼碼檢查樣式不斷版。
 
 ### Task PS-010：推薦組合 / 相關商品補強
 
@@ -340,7 +364,19 @@ Acceptance：
 - 三種 purchase style 可在表單切換。
 - M 版商品卡不被裁切。
 
-Status：待做。
+Status：完成於 `e306b5a7`；`product-purchase` 已將 `cta`、`bundle`、`related` 拆成不同商業目的。推薦組合會強化第一張主推商品，相關商品改為輕量延伸導購卡。
+
+驗證：
+
+- `npm run verify:product-style-distinction` 通過。
+- `npm run verify:product-mvp-modules` 通過。
+- `npm run typecheck` 通過。
+- `npm run build` 通過。
+
+剩餘人工 QA：
+
+- 檢查 M 版商品卡高度與圖片比例。
+- 實際用 Quick Builder 產生頁面後，確認推薦組合 / 相關商品語意沒有混淆。
 
 ## Phase 4. Image And Export QA
 
@@ -400,7 +436,19 @@ Acceptance：
 - 匯入後模組與圖片參照存在。
 - `npm run verify:project-package` 通過。
 
-Status：待做。
+Status：部分完成；平台層 `.cmb` / ZIP 圖片流程已於 `NX-010` 完成自動驗證，但 Product Starter 生成頁面的完整人工 QA 尚未完成。
+
+已驗證：
+
+- `npm run verify:local-image-store` 通過。
+- `npm run verify:project-package` 通過。
+
+剩餘人工 QA：
+
+- 用 Quick Builder 產生清潔用品 / 美妝 / 電商綜合頁面。
+- 分別上傳商品圖與背景圖。
+- 匯出 `.cmb` 後重新匯入，確認圖片與模組都還原。
+- 匯出 ZIP 後確認 `images/` 與 HTML 圖片路徑正常。
 
 ### Task PS-013：CMS 貼碼商品頁驗證
 
@@ -428,7 +476,19 @@ Acceptance：
 - Product Starter 模組匯出完整。
 - `npm run verify:cms-consistency` 通過。
 
-Status：待做。
+Status：部分完成；平台層 CMS 匯出已於 `NX-009` 驗證，Product Starter 生成頁面的三產業人工貼碼測試尚未完成。
+
+已驗證：
+
+- `npm run verify:cms-consistency` 通過。
+- `npm run verify:export-modal` 通過。
+
+剩餘人工 QA：
+
+- 用 Quick Builder 生成至少三種產業頁面。
+- 匯出 HTML / CSS / JS。
+- 確認貼碼不含 base64 圖片爆字。
+- 確認本地圖片情境會提示改用圖片網址。
 
 ## Phase 5. Industry Expansion
 

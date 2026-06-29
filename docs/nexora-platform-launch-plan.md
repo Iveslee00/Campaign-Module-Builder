@@ -1,6 +1,6 @@
 # NEXORA Platform Launch Plan
 
-更新日期：2026-06-28
+更新日期：2026-06-29
 
 本文件是 NEXORA 平台級架構與上線任務計畫。Product Page Starter 的任務池使用 `PS-*`，本文件使用 `NX-*`，避免商品頁功能與平台架構混在一起。
 
@@ -458,7 +458,7 @@ Goal：依 `PS-*` 任務池逐步補齊商品頁生成器。
 
 Scope：
 
-- 從 `PS-003` 開始往下執行。
+- 從目前未完成或待人工 QA 的 `PS-*` 往下執行。
 - 每次只做一個 `PS-*`。
 - 每次更新 `docs/product-page-starter-task-inventory.md` 狀態。
 
@@ -475,7 +475,23 @@ Acceptance：
 
 - 每個 PS Task 都有 commit 與驗證結果。
 
-Status：待做。
+Status：進行中；`PS-001` 至 `PS-005` 已完成，`PS-007`、`PS-009`、`PS-010` 已完成自動驗證與文件更新。`PS-006`、`PS-008`、`PS-011`、`PS-012`、`PS-013` 仍有文件規則或人工 QA 待補。
+
+2026-06-29 狀態摘要：
+
+- `PS-001` 配方預覽：完成。
+- `PS-002` 產業切換資料保留：完成。
+- `PS-003` 建立前欄位完整度提示：完成。
+- `PS-004` 主題 preset 正規化：完成。
+- `PS-005` 四主題視覺差異深化：完成。
+- `PS-006` 主題與全站樣式關係：部分完成，仍需補優先順序文件規則。
+- `PS-007` 商品內容物模組補強：完成，自動驗證通過，待 Quick Builder 人工 QA。
+- `PS-008` 適用場景補強：待做。
+- `PS-009` 商品評價 / 認證 / 品牌保證補強：完成，自動驗證通過，待人工 QA。
+- `PS-010` 推薦組合 / 相關商品補強：完成，自動驗證通過，待人工 QA。
+- `PS-011` 商品頁 placeholder 全面一致：部分完成，仍需補 hero variant 覆蓋。
+- `PS-012` ZIP / `.cmb` 商品頁圖片驗證：平台層完成，Product Starter 三產業人工 QA 待做。
+- `PS-013` CMS 貼碼商品頁驗證：平台層完成，Product Starter 三產業人工貼碼 QA 待做。
 
 ## Phase P6. Auth / Neon
 
@@ -763,14 +779,18 @@ Next suggested task:
 目前建議順序：
 
 1. `NX-003`：正式站 smoke test。
-2. `NX-005`：Workspace 導航結構定案。
-3. `NX-009`：CMS 貼碼匯出驗證。
-4. `NX-010`：ZIP 與 `.cmb` 圖片完整性驗證。
-5. `PS-003`：Product Starter 建立前欄位完整度提示。
-6. `NX-014`：正式上線 QA checklist。
+2. `NX-012`：帳號資料與 session QA。
+3. `PS-017`：Product Starter 手動 QA 清單。
+4. `PS-012`：ZIP / `.cmb` 商品頁圖片人工 QA。
+5. `PS-013`：CMS 貼碼商品頁人工 QA。
+6. `PS-011`：商品頁 placeholder hero variant 補齊。
+7. `PS-006`：主題與全站樣式優先順序文件規則。
+8. `PS-008`：適用場景補強。
+9. `NX-014`：正式上線 QA checklist。
+10. `NX-017`：客戶試用回饋表。
 
 原因：
 
-- 先確保正式站與核心匯出穩定。
-- 再強化 Product Starter。
-- 最後建立上線前固定 QA。
+- 先處理明天試用最可能造成中斷的正式站、登入與匯出。
+- 再補 Product Starter 的人工 QA 文件，避免只靠肉眼臨時測。
+- 最後才繼續補模組體驗與新增產業。
