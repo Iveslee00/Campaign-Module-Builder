@@ -436,12 +436,14 @@ Acceptance：
 - 匯入後模組與圖片參照存在。
 - `npm run verify:project-package` 通過。
 
-Status：部分完成；平台層 `.cmb` / ZIP 圖片流程已於 `NX-010` 完成自動驗證，但 Product Starter 生成頁面的完整人工 QA 尚未完成。
+Status：部分完成；平台層 `.cmb` / ZIP 圖片流程已於 `NX-010` 完成自動驗證，且已新增 Product Starter 匯出準備度驗證。瀏覽器實際下載 ZIP、匯出 `.cmb`、重新匯入仍需人工 QA。
 
 已驗證：
 
 - `npm run verify:local-image-store` 通過。
 - `npm run verify:project-package` 通過。
+- `npm run verify:product-starter-export-readiness` 通過。
+- `npm run build` 通過。
 
 剩餘人工 QA：
 
@@ -476,12 +478,14 @@ Acceptance：
 - Product Starter 模組匯出完整。
 - `npm run verify:cms-consistency` 通過。
 
-Status：部分完成；平台層 CMS 匯出已於 `NX-009` 驗證，Product Starter 生成頁面的三產業人工貼碼測試尚未完成。
+Status：部分完成；平台層 CMS 匯出已於 `NX-009` 驗證，且已新增 Product Starter 匯出準備度驗證。Product Starter 生成頁面的三產業人工貼碼測試尚未完成。
 
 已驗證：
 
 - `npm run verify:cms-consistency` 通過。
 - `npm run verify:export-modal` 通過。
+- `npm run verify:product-starter-export-readiness` 通過。
+- `npm run build` 通過。
 
 剩餘人工 QA：
 

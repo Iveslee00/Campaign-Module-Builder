@@ -97,6 +97,7 @@
 |---|---|---|
 | Product Starter visual differentiation | Pass | 四主題已補 preset token、預覽樣式與匯出 CSS 一致性。 |
 | Product Page Starter | Pass | `npm run verify:product-page-starter` |
+| Product Starter export readiness | Pass | `npm run verify:product-starter-export-readiness` |
 | Product MVP modules | Pass | `npm run verify:product-mvp-modules` |
 | Module visual polish | Pass | `npm run verify:module-visual-polish` |
 | CMS export consistency | Pass | `npm run verify:cms-consistency` |

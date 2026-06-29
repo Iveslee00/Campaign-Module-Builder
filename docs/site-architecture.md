@@ -360,6 +360,7 @@ DATABASE_URL
 | `npm run verify:project-memory` | 檢查本機專案與 `.cmb` 專案檔 |
 | `npm run verify:workshop-demo` | 檢查工作區入口與專案列表 |
 | `npm run verify:product-builder-demo` | 檢查快速建立 demo 是否接線完整 |
+| `npm run verify:product-starter-export-readiness` | 檢查快速建立商品頁與 CMS / ZIP / `.cmb` 圖片匯出規則是否接線完整 |
 | `npm run verify:module-visual-polish` | 檢查 General、Campaign、Product 模組預覽與匯出 CSS 的視覺強化語彙 |
 | `npm run verify:local-image-store` | 檢查 IndexedDB 圖片暫存、預覽、ZIP 與貼碼處理 |
 | `npm run verify:local-storage-quota` | 檢查 localStorage 爆容量時不會造成整站 crash |

@@ -33,6 +33,7 @@
     "verify:product-mvp-modules": "node --no-warnings scripts/verify-product-mvp-modules.mjs",
     "verify:module-visual-polish": "node --no-warnings scripts/verify-module-visual-polish.mjs",
     "verify:product-style-distinction": "node --no-warnings scripts/verify-product-style-distinction.mjs",
+    "verify:product-starter-export-readiness": "node --no-warnings scripts/verify-product-starter-export-readiness.mjs",
     "verify:color-popover": "node --no-warnings scripts/verify-color-popover-behavior.mjs",
     "verify:global-background": "node --no-warnings scripts/verify-global-background.mjs",
     "setup:auth-db": "node --no-warnings scripts/setup-auth-db.mjs",
