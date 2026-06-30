@@ -105,6 +105,7 @@ Export CSS 必須遵守：
 - `lib/export/htmlGenerator.ts` now renders modules through `renderModuleExportHTML`.
 - `modules/preview/ModulePreviewRenderer.tsx` now uses `previewRegistry`.
 - Added `verify:module-rendering-architecture`.
+- Added `verify:full-module-export-stability` as the full-module gate for registry coverage, export root classes, scoped CSS, mobile rules, and builder-only class leakage.
 - Added `verify:product-export-hotfixes` for current export parity hotfixes.
 
 ## Product Export Hotfix Rules

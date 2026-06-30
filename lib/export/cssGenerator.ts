@@ -34,10 +34,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   margin-left: auto; margin-right: auto;
   padding-left: 24px; padding-right: 24px;
 }
-.cb-section {
-  position: relative;
-  padding-top: 40px; padding-bottom: 48px;
-}
+.cb-section { padding-top: 36px; padding-bottom: 44px; }
+.cb-section { position: relative; }
 .cb-module-anchor { scroll-margin-top: 16px; }
 
 /* Buttons */
@@ -87,7 +85,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    4. TITLE BLOCK MODULE
    ------------------------------------------------------------ */
-.cb-title-block { position: relative; overflow: hidden; padding: 22px 0 12px; }
+.cb-title-block { padding: 12px 0 4px; }
+.cb-title-block { position: relative; overflow: hidden; }
 .cb-title-block .cb-container { position: relative; }
 .cb-title-block__halo {
   position: absolute; top: 50%; left: 0; width: 180px; height: 180px;
@@ -852,6 +851,11 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    16. ARTICLE TEXT MODULE
    ------------------------------------------------------------ */
+.cb-article-text,
+.cb-article-image {
+  position: relative;
+  overflow: hidden;
+}
 .cb-article__inner {
   max-width: 800px; margin-left: auto; margin-right: auto;
   padding: 30px; border-radius: 28px;
@@ -974,6 +978,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 /* ------------------------------------------------------------
    19. BANK PROMO MODULE
    ------------------------------------------------------------ */
+.cb-bank-promo { position: relative; overflow: hidden; }
 .cb-bank__header { text-align: center; margin-bottom: 32px; }
 .cb-bank__title { font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 700; letter-spacing: -0.02em; color: #1a1a2e; margin: 0 0 6px; }
 .cb-bank__subtitle { font-size: 13px; color: #9090b0; margin: 0; }

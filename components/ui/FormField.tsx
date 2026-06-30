@@ -182,7 +182,7 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
       if (!rect) return;
       const margin = 12;
       const width = Math.min(280, window.innerWidth - margin * 2);
-      const panelHeight = Math.min(360, window.innerHeight - margin * 2);
+      const panelHeight = Math.min(460, window.innerHeight - margin * 2);
       const gap = 8;
       const canPlaceRight = rect.right + gap + width <= window.innerWidth - margin;
       const canPlaceLeft = rect.left - gap - width >= margin;
@@ -191,7 +191,10 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
         : canPlaceLeft
           ? rect.left - width - gap
           : Math.min(Math.max(margin, rect.left), window.innerWidth - width - margin);
-      const top = Math.min(Math.max(margin, rect.top), window.innerHeight - panelHeight - margin);
+      const canPlaceBelow = rect.bottom + gap + panelHeight <= window.innerHeight - margin;
+      const top = canPlaceBelow
+        ? rect.bottom + gap
+        : Math.max(margin, rect.top - panelHeight - 8);
       setPopoverPosition({ top, left, width, maxHeight: panelHeight });
     };
 
@@ -251,7 +254,7 @@ export function GradientPickerPopover({ value, onChange }: { value: string; onCh
       {open && (
         <div
           ref={popoverRef}
-          className="nexora-glass-dark fixed z-50 overflow-y-auto rounded-2xl p-3"
+          className="fixed z-50 nexora-glass-dark overflow-y-auto rounded-2xl p-3"
           style={popoverPosition}
         >
           <div className="mb-3 flex items-center justify-between">

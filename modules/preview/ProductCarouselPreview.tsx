@@ -62,7 +62,7 @@ export function ProductCarouselPreview({ data }: { data: ProductCarouselData }) 
 
   return (
     <section
-      style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '28px 16px 36px' : '44px 0 56px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}
+      style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '24px 16px 32px' : '28px 0 44px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

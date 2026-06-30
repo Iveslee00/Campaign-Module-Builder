@@ -7,6 +7,7 @@ function assert(condition, message) {
 const files = {
   builder: 'lib/productBuilder/productPageBuilder.ts',
   html: 'lib/export/htmlGenerator.ts',
+  registry: 'lib/modules/moduleRegistry.ts',
   css: 'lib/export/cssGenerator.ts',
   packageGenerator: 'lib/export/packageGenerator.ts',
   projectPackage: 'lib/projects/projectPackage.ts',
@@ -21,6 +22,7 @@ Object.values(files).forEach((file) => {
 
 const builder = readFileSync(files.builder, 'utf8');
 const html = readFileSync(files.html, 'utf8');
+const registry = readFileSync(files.registry, 'utf8');
 const css = readFileSync(files.css, 'utf8');
 const packageGenerator = readFileSync(files.packageGenerator, 'utf8');
 const projectPackage = readFileSync(files.projectPackage, 'utf8');
@@ -45,6 +47,13 @@ const localImageStore = readFileSync(files.localImageStore, 'utf8');
 });
 
 [
+  "from '@/lib/modules/moduleRegistry'",
+  'renderModuleExportHTML',
+].forEach((token) => {
+  assert(html.includes(token), `HTML exporter should route through module registry: ${token}`);
+});
+
+[
   'generateProductFeaturesHTML',
   'generateProductShowcaseHTML',
   'generateProductScenesHTML',
@@ -54,12 +63,22 @@ const localImageStore = readFileSync(files.localImageStore, 'utf8');
   'generateProductProofHTML',
   'generateProductPurchaseHTML',
   'generateProductStepsHTML',
-  "case 'product-showcase'",
-  "case 'product-scenes'",
-  "case 'product-info'",
-  "case 'product-purchase'",
 ].forEach((token) => {
-  assert(html.includes(token), `HTML exporter missing Product Starter module support: ${token}`);
+  assert(registry.includes(token), `Module registry missing Product Starter exporter support: ${token}`);
+});
+
+[
+  "'product-features'",
+  "'product-showcase'",
+  "'product-scenes'",
+  "'product-info'",
+  "'product-benefits'",
+  "'product-steps'",
+  "'product-comparison'",
+  "'product-proof'",
+  "'product-purchase'",
+].forEach((token) => {
+  assert(registry.includes(token), `Module registry missing Product Starter module type: ${token}`);
 });
 
 [

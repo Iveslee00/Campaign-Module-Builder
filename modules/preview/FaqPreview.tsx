@@ -24,7 +24,7 @@ export function FaqPreview({ data }: { data: FaqData }) {
   };
 
   return (
-    <section style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '28px 16px 36px' : '56px 24px 64px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}>
+    <section style={{ ...moduleSurface(data.backgroundColor), padding: isMobile ? '24px 16px 32px' : '36px 24px 44px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', pointerEvents: 'auto' }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {data.items.map((item) => {

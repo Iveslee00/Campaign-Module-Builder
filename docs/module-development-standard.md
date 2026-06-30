@@ -239,6 +239,7 @@ RWD 不可只存在 Builder Preview。Export CSS 必須包含完整規則。
 模組相關修改至少跑：
 
 ```bash
+npm run verify:full-module-export-stability
 npm run verify:module-rendering-architecture
 npm run verify:product-export-hotfixes
 npm run verify:cms-consistency
@@ -283,3 +284,5 @@ npm run verify:export-preflight
 7. 文件已更新。
 8. commit 已建立。
 9. 需要上正式站時已 push。
+
+全模組匯出穩定性必須由 `npm run verify:full-module-export-stability` 驗證。這支 verifier 負責檢查每個 `ModuleType` 是否同時具備 registry、preview registry、export root class、scoped CSS 與高風險 mobile 規則。

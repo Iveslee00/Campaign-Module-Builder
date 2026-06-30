@@ -363,7 +363,9 @@ function themeFor(input: ProductBuilderInput) {
 
 function visualDirectionFor(input: ProductBuilderInput) {
   const theme = themeFor(input);
-  const cardMood = theme.cardBorder.includes('239,68,68')
+  const visualTags = themeVisuals[input.theme];
+  const promoRibbon = visualTags.includes('promoRibbon');
+  const cardMood = promoRibbon
     ? '卡片會偏促購感，適合強調優惠、檔期和立即行動。'
     : theme.cardBorder.includes('47,42,37')
       ? '卡片會偏精品感，適合強調質感、留白和品牌信任。'

@@ -4,7 +4,6 @@ import { AnchorNavData, PageModule } from '@/types/modules';
 import { getAnchorTargets } from '@/lib/modules/anchors';
 import { useDevice } from '@/contexts/DeviceContext';
 import { backgroundStyle, textColorStyle } from '@/lib/styles/colorStyles';
-import { premiumShadow } from './visualStyles';
 
 interface Props {
   data: AnchorNavData;
@@ -36,7 +35,6 @@ export function AnchorNavPreview({ data, moduleId, modules }: Props) {
               padding: '10px 16px',
               borderRadius: '999px',
               border: '1px solid rgba(99,102,241,0.28)',
-              boxShadow: premiumShadow,
               ...backgroundStyle(data.buttonColor || 'linear-gradient(180deg, #1f2440 0%, #15192d 100%)'),
               color: '#ffffff',
               fontSize: isMobile ? '14px' : '15px',

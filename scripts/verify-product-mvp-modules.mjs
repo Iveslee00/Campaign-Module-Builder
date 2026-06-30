@@ -27,6 +27,7 @@ const schemas = readFileSync('data/moduleSchemas.ts', 'utf8');
 const forms = readFileSync('modules/forms/FormRenderer.tsx', 'utf8');
 const previews = readFileSync('modules/preview/ModulePreviewRenderer.tsx', 'utf8');
 const html = readFileSync('lib/export/htmlGenerator.ts', 'utf8');
+const registry = readFileSync('lib/modules/moduleRegistry.ts', 'utf8');
 const css = readFileSync('lib/export/cssGenerator.ts', 'utf8');
 const taxonomy = readFileSync('docs/module-taxonomy.md', 'utf8');
 
@@ -44,8 +45,9 @@ const taxonomy = readFileSync('docs/module-taxonomy.md', 'utf8');
   if (!types.includes(`'${type}'`)) throw new Error(`Module type missing: ${type}`);
   if (!schemas.includes(`type: '${type}'`)) throw new Error(`Schema missing: ${type}`);
   if (!forms.includes(`case '${type}'`)) throw new Error(`Form renderer missing: ${type}`);
-  if (!previews.includes(`case '${type}'`)) throw new Error(`Preview renderer missing: ${type}`);
-  if (!html.includes(`case '${type}'`)) throw new Error(`HTML exporter missing: ${type}`);
+  if (!previews.includes(`'${type}':`)) throw new Error(`Preview registry missing: ${type}`);
+  if (!registry.includes(`'${type}':`)) throw new Error(`Module registry missing: ${type}`);
+  if (!html.includes('renderModuleExportHTML')) throw new Error('HTML exporter should route through moduleRegistry.');
 });
 
 [
