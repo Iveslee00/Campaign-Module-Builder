@@ -9,8 +9,10 @@ export function generateProductFeaturesHTML(data: ProductFeaturesData): string {
         <span class="cb-product-features__texture" aria-hidden="true"></span>
         <span class="cb-product-features__index" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span>
         <span class="cb-product-features__icon">${escapeHtml(item.icon)}</span>
-        <h3 class="cb-product-features__item-title"${titleStyle}>${escapeHtml(item.title)}</h3>
-        <p class="cb-product-features__item-text"${textStyle}>${escapeHtml(item.description)}</p>
+        <div class="cb-product-features__content">
+          <h3 class="cb-product-features__item-title"${titleStyle}>${escapeHtml(item.title)}</h3>
+          <p class="cb-product-features__item-text"${textStyle}>${escapeHtml(item.description)}</p>
+        </div>
       </article>`).join('\n');
 
   return `<section class="cb-product-features cb-product-features--${escapeHtml(data.style)} cb-section"${bg}>

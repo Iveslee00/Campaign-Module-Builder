@@ -110,6 +110,7 @@ flowchart TD
 | `lib/modules/moduleRegistry.ts` | Export 模組 registry，`htmlGenerator.ts` 必須透過此入口渲染模組 |
 | `lib/productBuilder/*` | 商品頁快速生成邏輯，將商品資料轉成既有 PageModule[] |
 | `lib/export/*` | HTML/CSS/JS/ZIP 組合與輸出 |
+| `scripts/verify-module-export-parity.mjs` | 全模組 Preview / Export 合約檢查，所有 `ModuleType` 都必須納入 |
 | `types/modules.ts` | 活動頁模組型別 |
 | `types/emailModules.ts` | 電子報模組型別 |
 | `types/project.ts` | 專案與 workspace 型別 |
@@ -125,6 +126,8 @@ flowchart TD
 - Export 入口是 `lib/modules/moduleRegistry.ts` 的 `moduleRegistry`。
 - 禁止在 `lib/export/htmlGenerator.ts` 重新新增 `switch (module.type)`。
 - 禁止在 `modules/preview/ModulePreviewRenderer.tsx` 重新新增 `switch (module.type)`。
+- 每個 `ModuleType` 都必須被 `npm run verify:module-export-parity` 檢查。
+- 修改任何模組時，必須同時確認 Builder / Preview / Export 的 DOM 結構、item 數量、RWD 與 CSS scope。
 - 功能做完但文件沒有更新，不算完成。
 
 ## 登入流程

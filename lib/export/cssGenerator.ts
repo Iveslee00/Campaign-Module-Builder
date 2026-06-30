@@ -461,11 +461,14 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 }
 .cb-product-features--grid-6 .cb-product-features__item { min-height: 142px; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.78)); }
 .cb-product-features__icon {
+  position: relative; z-index: 1;
   display: inline-flex; width: 46px; height: 46px; align-items: center; justify-content: center;
   border-radius: 16px; background: linear-gradient(135deg, #e0f2fe, #eef2ff);
   box-shadow: inset 0 0 0 1px rgba(99,102,241,0.10);
   font-size: 22px; margin-bottom: 16px;
 }
+.cb-product-features--icon-text .cb-product-features__icon { margin-bottom: 0; }
+.cb-product-features__content { position: relative; z-index: 1; min-width: 0; }
 .cb-product-features--cards .cb-product-features__icon { width: 54px; height: 54px; border-radius: 20px; margin-bottom: 22px; font-size: 24px; }
 .cb-product-features--cards .cb-product-features__item-title { font-size: 1.18rem; }
 .cb-product-features--cards .cb-product-features__item-text { font-size: 0.96rem; line-height: 1.75; }

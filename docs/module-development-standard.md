@@ -40,7 +40,9 @@
 
 ### 2. Builder / Preview / Export 必須盡量共用規格
 
-目前 Phase 1 已完成 registry 收斂，但尚未完全共用 React component。
+目前 Phase 2 current state 是「registry-governed preview/export parity」，尚未完全共用 React component。
+
+因此任何模組調整都不能只看 Builder 畫布，必須同時檢查 Export DOM 與 Export CSS。全模組合約由 `npm run verify:module-export-parity` 負責檢查。
 
 新增模組時必須至少做到：
 
@@ -48,6 +50,8 @@
 - Preview 與 Export 的 item 數量、排序、空狀態、RWD 行為一致。
 - Preview 與 Export 的 variant / style 名稱一致。
 - Export 不得自行增加 Preview 沒有的 DOM 或 item。
+- Export 不得拆散 Preview 中作為同一組排版的 DOM，例如 icon + content、image + card、title + body。
+- Export CSS 必須包含該 variant 的 desktop / tablet / mobile 規則。
 
 目標架構：
 
@@ -205,6 +209,30 @@ RWD 不可只存在 Builder Preview。Export CSS 必須包含完整規則。
 - mobile rule
 - CMS consistency
 
+### 11. 全模組都要被合約涵蓋
+
+每一個 `ModuleType` 都必須被 `scripts/verify-module-export-parity.mjs` 納入合約。合約最低要檢查：
+
+- Preview file 存在且 export React component。
+- Exporter file 存在且輸出正確 root class。
+- `previewRegistry` 有登錄該 type。
+- `moduleRegistry` 有登錄該 type。
+- Export CSS 有該模組 root selector。
+- 高風險 variant 有專屬 parity rule，例如 item 數量、DOM wrapper、RWD grid、圖片尺寸。
+
+如果新增 `ModuleType` 但沒有更新這支 verifier，工作不算完成。
+
+### 12. 視覺變體要有真差異
+
+模組 style / variant 不可只是換文案或微調顏色。每個變體至少要有一個明確差異：
+
+- layout 差異，例如 grid / split / stacked / editorial。
+- content hierarchy 差異，例如 icon-first、image-first、comparison-first。
+- spacing / card treatment 差異，例如 dense card、premium panel、glass overlay。
+- interaction / motion 差異，例如 hover lift、soft reveal、carousel behavior。
+
+如果兩個變體輸出結果幾乎一樣，必須合併或重做，不要保留假選項。
+
 ## 新增模組流程
 
 新增模組時照順序執行：
@@ -240,6 +268,7 @@ RWD 不可只存在 Builder Preview。Export CSS 必須包含完整規則。
 
 ```bash
 npm run verify:full-module-export-stability
+npm run verify:module-export-parity
 npm run verify:module-rendering-architecture
 npm run verify:product-export-hotfixes
 npm run verify:cms-consistency

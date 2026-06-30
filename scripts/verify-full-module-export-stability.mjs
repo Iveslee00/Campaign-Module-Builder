@@ -56,6 +56,11 @@ assert(
     'node --no-warnings scripts/verify-full-module-export-stability.mjs',
   'package.json should expose verify:full-module-export-stability'
 );
+assert(
+  packageJson.scripts['verify:module-export-parity'] ===
+    'node --no-warnings scripts/verify-module-export-parity.mjs',
+  'package.json should expose verify:module-export-parity'
+);
 
 for (const type of moduleTypes) {
   assert(rootClassByType[type], `Missing root class mapping for module type: ${type}`);
@@ -111,6 +116,8 @@ for (const type of mobileRequiredTypes) {
 }
 
 const parityRules = [
+  ['cb-product-features__content', 'Product features export should wrap title/text content like preview'],
+  ['.cb-product-features--icon-text .cb-product-features__icon { margin-bottom: 0; }', 'Product feature icon-text export should remove icon bottom margin'],
   ['cb-product-purchase--bundle .cb-product-purchase__grid { grid-template-columns: repeat(3', 'Bundle purchase should export three-column desktop grid'],
   ['data.products.slice(0, 3)', 'Bundle purchase exporter should match preview visible item count'],
   ['cb-product-comparison__cell::before', 'Product comparison should expose mobile column labels'],

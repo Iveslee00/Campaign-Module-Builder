@@ -46,6 +46,8 @@
     "verify:visual-safety": "node --no-warnings scripts/verify-visual-safety.mjs",
     "verify:product-export-hotfixes": "node --no-warnings scripts/verify-product-export-hotfixes.mjs",
     "verify:module-rendering-architecture": "node --no-warnings scripts/verify-module-rendering-architecture.mjs",
+    "verify:product-export-parity": "node --no-warnings scripts/verify-product-export-parity.mjs",
+    "verify:module-export-parity": "node --no-warnings scripts/verify-module-export-parity.mjs",
     "verify:full-module-export-stability": "node --no-warnings scripts/verify-full-module-export-stability.mjs",
     "setup:auth-db": "node --no-warnings scripts/setup-auth-db.mjs",
     "manage:auth-user": "node --no-warnings scripts/manage-auth-user.mjs",

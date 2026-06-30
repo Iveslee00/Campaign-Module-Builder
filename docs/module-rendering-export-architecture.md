@@ -108,6 +108,21 @@ Export CSS 必須遵守：
 - Added `verify:full-module-export-stability` as the full-module gate for registry coverage, export root classes, scoped CSS, mobile rules, and builder-only class leakage.
 - Added `verify:product-export-hotfixes` for current export parity hotfixes.
 
+## Phase 2 current state
+
+Phase 2 is currently at registry-governed preview/export parity.
+
+This means every module type must be registered in both preview and export registries, and every module must have an explicit export contract. It does not yet mean every module is rendered by one shared React component.
+
+Current Phase 2 guardrails:
+
+- `verify:module-export-parity` checks every `ModuleType` for preview file, exporter file, preview registry entry, export registry entry, export root class, and scoped CSS.
+- High-risk product modules now have explicit parity rules for DOM wrappers, item counts, icon/text layout, KV overlay removal, product showcase card treatment, and purchase bundle grid output.
+- Export DOM must not split grouped preview content into independent grid/flex children.
+- Export CSS must be scoped to `.cb-*` module classes and include the variant rules needed for CMS output.
+
+The final target remains a shared `ModuleView` / `ModuleRenderer` path using `mode="builder" | "preview" | "export"`. Until that migration is complete, registry + verifier parity is the required safety gate.
+
 ## Product Export Hotfix Rules
 
 - KV / KV 輪播不輸出黑色漸層濾鏡。
@@ -116,6 +131,7 @@ Export CSS 必須遵守：
 - `product-showcase` 留白展示圖片不可過大，需限制寬度。
 - `product-purchase` 推薦組合 preview / export 固定顯示前三品。
 - `product-features` export 必須有 grid overflow 防護與 mobile icon-text 規則。
+- `product-features` icon-text export 必須使用 `.cb-product-features__content` 包住 title / text，避免匯出後 grid children 被拆散。
 
 ## Future Module Rule
 
@@ -131,7 +147,7 @@ Do not complete module work without updating the related docs and verifier. 功�
 4. Add preview renderer entry in `previewRegistry`.
 5. Add export renderer entry in `moduleRegistry`.
 6. Add scoped CSS in export CSS source.
-7. Add verifier coverage.
+7. Add verifier coverage, including `verify:module-export-parity`.
 8. Update docs before commit.
 
 ## Remaining Work

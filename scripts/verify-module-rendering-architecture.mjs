@@ -28,6 +28,10 @@ assert(
   pkg.scripts['verify:module-rendering-architecture'] === 'node --no-warnings scripts/verify-module-rendering-architecture.mjs',
   'package.json should expose verify:module-rendering-architecture'
 );
+assert(
+  pkg.scripts['verify:module-export-parity'] === 'node --no-warnings scripts/verify-module-export-parity.mjs',
+  'package.json should expose verify:module-export-parity'
+);
 
 assert(registry.includes('moduleRegistry'), 'Export module registry should exist');
 assert(registry.includes('renderModuleExportHTML'), 'Registry should expose renderModuleExportHTML');
@@ -67,6 +71,18 @@ assert(
 assert(
   developmentStandard.includes('npm run verify:module-rendering-architecture'),
   'Module development standard should list the architecture verifier'
+);
+assert(
+  developmentStandard.includes('npm run verify:module-export-parity'),
+  'Module development standard should list the full module parity verifier'
+);
+assert(
+  architectureDoc.includes('Phase 2 current state'),
+  'Architecture doc should clearly state current Phase 2 status'
+);
+assert(
+  architectureDoc.includes('verify:module-export-parity'),
+  'Architecture doc should mention the all-module parity verifier'
 );
 assert(siteArchitectureDoc.includes('docs/README.md'), 'Site architecture should reference the docs index');
 assert(siteArchitectureDoc.includes('docs/module-development-standard.md'), 'Site architecture should reference module standards');
