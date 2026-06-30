@@ -1,6 +1,6 @@
 # NEXORA 網站架構圖
 
-更新日期：2026-06-30
+更新日期：2026-07-01
 
 這份文件記錄目前 NEXORA 的網站架構、資料流與主要模組。之後新增登入、資料庫、匯出、專案檔、圖片策略或新工具時，必須同步更新本文件。
 
@@ -58,6 +58,7 @@ flowchart TD
   Editor["components/editor/*"]
   Forms["modules/forms/*"]
   Preview["modules/preview/*"]
+  SharedRenderer["modules/renderers/*"]
   Exporters["modules/exporters/*"]
   ModuleRegistry["lib/modules/moduleRegistry.ts"]
   ExportLib["lib/export/*"]
@@ -73,6 +74,8 @@ flowchart TD
   App --> AuthApi
   Editor --> Forms
   Editor --> Preview
+  Preview --> SharedRenderer
+  SharedRenderer --> ModuleRegistry
   Editor --> ExportLib
   ProductStarter --> Types
   ProductStarter --> Editor
@@ -105,9 +108,10 @@ flowchart TD
 | `components/editor/ExportModal.tsx` | 貼碼、ZIP、電子報匯出 |
 | `components/editor/ProductBuildModal.tsx` | 快速建立入口，收集產業、商品目的、視覺主題、商品資料 |
 | `modules/forms/*` | 各活動頁模組的設定表單 |
-| `modules/preview/*` | 各活動頁模組的即時預覽；由 `ModulePreviewRenderer.tsx` 的 `previewRegistry` 統一分派 |
+| `modules/preview/*` | 模組預覽入口；由 `ModulePreviewRenderer.tsx` 的 `previewRegistry` 統一分派到 shared renderer |
+| `modules/renderers/*` | Builder / Preview / Export 共用渲染橋接；目前 `SharedModuleView` 透過 `renderModuleExportHTML` 使用同一份 export DOM |
 | `modules/exporters/*` | 各活動頁模組的 HTML 匯出片段 |
-| `lib/modules/moduleRegistry.ts` | Export 模組 registry，`htmlGenerator.ts` 必須透過此入口渲染模組 |
+| `lib/modules/moduleRegistry.ts` | 模組 registry，Builder / Preview / Export 都必須透過此入口渲染模組 |
 | `lib/productBuilder/*` | 商品頁快速生成邏輯，將商品資料轉成既有 PageModule[] |
 | `lib/export/*` | HTML/CSS/JS/ZIP 組合與輸出 |
 | `scripts/verify-module-export-parity.mjs` | 全模組 Preview / Export 合約檢查，所有 `ModuleType` 都必須納入 |
@@ -123,10 +127,12 @@ flowchart TD
 
 - Builder、Preview、Export 必須以同一份 `PageModule` 資料為來源。
 - Preview 入口是 `modules/preview/ModulePreviewRenderer.tsx` 的 `previewRegistry`。
+- Preview 的實際模組 DOM 入口是 `modules/renderers/SharedModuleView.tsx`。
 - Export 入口是 `lib/modules/moduleRegistry.ts` 的 `moduleRegistry`。
 - 禁止在 `lib/export/htmlGenerator.ts` 重新新增 `switch (module.type)`。
 - 禁止在 `modules/preview/ModulePreviewRenderer.tsx` 重新新增 `switch (module.type)`。
 - 每個 `ModuleType` 都必須被 `npm run verify:module-export-parity` 檢查。
+- `npm run verify:shared-module-rendering` 必須通過。
 - 修改任何模組時，必須同時確認 Builder / Preview / Export 的 DOM 結構、item 數量、RWD 與 CSS scope。
 - 功能做完但文件沒有更新，不算完成。
 

@@ -32,6 +32,10 @@ assert(
   pkg.scripts['verify:module-export-parity'] === 'node --no-warnings scripts/verify-module-export-parity.mjs',
   'package.json should expose verify:module-export-parity'
 );
+assert(
+  pkg.scripts['verify:shared-module-rendering'] === 'node --no-warnings scripts/verify-shared-module-rendering.mjs',
+  'package.json should expose verify:shared-module-rendering'
+);
 
 assert(registry.includes('moduleRegistry'), 'Export module registry should exist');
 assert(registry.includes('renderModuleExportHTML'), 'Registry should expose renderModuleExportHTML');
@@ -43,6 +47,7 @@ assert(htmlGenerator.includes("from '@/lib/modules/moduleRegistry'"), 'HTML expo
 assert(!/switch\s*\(\s*module\.type\s*\)/.test(htmlGenerator), 'HTML export should not hand-code a separate module switch');
 
 assert(previewRenderer.includes('previewRegistry'), 'Preview renderer should use a registry map');
+assert(previewRenderer.includes('SharedModuleView'), 'Preview renderer should route modules through SharedModuleView');
 assert(!/switch\s*\(\s*module\.type\s*\)/.test(previewRenderer), 'Preview renderer should not hand-code a separate module switch');
 
 assert(architectureDoc.includes('Current Diagnosis'), 'Architecture doc should include diagnosis');
@@ -77,12 +82,24 @@ assert(
   'Module development standard should list the full module parity verifier'
 );
 assert(
-  architectureDoc.includes('Phase 2 current state'),
-  'Architecture doc should clearly state current Phase 2 status'
+  developmentStandard.includes('npm run verify:shared-module-rendering'),
+  'Module development standard should list the shared rendering verifier'
+);
+assert(
+  architectureDoc.includes('Phase 3 current state'),
+  'Architecture doc should clearly state current Phase 3 status'
 );
 assert(
   architectureDoc.includes('verify:module-export-parity'),
   'Architecture doc should mention the all-module parity verifier'
+);
+assert(
+  architectureDoc.includes('verify:shared-module-rendering'),
+  'Architecture doc should mention the shared rendering verifier'
+);
+assert(
+  architectureDoc.includes('verify:phase3-shared-modules'),
+  'Architecture doc should mention the Phase 3 shared module verifier'
 );
 assert(siteArchitectureDoc.includes('docs/README.md'), 'Site architecture should reference the docs index');
 assert(siteArchitectureDoc.includes('docs/module-development-standard.md'), 'Site architecture should reference module standards');

@@ -5,6 +5,7 @@ import { PageModule } from '@/types/modules';
 import { EmailPageModule } from '@/types/emailModules';
 import { ModulePreviewRenderer } from '@/modules/preview/ModulePreviewRenderer';
 import { EmailModulePreviewRenderer } from '@/modules/email/preview/EmailModulePreviewRenderer';
+import { CampaignExportStyles } from './CampaignExportStyles';
 import { DeviceContext } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { useEmailSettings } from '@/contexts/EmailSettingsContext';
@@ -232,7 +233,7 @@ export function PreviewCanvas({
   const desktopCanvasRef = React.useRef<HTMLDivElement>(null);
   const [desktopScale, setDesktopScale] = React.useState(1);
   const [desktopCanvasHeight, setDesktopCanvasHeight] = React.useState(0);
-  const { pageBackgroundColor, pageBackgroundImage } = useGlobalSettings();
+  const { buttonColor, buttonTextColor, pageBackgroundColor, pageBackgroundImage } = useGlobalSettings();
   const emailSettings = useEmailSettings();
 
   const sensors = useSensors(
@@ -261,6 +262,12 @@ export function PreviewCanvas({
       backgroundPosition: 'top center',
     } : {}),
   };
+  const campaignExportSettings = React.useMemo(() => ({
+    buttonColor,
+    buttonTextColor,
+    pageBackgroundColor,
+    pageBackgroundImage,
+  }), [buttonColor, buttonTextColor, pageBackgroundColor, pageBackgroundImage]);
   const desktopCanvasStyle: React.CSSProperties = {
     ...campaignBackgroundStyle,
     width: DESKTOP_CANVAS_WIDTH,
@@ -447,13 +454,14 @@ export function PreviewCanvas({
           </div>
         ) : (
           <DeviceContext.Provider value={{ isMobile }}>
+            <CampaignExportStyles settings={campaignExportSettings} forceMobile={isMobile} />
             <div
               ref={isMobile ? undefined : desktopViewportRef}
               className={`min-h-0 flex-1 overflow-y-auto ${isMobile ? 'bg-slate-800' : ''}`}
               style={isMobile ? undefined : campaignBackgroundStyle}
             >
               <div className={isMobile ? 'flex justify-center py-6 px-4' : 'flex min-h-full justify-center py-6 px-4'} style={isMobile ? undefined : campaignBackgroundStyle}>
-                <div className={isMobile ? 'w-full shadow-2xl rounded-2xl overflow-hidden border border-slate-600' : 'flex-shrink-0'} style={isMobile ? { maxWidth: '390px' } : desktopFrameStyle}>
+                <div className={isMobile ? 'nexora-preview-mobile-scope w-full shadow-2xl rounded-2xl overflow-hidden border border-slate-600' : 'flex-shrink-0'} style={isMobile ? { maxWidth: '390px' } : desktopFrameStyle}>
                   <div ref={isMobile ? undefined : desktopCanvasRef} style={isMobile ? undefined : desktopCanvasStyle}>
                   {isMobile && (
                     <div className="flex items-center justify-between px-5 py-2 bg-slate-900 text-slate-400 text-xs border-b border-slate-700">

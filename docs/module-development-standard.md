@@ -1,6 +1,6 @@
 # NEXORA Builder Module Development Standard
 
-更新日期：2026-06-30
+更新日期：2026-07-01
 
 這份文件是 NEXORA Builder 模組新增、修改、重構的硬性標準。任何動到模組相關檔案的工作，不管是新增或修改，都必須遵守本文件。
 
@@ -10,7 +10,9 @@
 
 - `types/modules.ts`
 - `modules/forms/*`
+- `modules/definitions/*`
 - `modules/preview/*`
+- `modules/renderers/*`
 - `modules/exporters/*`
 - `lib/modules/*`
 - `lib/export/*`
@@ -40,18 +42,21 @@
 
 ### 2. Builder / Preview / Export 必須盡量共用規格
 
-目前 Phase 2 current state 是「registry-governed preview/export parity」，尚未完全共用 React component。
+目前 Phase 3 current state 是「shared static rendering parity + high-risk module definitions」。`modules/preview/ModulePreviewRenderer.tsx` 仍保留 `previewRegistry`，但每個模組都必須透過 `SharedModuleView` 讀同一份 export HTML。高風險模組必須額外登錄在 `modules/definitions/highRiskModuleDefinitions.ts`，並提供 module-scoped `cssFragment`。
 
-因此任何模組調整都不能只看 Builder 畫布，必須同時檢查 Export DOM 與 Export CSS。全模組合約由 `npm run verify:module-export-parity` 負責檢查。
+因此任何模組調整都不能只看 Builder 畫布，必須同時檢查 Export DOM 與 Export CSS。全模組合約由 `npm run verify:shared-module-rendering` 與 `npm run verify:module-export-parity` 負責檢查。
 
 新增模組時必須至少做到：
 
 - Preview 與 Export 使用同一份資料來源。
+- Builder / Preview 入口不可繞過 `SharedModuleView`。
+- 高風險模組不可直接在 `moduleRegistry` 呼叫 exporter，必須透過 `renderHighRiskModuleHTML`。
 - Preview 與 Export 的 item 數量、排序、空狀態、RWD 行為一致。
 - Preview 與 Export 的 variant / style 名稱一致。
 - Export 不得自行增加 Preview 沒有的 DOM 或 item。
 - Export 不得拆散 Preview 中作為同一組排版的 DOM，例如 icon + content、image + card、title + body。
 - Export CSS 必須包含該 variant 的 desktop / tablet / mobile 規則。
+- 有圖片欄位的高風險模組，缺圖時必須使用 `renderImagePlaceholder()` 顯示尺寸，並輸出 `data-image-width` / `data-image-height`。
 
 目標架構：
 
@@ -175,6 +180,8 @@ absolute 只能用於裝飾、badge、背景層，不可作為主要排版基礎
 
 RWD 不可只存在 Builder Preview。Export CSS 必須包含完整規則。
 
+Builder / Preview 的手機畫布必須透過 `.nexora-preview-mobile-scope` 強制套用 mobile media rules，不能只依賴瀏覽器 viewport。
+
 ### 8. Export 必須獨立可用
 
 匯出 HTML 必須包含完整：
@@ -208,14 +215,16 @@ RWD 不可只存在 Builder Preview。Export CSS 必須包含完整規則。
 - preview/export parity
 - mobile rule
 - CMS consistency
+- shared rendering bridge
+- high-risk module definition / css fragment / image placeholder
 
 ### 11. 全模組都要被合約涵蓋
 
 每一個 `ModuleType` 都必須被 `scripts/verify-module-export-parity.mjs` 納入合約。合約最低要檢查：
 
-- Preview file 存在且 export React component。
+- `previewRegistry` 有登錄該 type，且透過 `SharedModuleView` 渲染。
 - Exporter file 存在且輸出正確 root class。
-- `previewRegistry` 有登錄該 type。
+- `previewRegistry` 不得直接 import per-module preview component。
 - `moduleRegistry` 有登錄該 type。
 - Export CSS 有該模組 root selector。
 - 高風險 variant 有專屬 parity rule，例如 item 數量、DOM wrapper、RWD grid、圖片尺寸。
@@ -240,7 +249,7 @@ RWD 不可只存在 Builder Preview。Export CSS 必須包含完整規則。
 1. 更新 `types/modules.ts`
 2. 更新 module schema / default data
 3. 新增或更新 form
-4. 新增或更新 preview
+4. 確認 `previewRegistry` 透過 `SharedModuleView` 支援該模組
 5. 登錄 `previewRegistry`
 6. 新增或更新 exporter
 7. 登錄 `moduleRegistry`
@@ -268,6 +277,8 @@ RWD 不可只存在 Builder Preview。Export CSS 必須包含完整規則。
 
 ```bash
 npm run verify:full-module-export-stability
+npm run verify:phase3-shared-modules
+npm run verify:shared-module-rendering
 npm run verify:module-export-parity
 npm run verify:module-rendering-architecture
 npm run verify:product-export-hotfixes

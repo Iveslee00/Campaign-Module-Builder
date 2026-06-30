@@ -8,6 +8,7 @@ const files = {
   builder: 'lib/productBuilder/productPageBuilder.ts',
   html: 'lib/export/htmlGenerator.ts',
   registry: 'lib/modules/moduleRegistry.ts',
+  highRiskDefinitions: 'modules/definitions/highRiskModuleDefinitions.ts',
   css: 'lib/export/cssGenerator.ts',
   packageGenerator: 'lib/export/packageGenerator.ts',
   projectPackage: 'lib/projects/projectPackage.ts',
@@ -23,6 +24,7 @@ Object.values(files).forEach((file) => {
 const builder = readFileSync(files.builder, 'utf8');
 const html = readFileSync(files.html, 'utf8');
 const registry = readFileSync(files.registry, 'utf8');
+const highRiskDefinitions = readFileSync(files.highRiskDefinitions, 'utf8');
 const css = readFileSync(files.css, 'utf8');
 const packageGenerator = readFileSync(files.packageGenerator, 'utf8');
 const projectPackage = readFileSync(files.projectPackage, 'utf8');
@@ -54,17 +56,33 @@ const localImageStore = readFileSync(files.localImageStore, 'utf8');
 });
 
 [
-  'generateProductFeaturesHTML',
-  'generateProductShowcaseHTML',
   'generateProductScenesHTML',
   'generateProductInfoHTML',
   'generateProductBenefitsHTML',
   'generateProductComparisonHTML',
   'generateProductProofHTML',
-  'generateProductPurchaseHTML',
   'generateProductStepsHTML',
 ].forEach((token) => {
   assert(registry.includes(token), `Module registry missing Product Starter exporter support: ${token}`);
+});
+
+[
+  'generateProductFeaturesHTML',
+  'generateProductShowcaseHTML',
+  'generateProductPurchaseHTML',
+  "'product-features'",
+  "'product-showcase'",
+  "'product-purchase'",
+  'cssFragment',
+].forEach((token) => {
+  assert(highRiskDefinitions.includes(token), `High-risk definitions missing Product Starter support: ${token}`);
+});
+
+[
+  'getHighRiskModuleDefinition',
+  'renderHighRiskModuleHTML',
+].forEach((token) => {
+  assert(registry.includes(token), `Module registry should route high-risk Product Starter modules through definitions: ${token}`);
 });
 
 [

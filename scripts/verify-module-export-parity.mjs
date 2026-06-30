@@ -15,44 +15,45 @@ assert(moduleTypeBlock, 'ModuleType union should be readable');
 const moduleTypes = [...moduleTypeBlock[1].matchAll(/\|\s*'([^']+)'/g)].map((match) => match[1]);
 
 const contracts = {
-  'title': { preview: 'modules/preview/TitlePreview.tsx', exporter: 'modules/exporters/titleExporter.ts', root: 'cb-title-block' },
-  'hero': { preview: 'modules/preview/HeroPreview.tsx', exporter: 'modules/exporters/heroExporter.ts', root: 'cb-hero' },
-  'split-section': { preview: 'modules/preview/SplitSectionPreview.tsx', exporter: 'modules/exporters/splitSectionExporter.ts', root: 'cb-split' },
-  'product-grid': { preview: 'modules/preview/ProductGridPreview.tsx', exporter: 'modules/exporters/productGridExporter.ts', root: 'cb-products' },
-  'banner-products': { preview: 'modules/preview/BannerProductsPreview.tsx', exporter: 'modules/exporters/bannerProductsExporter.ts', root: 'cb-banner-products' },
-  'product-banner': { preview: 'modules/preview/ProductBannerPreview.tsx', exporter: 'modules/exporters/productBannerExporter.ts', root: 'cb-product-banner' },
-  'product-carousel': { preview: 'modules/preview/ProductCarouselPreview.tsx', exporter: 'modules/exporters/productCarouselExporter.ts', root: 'cb-carousel' },
-  'logo-wall': { preview: 'modules/preview/LogoWallPreview.tsx', exporter: 'modules/exporters/logoWallExporter.ts', root: 'cb-logo-wall' },
-  'cta': { preview: 'modules/preview/CtaPreview.tsx', exporter: 'modules/exporters/ctaExporter.ts', root: 'cb-cta' },
-  'faq': { preview: 'modules/preview/FaqPreview.tsx', exporter: 'modules/exporters/faqExporter.ts', root: 'cb-faq' },
-  'sticky-sidebar': { preview: 'modules/preview/StickySidebarPreview.tsx', exporter: 'modules/exporters/stickySidebarExporter.ts', root: 'cb-sticky-sidebar' },
-  'article-text': { preview: 'modules/preview/ArticleTextPreview.tsx', exporter: 'modules/exporters/articleTextExporter.ts', root: 'cb-article-text' },
-  'article-image': { preview: 'modules/preview/ArticleImagePreview.tsx', exporter: 'modules/exporters/articleImageExporter.ts', root: 'cb-article-image' },
-  'hero-carousel': { preview: 'modules/preview/HeroCarouselPreview.tsx', exporter: 'modules/exporters/heroCarouselExporter.ts', root: 'cb-kv' },
-  'bank-promo': { preview: 'modules/preview/BankPromoPreview.tsx', exporter: 'modules/exporters/bankPromoExporter.ts', root: 'cb-bank-promo' },
-  'anchor-nav': { preview: 'modules/preview/AnchorNavPreview.tsx', exporter: 'modules/exporters/anchorNavExporter.ts', root: 'cb-anchor-nav' },
-  'product-features': { preview: 'modules/preview/ProductFeaturesPreview.tsx', exporter: 'modules/exporters/productFeaturesExporter.ts', root: 'cb-product-features' },
-  'product-showcase': { preview: 'modules/preview/ProductShowcasePreview.tsx', exporter: 'modules/exporters/productShowcaseExporter.ts', root: 'cb-product-showcase' },
-  'product-scenes': { preview: 'modules/preview/ProductScenesPreview.tsx', exporter: 'modules/exporters/productScenesExporter.ts', root: 'cb-product-scenes' },
-  'product-info': { preview: 'modules/preview/ProductInfoPreview.tsx', exporter: 'modules/exporters/productInfoExporter.ts', root: 'cb-product-info' },
-  'product-benefits': { preview: 'modules/preview/ProductAdvancedPreview.tsx', exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-benefits' },
-  'product-steps': { preview: 'modules/preview/ProductAdvancedPreview.tsx', exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-steps' },
-  'product-comparison': { preview: 'modules/preview/ProductAdvancedPreview.tsx', exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-comparison' },
-  'product-proof': { preview: 'modules/preview/ProductAdvancedPreview.tsx', exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-proof' },
-  'product-purchase': { preview: 'modules/preview/ProductAdvancedPreview.tsx', exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-purchase' },
+  'title': { exporter: 'modules/exporters/titleExporter.ts', root: 'cb-title-block' },
+  'hero': { exporter: 'modules/exporters/heroExporter.ts', root: 'cb-hero' },
+  'split-section': { exporter: 'modules/exporters/splitSectionExporter.ts', root: 'cb-split' },
+  'product-grid': { exporter: 'modules/exporters/productGridExporter.ts', root: 'cb-products' },
+  'banner-products': { exporter: 'modules/exporters/bannerProductsExporter.ts', root: 'cb-banner-products' },
+  'product-banner': { exporter: 'modules/exporters/productBannerExporter.ts', root: 'cb-product-banner' },
+  'product-carousel': { exporter: 'modules/exporters/productCarouselExporter.ts', root: 'cb-carousel' },
+  'logo-wall': { exporter: 'modules/exporters/logoWallExporter.ts', root: 'cb-logo-wall' },
+  'cta': { exporter: 'modules/exporters/ctaExporter.ts', root: 'cb-cta' },
+  'faq': { exporter: 'modules/exporters/faqExporter.ts', root: 'cb-faq' },
+  'sticky-sidebar': { exporter: 'modules/exporters/stickySidebarExporter.ts', root: 'cb-sticky-sidebar' },
+  'article-text': { exporter: 'modules/exporters/articleTextExporter.ts', root: 'cb-article-text' },
+  'article-image': { exporter: 'modules/exporters/articleImageExporter.ts', root: 'cb-article-image' },
+  'hero-carousel': { exporter: 'modules/exporters/heroCarouselExporter.ts', root: 'cb-kv' },
+  'bank-promo': { exporter: 'modules/exporters/bankPromoExporter.ts', root: 'cb-bank-promo' },
+  'anchor-nav': { exporter: 'modules/exporters/anchorNavExporter.ts', root: 'cb-anchor-nav' },
+  'product-features': { exporter: 'modules/exporters/productFeaturesExporter.ts', root: 'cb-product-features' },
+  'product-showcase': { exporter: 'modules/exporters/productShowcaseExporter.ts', root: 'cb-product-showcase' },
+  'product-scenes': { exporter: 'modules/exporters/productScenesExporter.ts', root: 'cb-product-scenes' },
+  'product-info': { exporter: 'modules/exporters/productInfoExporter.ts', root: 'cb-product-info' },
+  'product-benefits': { exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-benefits' },
+  'product-steps': { exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-steps' },
+  'product-comparison': { exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-comparison' },
+  'product-proof': { exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-proof' },
+  'product-purchase': { exporter: 'modules/exporters/productAdvancedExporter.ts', root: 'cb-product-purchase' },
 };
+
+assert(previewRenderer.includes('SharedModuleView'), 'Preview renderer should route all modules through SharedModuleView');
+assert(!/import\s+\{[^}]*Preview[^}]*\}\s+from\s+'\.\//.test(previewRenderer), 'Preview renderer should not import per-module preview components');
 
 for (const type of moduleTypes) {
   const contract = contracts[type];
   assert(contract, `Missing module export parity contract for ${type}`);
 
-  const preview = read(contract.preview);
   const exporter = read(contract.exporter);
   const rootSelector = `.${contract.root}`;
 
   assert(previewRenderer.includes(`'${type}'`), `Preview renderer missing ${type}`);
   assert(registry.includes(`'${type}'`), `Module registry missing ${type}`);
-  assert(preview.includes('export function'), `Preview file for ${type} should export a React component`);
   assert(exporter.includes(contract.root), `Exporter for ${type} should output root class ${contract.root}`);
   assert(css.includes(rootSelector), `Export CSS for ${type} should include root selector ${rootSelector}`);
 }

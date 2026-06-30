@@ -1,9 +1,12 @@
 import { HeroData } from '@/types/modules';
 import { escapeHtml } from '@/lib/utils';
+import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
+import { renderImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
 
 export function generateHeroHTML(data: HeroData): string {
   const heightClass = `cb-hero--${data.height ?? 'medium'}`;
   const imageOnlyClass = data.showText === false ? ' cb-hero--image-only' : '';
+  const imageSpecs = getKvImageSpecs(data.height, data.showText !== false);
   const titleStyle = ` style="color: ${escapeHtml(data.titleColor || '#ffffff')}"`;
   const textStyle = ` style="color: ${escapeHtml(data.textColor || '#ffffff')}"`;
   const sectionStyle = data.backgroundColor
@@ -24,7 +27,7 @@ export function generateHeroHTML(data: HeroData): string {
 
   const mediaPicture = data.image
     ? `<picture class="cb-hero__picture">${data.mobileImage ? `\n            <source media="(max-width: 767px)" srcset="${escapeHtml(data.mobileImage)}">` : ''}\n            <img src="${escapeHtml(data.image)}" alt="${escapeHtml(data.title)}">\n          </picture>`
-    : '';
+    : renderImagePlaceholder(data.showText === false ? 'KV PC 滿版' : 'KV PC 圖片區', imageSpecs.desktop, 'dark');
 
   if (data.showText === false) {
     const linkedMedia = data.buttonLink && data.buttonLink !== '#'

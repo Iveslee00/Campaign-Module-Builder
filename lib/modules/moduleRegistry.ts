@@ -1,9 +1,7 @@
 import type { ModuleType, PageModule } from '@/types/modules';
 import { generateTitleHTML } from '@/modules/exporters/titleExporter';
-import { generateHeroHTML } from '@/modules/exporters/heroExporter';
 import { generateSplitSectionHTML } from '@/modules/exporters/splitSectionExporter';
 import { generateProductGridHTML } from '@/modules/exporters/productGridExporter';
-import { generateBannerProductsHTML } from '@/modules/exporters/bannerProductsExporter';
 import { generateProductBannerHTML } from '@/modules/exporters/productBannerExporter';
 import { generateProductCarouselHTML } from '@/modules/exporters/productCarouselExporter';
 import { generateLogoWallHTML } from '@/modules/exporters/logoWallExporter';
@@ -12,20 +10,17 @@ import { generateFaqHTML } from '@/modules/exporters/faqExporter';
 import { generateStickySidebarHTML } from '@/modules/exporters/stickySidebarExporter';
 import { generateArticleTextHTML } from '@/modules/exporters/articleTextExporter';
 import { generateArticleImageHTML } from '@/modules/exporters/articleImageExporter';
-import { generateHeroCarouselHTML } from '@/modules/exporters/heroCarouselExporter';
 import { generateBankPromoHTML } from '@/modules/exporters/bankPromoExporter';
 import { generateAnchorNavHTML } from '@/modules/exporters/anchorNavExporter';
-import { generateProductFeaturesHTML } from '@/modules/exporters/productFeaturesExporter';
-import { generateProductShowcaseHTML } from '@/modules/exporters/productShowcaseExporter';
 import { generateProductScenesHTML } from '@/modules/exporters/productScenesExporter';
 import { generateProductInfoHTML } from '@/modules/exporters/productInfoExporter';
 import {
   generateProductBenefitsHTML,
   generateProductComparisonHTML,
   generateProductProofHTML,
-  generateProductPurchaseHTML,
   generateProductStepsHTML,
 } from '@/modules/exporters/productAdvancedExporter';
+import { getHighRiskModuleDefinition, renderHighRiskModuleHTML } from '@/modules/definitions/highRiskModuleDefinitions';
 
 export type ModuleRegistryCategory = 'general' | 'campaign' | 'product';
 
@@ -41,6 +36,18 @@ export interface ModuleRegistryEntry {
 }
 
 const dataOf = <T>(module: PageModule) => module.data as T;
+const renderSharedModule = (module: PageModule, context: ModuleExportContext) => {
+  const definition = getHighRiskModuleDefinition(module.type);
+  if (!definition) {
+    throw new Error(`Missing high-risk module definition: ${module.type}`);
+  }
+
+  const html = renderHighRiskModuleHTML(module, context);
+  if (html === null) {
+    throw new Error(`Missing high-risk module definition: ${module.type}`);
+  }
+  return html;
+};
 
 export const moduleRegistry: Record<ModuleType, ModuleRegistryEntry> = {
   'title': {
@@ -59,13 +66,13 @@ export const moduleRegistry: Record<ModuleType, ModuleRegistryEntry> = {
     type: 'hero',
     label: 'KV',
     category: 'general',
-    renderExport: (module) => generateHeroHTML(dataOf(module)),
+    renderExport: (module, context) => renderSharedModule(module, context),
   },
   'hero-carousel': {
     type: 'hero-carousel',
     label: 'KV 輪播',
     category: 'general',
-    renderExport: (module) => generateHeroCarouselHTML(dataOf(module)),
+    renderExport: (module, context) => renderSharedModule(module, context),
   },
   'split-section': {
     type: 'split-section',
@@ -131,7 +138,7 @@ export const moduleRegistry: Record<ModuleType, ModuleRegistryEntry> = {
     type: 'banner-products',
     label: '活動 Banner + 商品',
     category: 'campaign',
-    renderExport: (module) => generateBannerProductsHTML(dataOf(module)),
+    renderExport: (module, context) => renderSharedModule(module, context),
   },
   'product-banner': {
     type: 'product-banner',
@@ -143,13 +150,13 @@ export const moduleRegistry: Record<ModuleType, ModuleRegistryEntry> = {
     type: 'product-features',
     label: '商品特色',
     category: 'product',
-    renderExport: (module) => generateProductFeaturesHTML(dataOf(module)),
+    renderExport: (module, context) => renderSharedModule(module, context),
   },
   'product-showcase': {
     type: 'product-showcase',
     label: '大圖展示',
     category: 'product',
-    renderExport: (module) => generateProductShowcaseHTML(dataOf(module)),
+    renderExport: (module, context) => renderSharedModule(module, context),
   },
   'product-scenes': {
     type: 'product-scenes',
@@ -191,7 +198,7 @@ export const moduleRegistry: Record<ModuleType, ModuleRegistryEntry> = {
     type: 'product-purchase',
     label: '購買轉換',
     category: 'product',
-    renderExport: (module) => generateProductPurchaseHTML(dataOf(module)),
+    renderExport: (module, context) => renderSharedModule(module, context),
   },
 };
 

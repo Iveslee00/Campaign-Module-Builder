@@ -1,6 +1,6 @@
 # NEXORA Documentation Index
 
-更新日期：2026-06-30
+更新日期：2026-07-01
 
 這份文件是 NEXORA 文件入口。後續交接給 ChatGPT、Codex 或人工開發時，先讀本檔，再依任務類型讀對應文件。
 
@@ -42,6 +42,7 @@
 |---|---|
 | `docs/superpowers/specs/2026-06-30-builder-quality-sprint-design.md` | Builder 品質強化 sprint 規格 |
 | `docs/superpowers/plans/2026-06-30-builder-inspector-ia.md` | Inspector IA 執行計畫 |
+| `docs/superpowers/plans/2026-07-01-full-module-shared-renderer-refactor.md` | 全模組 shared renderer 深層重構計畫 |
 
 ## 文件更新規則
 

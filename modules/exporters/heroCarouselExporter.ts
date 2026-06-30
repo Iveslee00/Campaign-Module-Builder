@@ -1,5 +1,7 @@
 import { HeroCarouselData } from '@/types/modules';
 import { escapeHtml } from '@/lib/utils';
+import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
+import { renderImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
 
 export function generateHeroCarouselHTML(data: HeroCarouselData): string {
   const bgOverride = data.backgroundColor ? ` style="background: ${escapeHtml(data.backgroundColor)}"` : '';
@@ -8,13 +10,14 @@ export function generateHeroCarouselHTML(data: HeroCarouselData): string {
   const slides = data.slides
     .map((s) => {
       const showText = s.showText !== false;
+      const imageSpecs = getKvImageSpecs(data.height, showText);
       const titleStyle = ` style="color: ${escapeHtml(s.titleColor || '#ffffff')}"`;
       const textStyle = ` style="color: ${escapeHtml(s.textColor || '#ffffff')}"`;
       const textBgStyle = '';
       const align = s.alignment ?? 'left';
       const imgEl = s.image
         ? `\n        <picture class="cb-kv__picture">${s.mobileImage ? `\n          <source media="(max-width: 767px)" srcset="${escapeHtml(s.mobileImage)}">` : ''}\n          <img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title || '')}" class="cb-kv__bg">\n        </picture>`
-        : '';
+        : renderImagePlaceholder(showText ? 'KV 輪播 PC 圖片區' : 'KV 輪播 PC 滿版', imageSpecs.desktop, 'dark');
 
       const title = showText && s.title ? `          <h2 class="cb-kv__title"${titleStyle}>${escapeHtml(s.title)}</h2>` : '';
       const subtitle = showText && s.subtitle ? `          <p class="cb-kv__subtitle"${textStyle}>${escapeHtml(s.subtitle)}</p>` : '';

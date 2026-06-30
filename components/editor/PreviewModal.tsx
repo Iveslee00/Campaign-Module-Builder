@@ -5,6 +5,7 @@ import { PageModule } from '@/types/modules';
 import { EmailPageModule } from '@/types/emailModules';
 import { ModulePreviewRenderer } from '@/modules/preview/ModulePreviewRenderer';
 import { EmailModulePreviewRenderer } from '@/modules/email/preview/EmailModulePreviewRenderer';
+import { CampaignExportStyles } from './CampaignExportStyles';
 import { DeviceContext } from '@/contexts/DeviceContext';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
 import { useEmailSettings } from '@/contexts/EmailSettingsContext';
@@ -49,7 +50,7 @@ async function fixAspectRatio(root: HTMLElement): Promise<() => void> {
 }
 
 export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props) {
-  const { pageBackgroundColor, pageBackgroundImage } = useGlobalSettings();
+  const { buttonColor, buttonTextColor, pageBackgroundColor, pageBackgroundImage } = useGlobalSettings();
   const emailSettings = useEmailSettings();
   const [deviceMode, setDeviceMode] = useState<DeviceMode>('desktop');
   const [capturing, setCapturing] = useState(false);
@@ -70,6 +71,12 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
       backgroundPosition: 'top center',
     } : {}),
   };
+  const campaignExportSettings = React.useMemo(() => ({
+    buttonColor,
+    buttonTextColor,
+    pageBackgroundColor,
+    pageBackgroundImage,
+  }), [buttonColor, buttonTextColor, pageBackgroundColor, pageBackgroundImage]);
   const desktopPreviewStyle: React.CSSProperties = {
     ...campaignBackgroundStyle,
     width: DESKTOP_CANVAS_WIDTH,
@@ -246,9 +253,10 @@ export function PreviewModal({ pageMode, modules, emailModules, onClose }: Props
           </div>
         ) : (
           <DeviceContext.Provider value={{ isMobile }}>
+            <CampaignExportStyles settings={campaignExportSettings} forceMobile={isMobile} />
             {isMobile ? (
               <div className="flex justify-center py-6 px-4">
-                <div style={{ width: '390px' }} className="shadow-2xl rounded-2xl overflow-hidden border border-slate-600">
+                <div style={{ width: '390px' }} className="nexora-preview-mobile-scope shadow-2xl rounded-2xl overflow-hidden border border-slate-600">
                   <div className="flex items-center justify-between px-5 py-2 bg-slate-900 text-slate-400 text-xs border-b border-slate-700">
                     <span className="font-medium">9:41</span>
                     <div className="flex gap-1 items-center">

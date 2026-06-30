@@ -6,6 +6,8 @@ import {
   ProductStepsData,
 } from '@/types/modules';
 import { escapeHtml } from '@/lib/utils';
+import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
+import { renderImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
 
 const textStyle = (color: string) => color ? ` style="color: ${escapeHtml(color)}"` : '';
 const bgStyle = (color: string) => color ? ` style="background: ${escapeHtml(color)}"` : '';
@@ -114,7 +116,7 @@ ${items}
 export function generateProductPurchaseHTML(data: ProductPurchaseData): string {
   const visibleProducts = data.style === 'bundle' ? data.products.slice(0, 3) : data.products;
   const products = visibleProducts.map((product) => `      <a class="cb-product-purchase__card" href="${escapeHtml(product.link || '#')}">
-        <span class="cb-product-purchase__media">${product.image ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">` : ''}</span>
+        <span class="cb-product-purchase__media">${product.image ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">` : renderImagePlaceholder('商品圖', IMAGE_SPECS.product)}</span>
         <span class="cb-product-purchase__body">
           <span class="cb-product-purchase__brand">${escapeHtml(product.brand)}</span>
           <strong class="cb-product-purchase__name">${escapeHtml(product.name)}</strong>

@@ -1,11 +1,14 @@
 import { BannerProductsData } from '@/types/modules';
 import { escapeHtml } from '@/lib/utils';
 import { getBannerProductsCountClass } from '@/lib/modules/bannerProducts';
+import { IMAGE_SPECS, getBannerProductsImageSpecs } from '@/lib/assets/imageSpecs';
+import { renderImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
 import { generateProductCardLabels } from './productCardLabels';
 
 export function generateBannerProductsHTML(data: BannerProductsData): string {
   const count = data.products.length;
   const countClass = getBannerProductsCountClass(count);
+  const bannerSpecs = getBannerProductsImageSpecs(count);
   const bannerTitleStyle = data.bannerTitleColor ? ` style="color: ${escapeHtml(data.bannerTitleColor)}"` : '';
 
   const productCards = data.products
@@ -16,7 +19,7 @@ export function generateBannerProductsHTML(data: BannerProductsData): string {
 
       return `      <a href="${escapeHtml(p.link || '#')}" class="cb-product-card">
         <div class="cb-product-card__media">${labels}
-          <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}">
+          ${p.image ? `<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}">` : renderImagePlaceholder('商品圖', IMAGE_SPECS.product)}
           <span class="cb-product-card__signal"></span>
         </div>
         <div class="cb-product-card__body">
@@ -31,7 +34,7 @@ export function generateBannerProductsHTML(data: BannerProductsData): string {
   const bgOverride = data.backgroundColor ? ` style="background: ${escapeHtml(data.backgroundColor)}"` : '';
   const bannerImg = data.bannerImage
     ? `<picture class="cb-banner-products__picture">${data.mobileBannerImage ? `\n          <source media="(max-width: 767px)" srcset="${escapeHtml(data.mobileBannerImage)}">` : ''}\n          <img src="${escapeHtml(data.bannerImage)}" alt="${escapeHtml(data.bannerTitle)}" class="cb-banner-products__banner-img">\n        </picture>`
-    : '';
+    : renderImagePlaceholder('活動 Banner PC', bannerSpecs.desktop, 'dark');
 
   return `<section class="cb-banner-products cb-section"${bgOverride}>
   <div class="cb-container">

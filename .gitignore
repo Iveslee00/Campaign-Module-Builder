@@ -5,6 +5,8 @@ out/
 dist/
 build/
 coverage/
+output/
+tmp/
 *.tsbuildinfo
 .env
 .env*.local

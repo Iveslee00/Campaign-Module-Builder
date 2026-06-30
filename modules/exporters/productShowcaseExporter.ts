@@ -1,5 +1,7 @@
 import { ProductShowcaseData } from '@/types/modules';
 import { escapeHtml } from '@/lib/utils';
+import { IMAGE_SPECS } from '@/lib/assets/imageSpecs';
+import { renderImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
 
 function normalizeProductShowcaseStyle(style: ProductShowcaseData['style'] | string): ProductShowcaseData['style'] {
   if (style === 'split' || style === 'luxury') return style;
@@ -14,7 +16,7 @@ export function generateProductShowcaseHTML(data: ProductShowcaseData): string {
   const reverse = data.reverse ? ' cb-product-showcase__inner--reverse' : '';
   const image = data.image
     ? `<picture class="cb-product-showcase__picture">${data.mobileImage ? `\n          <source media="(max-width: 767px)" srcset="${escapeHtml(data.mobileImage)}">` : ''}\n          <img src="${escapeHtml(data.image)}" alt="${escapeHtml(data.title)}">\n        </picture>`
-    : '';
+    : renderImagePlaceholder('展示圖片', IMAGE_SPECS.productShowcase);
   const button = data.buttonText ? `<a href="${escapeHtml(data.buttonLink || '#')}" class="cb-btn cb-product-showcase__btn">${escapeHtml(data.buttonText)}</a>` : '';
 
   return `<section class="cb-product-showcase cb-product-showcase--${escapeHtml(style)} cb-section"${bg}>

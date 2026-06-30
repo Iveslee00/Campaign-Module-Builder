@@ -1,4 +1,5 @@
 import { GlobalSettings } from '@/types/modules';
+import { getHighRiskModuleCssFragments } from '@/modules/definitions/highRiskModuleDefinitions';
 
 export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
   const btnColor = settings?.buttonColor || '#6366f1';
@@ -52,6 +53,8 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-page a.cb-btn:hover { color: ${btnTextColor}; }
 .cb-btn--white { background: ${btnColor}; color: ${btnTextColor}; }
 .cb-btn--white:hover { background: ${btnHover}; transform: translateY(-1px); }
+
+${getHighRiskModuleCssFragments()}
 
 /* ------------------------------------------------------------
    3. ANCHOR NAV MODULE
