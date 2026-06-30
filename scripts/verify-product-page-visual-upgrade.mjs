@@ -31,6 +31,7 @@ const required = [
   [advancedExporter, 'cb-product-purchase__glow', 'Purchase exporter should output glow layer'],
   [css, '.cb-product-showcase__floating-badge', 'Export CSS should style floating showcase badge'],
   [css, '.cb-product-showcase__ambient-panel', 'Export CSS should style showcase ambient panel'],
+  [css, 'showcase content stays above overlapping product media', 'Export CSS should document showcase layer ordering'],
   [css, '.cb-product-features__index', 'Export CSS should style feature index badges'],
   [css, '.cb-product-benefits__signal', 'Export CSS should style benefit signal bars'],
   [css, '.cb-product-purchase__glow', 'Export CSS should style purchase glow layer'],
@@ -46,6 +47,7 @@ for (const [source, token, message] of required) {
 
 const unsafeImageOverlayPatterns = [
   [/\.cb-product-showcase__ambient-panel\s*\{[^}]*backdrop-filter/s, 'Product showcase ambient panel must not blur the product image'],
+  [/\.cb-product-showcase__content\s*\{[^}]*z-index:\s*[0-2]\b/s, 'Product showcase content layer must sit above overlapping product media'],
 ];
 
 for (const [pattern, message] of unsafeImageOverlayPatterns) {

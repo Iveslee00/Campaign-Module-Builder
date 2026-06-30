@@ -30,7 +30,7 @@ export function ProductShowcasePreview({ data }: { data: ProductShowcaseData }) 
       left: isLuxury && !isMobile ? 0 : undefined,
       top: isLuxury && !isMobile ? '50%' : undefined,
       transform: isLuxury && !isMobile ? 'translateY(-50%)' : undefined,
-      zIndex: 1,
+      zIndex: 4,
       maxWidth: isFull ? 540 : isSpacious ? 680 : isLuxury ? 430 : 460,
       margin: isSpacious ? '0 auto' : undefined,
       textAlign: isSpacious ? 'center' : 'left',
@@ -52,6 +52,7 @@ export function ProductShowcasePreview({ data }: { data: ProductShowcaseData }) 
   const media = (
     <div style={{
       position: 'relative',
+      zIndex: 1,
       width: isLuxury && !isMobile ? '72%' : undefined,
       marginLeft: isLuxury && !isMobile ? 'auto' : undefined,
       aspectRatio: isMobile ? '750 / 900' : isFull ? '1920 / 740' : isLuxury ? '920 / 760' : '1 / 1',

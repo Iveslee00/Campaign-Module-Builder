@@ -488,14 +488,15 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-showcase--luxury { background-image: radial-gradient(circle at 78% 18%, rgba(125,211,252,0.26), transparent 34%), linear-gradient(135deg, rgba(248,251,255,0.95), rgba(234,247,255,0.82) 48%, rgba(255,247,237,0.9)); }
 .cb-product-showcase--luxury .cb-product-showcase__inner { position: relative; display: block; min-height: 640px; }
 .cb-product-showcase__inner--reverse .cb-product-showcase__media { order: -1; }
-.cb-product-showcase__content { position: relative; z-index: 1; max-width: 520px; }
+/* showcase content stays above overlapping product media */
+.cb-product-showcase__content { position: relative; z-index: 4; max-width: 520px; }
 .cb-product-showcase--split .cb-product-showcase__content {
   padding: 30px 30px; border-radius: 26px;
   background: rgba(255,255,255,0.66);
   box-shadow: 0 18px 54px rgba(79,70,229,0.10);
 }
 .cb-product-showcase--luxury .cb-product-showcase__content {
-  position: absolute; left: 24px; top: 50%; transform: translateY(-50%); z-index: 2;
+  position: absolute; left: 24px; top: 50%; transform: translateY(-50%); z-index: 5;
   max-width: 430px; padding: 36px 34px; border-radius: 34px;
   background: rgba(255,255,255,0.84);
   border: 1px solid rgba(255,255,255,0.72);
@@ -506,7 +507,7 @@ export function generatePageCSS(settings?: Partial<GlobalSettings>): string {
 .cb-product-showcase__subtitle { margin: 14px 0 0; font-size: 1.05rem; line-height: 1.65; font-weight: 650; color: #475569; }
 .cb-product-showcase__description { margin: 12px 0 0; font-size: 0.96rem; line-height: 1.75; color: #475569; opacity: 0.86; }
 .cb-product-showcase__btn { margin-top: 24px; border-radius: 999px; }
-.cb-product-showcase__media { position: relative; aspect-ratio: 1 / 1; border-radius: 28px; overflow: hidden; background: #eef2ff; box-shadow: 0 24px 70px rgba(15,23,42,0.12); }
+.cb-product-showcase__media { position: relative; z-index: 1; aspect-ratio: 1 / 1; border-radius: 28px; overflow: hidden; background: #eef2ff; box-shadow: 0 24px 70px rgba(15,23,42,0.12); }
 .cb-product-showcase__ambient-panel {
   position: absolute; inset: 7%; z-index: 1; pointer-events: none;
   border-radius: 34px;

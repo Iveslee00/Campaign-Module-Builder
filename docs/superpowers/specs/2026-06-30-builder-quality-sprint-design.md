@@ -602,6 +602,8 @@ Status：完成第一階段。General / Campaign 模組已補強視覺層次：K
 
 Hotfix：大面積覆蓋圖片的玻璃層不得使用 `backdrop-filter`，避免 KV、KV 輪播、單品主打或商品展示輸出後把圖片整片模糊。已將此規則加入 `npm run verify:general-campaign-visual-upgrade` 與 `npm run verify:product-page-visual-upgrade`。
 
+Hotfix：商品展示 / 大圖展示的重疊版型，文字卡層級必須高於圖片媒體層，避免圖片壓到標題與 CTA。已將此規則加入 `npm run verify:product-page-visual-upgrade`。
+
 ### BQ-012：Resources page repositioning
 
 Goal：處理素材區雞肋感。
