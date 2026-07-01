@@ -169,8 +169,25 @@ export function SharedModuleView({ module, modules = [], mode = 'preview' }: Mod
   React.useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
-    return initializePreviewCarousels(root);
+    let cleanup: (() => void) | undefined;
+    const frame = window.requestAnimationFrame(() => {
+      cleanup = initializePreviewCarousels(root);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      cleanup?.();
+    };
   }, [html]);
+
+  const handlePreviewClickCapture = React.useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    if (mode !== 'builder') return;
+    const target = event.target as HTMLElement | null;
+    const link = target?.closest('a');
+    if (link) {
+      event.preventDefault();
+    }
+  }, [mode]);
 
   return (
     <div
@@ -179,6 +196,7 @@ export function SharedModuleView({ module, modules = [], mode = 'preview' }: Mod
       data-nexora-module-view={module.type}
       data-nexora-render-mode={mode}
       style={{ background: 'transparent' }}
+      onClickCapture={handlePreviewClickCapture}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

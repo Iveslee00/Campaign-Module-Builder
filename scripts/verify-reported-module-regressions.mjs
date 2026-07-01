@@ -9,6 +9,7 @@ const assert = (condition, message) => {
 };
 
 const sharedModuleView = read('modules/renderers/SharedModuleView.tsx');
+const previewCanvas = read('components/editor/PreviewCanvas.tsx');
 const splitExporter = read('modules/exporters/splitSectionExporter.ts');
 const articleImageExporter = read('modules/exporters/articleImageExporter.ts');
 const logoWallExporter = read('modules/exporters/logoWallExporter.ts');
@@ -27,6 +28,19 @@ assert(
     sharedModuleView.includes("querySelectorAll<HTMLElement>('.cb-kv')") &&
     sharedModuleView.includes("querySelectorAll<HTMLElement>('.cb-carousel')"),
   'Shared module preview should initialize KV and product carousels'
+);
+
+assert(
+  sharedModuleView.includes('requestAnimationFrame') &&
+    sharedModuleView.includes('handlePreviewClickCapture') &&
+    sharedModuleView.includes("closest('a')"),
+  'Shared module preview should initialize after layout and block link navigation without blocking carousel controls'
+);
+
+assert(
+  !previewCanvas.includes('<div className="pointer-events-none select-none overflow-hidden">\\n          <ModulePreviewRenderer module={module} modules={modules} />') &&
+    previewCanvas.includes('className="select-none overflow-hidden"'),
+  'Builder canvas should not block pointer events for interactive module previews'
 );
 
 assert(

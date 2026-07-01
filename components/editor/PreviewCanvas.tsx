@@ -123,7 +123,7 @@ function SortableModule({ module, modules, isSelected, onSelect, onDelete, onDup
             <Trash2 size={13} />
           </button>
         </div>
-        <div className="pointer-events-none select-none overflow-hidden">
+        <div className="select-none overflow-hidden">
           <ModulePreviewRenderer module={module} modules={modules} />
         </div>
       </div>
