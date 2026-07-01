@@ -503,7 +503,7 @@ ${getHighRiskModuleCssFragments()}
 }
 .cb-product-showcase__picture { position: absolute; inset: 0; display: block; }
 .cb-product-showcase__picture img { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; object-fit: cover; display: block; }
-.cb-product-showcase--luxury .cb-product-showcase__picture img { object-fit: contain; }
+.cb-product-showcase--luxury .cb-product-showcase__picture img { object-fit: cover; }
 
 .cb-product-scenes__single { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 .cb-product-scenes--right-image .cb-product-scenes__single .cb-product-scenes__media { order: 2; }

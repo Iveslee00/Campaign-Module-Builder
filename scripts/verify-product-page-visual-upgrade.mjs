@@ -42,6 +42,7 @@ const unsafeImageOverlayPatterns = [
   [/cb-product-showcase__ambient-panel/, 'Product showcase export must not place an ambient glass panel over the image'],
   [/cb-product-showcase__floating-badge/, 'Product showcase export must not place a floating glass badge over the image'],
   [/\.cb-product-showcase__content\s*\{[^}]*z-index:\s*[0-2]\b/s, 'Product showcase content layer must sit above overlapping product media'],
+  [/\.cb-product-showcase--luxury\s+\.cb-product-showcase__picture\s+img\s*\{[^}]*object-fit:\s*contain\b/s, 'Luxury showcase image must fill the media area without white edges'],
 ];
 
 for (const [pattern, message] of unsafeImageOverlayPatterns) {
