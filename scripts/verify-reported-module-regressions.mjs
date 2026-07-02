@@ -36,14 +36,15 @@ assert(
 
 assert(
   sharedModuleView.includes('requestAnimationFrame') &&
-    sharedModuleView.includes('handlePreviewClickCapture') &&
-    sharedModuleView.includes("closest('a')"),
+    sharedModuleView.includes('handlePreviewInteractionCapture') &&
+    sharedModuleView.includes("target?.closest('a')") &&
+    sharedModuleView.includes('event.preventDefault();'),
   'Shared module preview should initialize after layout and block link navigation without blocking carousel controls'
 );
 
 assert(
-  sharedModuleView.includes("closest('button, input, textarea, select, [role=\"button\"]')") &&
-    sharedModuleView.includes('onPointerDownCapture={handlePreviewPointerDownCapture}') &&
+  sharedModuleView.includes('MODULE_INTERACTIVE_SELECTOR') &&
+    sharedModuleView.includes('onPointerDownCapture={handlePreviewInteractionCapture}') &&
     !sharedModuleView.includes('normalizePreviewFaqHtml') &&
     !sharedModuleView.includes('data-nexora-faq-trigger'),
   'Builder shared preview should stop interactive controls from bubbling to module selection without treating FAQ as interactive'
@@ -81,11 +82,27 @@ assert(
 );
 
 assert(
-  previewCanvas.includes('isCarouselControlTarget') &&
-    previewCanvas.includes("'.cb-kv__nav, .cb-kv__dot, .cb-carousel__btn'") &&
-    previewCanvas.includes('handleCanvasModuleClick') &&
-    previewCanvas.includes('if (isCarouselControlTarget(event.target)) return;'),
-  'Builder canvas module selection should ignore carousel controls so in-canvas carousels remain interactive'
+  previewCanvas.includes('CANVAS_INTERACTIVE_SELECTOR') &&
+    previewCanvas.includes("'.cb-kv__nav'") &&
+    previewCanvas.includes("'.cb-kv__dot'") &&
+    previewCanvas.includes("'.cb-carousel__btn'") &&
+    previewCanvas.includes('handleCanvasInteractionCapture') &&
+    previewCanvas.includes('onPointerDownCapture={handleCanvasInteractionCapture}') &&
+    previewCanvas.includes('onClickCapture={handleCanvasInteractionCapture}') &&
+    previewCanvas.includes('event.stopPropagation();'),
+  'Builder canvas should isolate module interactive controls before selection or editor shell events'
+);
+
+assert(
+  sharedModuleView.includes('MODULE_INTERACTIVE_SELECTOR') &&
+    sharedModuleView.includes("'.cb-kv__nav'") &&
+    sharedModuleView.includes("'.cb-kv__dot'") &&
+    sharedModuleView.includes("'.cb-carousel__btn'") &&
+    sharedModuleView.includes('handlePreviewInteractionCapture') &&
+    sharedModuleView.includes('onPointerDownCapture={handlePreviewInteractionCapture}') &&
+    sharedModuleView.includes('onClickCapture={handlePreviewInteractionCapture}') &&
+    !sharedModuleView.includes('if (getCarouselControlTarget(target)) return;'),
+  'Shared module builder mode should use one interactive boundary instead of letting carousel controls bubble outward'
 );
 
 assert(

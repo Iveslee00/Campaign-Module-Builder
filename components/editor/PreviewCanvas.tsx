@@ -55,9 +55,22 @@ const getCampaignModuleLabel = (module: PageModule) => {
   return campaignLabels[module.type] ?? module.type;
 };
 
-const isCarouselControlTarget = (target: EventTarget | null) => (
+const CANVAS_INTERACTIVE_SELECTOR = [
+  'button',
+  'input',
+  'textarea',
+  'select',
+  '[role="button"]',
+  'a',
+  'summary',
+  '.cb-kv__nav',
+  '.cb-kv__dot',
+  '.cb-carousel__btn',
+].join(', ');
+
+const isCanvasInteractiveTarget = (target: EventTarget | null) => (
   target instanceof HTMLElement &&
-  Boolean(target.closest('.cb-kv__nav, .cb-kv__dot, .cb-carousel__btn'))
+  Boolean(target.closest(CANVAS_INTERACTIVE_SELECTOR))
 );
 
 const emailLabels: Record<string, string> = {
@@ -94,14 +107,21 @@ function SortableModule({ module, modules, isSelected, onSelect, onDelete, onDup
     ? 'inset 0 0 0 1px rgba(99,102,241,0.45), 0 1px 0 0 rgba(0,0,0,0.06)'
     : '0 0 0 1px rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.05)';
 
+  const handleCanvasInteractionCapture = (event: React.SyntheticEvent<HTMLDivElement>) => {
+    if (!isCanvasInteractiveTarget(event.target)) return;
+    event.stopPropagation();
+  };
+
   const handleCanvasModuleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (isCarouselControlTarget(event.target)) return;
+    if (isCanvasInteractiveTarget(event.target)) return;
     onSelect();
   };
 
   return (
     <div ref={setNodeRef} id={'anchorName' in module.data && module.data.anchorName ? getModuleAnchorId(module.id) : undefined} style={style} className="relative group">
       <div
+        onPointerDownCapture={handleCanvasInteractionCapture}
+        onClickCapture={handleCanvasInteractionCapture}
         onClick={handleCanvasModuleClick}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

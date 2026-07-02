@@ -11,6 +11,18 @@ const picturePattern = /<picture\b[^>]*>[\s\S]*?<\/picture>/g;
 const mobileSourcePattern = /<source\b([^>]*\bmedia="[^"]*max-width:\s*767px[^"]*"[^>]*)>/i;
 const srcsetPattern = /\bsrcset="([^"]+)"/i;
 const imgSrcPattern = /(<img\b[^>]*\bsrc=")([^"]*)(")/i;
+const MODULE_INTERACTIVE_SELECTOR = [
+  'button',
+  'input',
+  'textarea',
+  'select',
+  '[role="button"]',
+  'a',
+  'summary',
+  '.cb-kv__nav',
+  '.cb-kv__dot',
+  '.cb-carousel__btn',
+].join(', ');
 
 function getFirstSrcFromSrcset(srcset: string) {
   return srcset.split(',')[0]?.trim().split(/\s+/)[0] ?? '';
@@ -264,39 +276,20 @@ export function SharedModuleView({ module, modules = [], mode = 'preview' }: Mod
   }, [html]);
 
   const getInteractivePreviewTarget = React.useCallback((target: HTMLElement | null) => (
-    target?.closest('button, input, textarea, select, [role="button"]') ?? null
+    target?.closest(MODULE_INTERACTIVE_SELECTOR) ?? null
   ), []);
 
-  const getCarouselControlTarget = React.useCallback((target: HTMLElement | null) => (
-    target?.closest('.cb-kv__nav, .cb-kv__dot, .cb-carousel__btn') ?? null
-  ), []);
-
-  const handlePreviewPointerDownCapture = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+  const handlePreviewInteractionCapture = React.useCallback((event: React.SyntheticEvent<HTMLDivElement>) => {
     if (mode !== 'builder') return;
     const target = event.target as HTMLElement | null;
-    if (getCarouselControlTarget(target)) return;
-    const interactive = getInteractivePreviewTarget(target);
-    if (interactive || target?.closest('a')) {
-      event.stopPropagation();
-    }
-  }, [getCarouselControlTarget, getInteractivePreviewTarget, mode]);
-
-  const handlePreviewClickCapture = React.useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    if (mode !== 'builder') return;
-    const target = event.target as HTMLElement | null;
-    if (getCarouselControlTarget(target)) return;
     const interactive = getInteractivePreviewTarget(target);
     if (interactive) {
-      event.stopPropagation();
-      return;
-    }
-
-    const link = target?.closest('a');
-    if (link) {
-      event.preventDefault();
+      if (event.type === 'click' && target?.closest('a')) {
+        event.preventDefault();
+      }
       event.stopPropagation();
     }
-  }, [getCarouselControlTarget, getInteractivePreviewTarget, mode]);
+  }, [getInteractivePreviewTarget, mode]);
 
   return (
     <div
@@ -305,8 +298,8 @@ export function SharedModuleView({ module, modules = [], mode = 'preview' }: Mod
       data-nexora-module-view={module.type}
       data-nexora-render-mode={mode}
       style={{ background: 'transparent' }}
-      onPointerDownCapture={handlePreviewPointerDownCapture}
-      onClickCapture={handlePreviewClickCapture}
+      onPointerDownCapture={handlePreviewInteractionCapture}
+      onClickCapture={handlePreviewInteractionCapture}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
