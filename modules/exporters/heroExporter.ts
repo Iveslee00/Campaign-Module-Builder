@@ -1,7 +1,7 @@
 import { HeroData } from '@/types/modules';
 import { escapeHtml } from '@/lib/utils';
 import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
-import { renderImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
+import { renderResponsiveImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
 
 export function generateHeroHTML(data: HeroData): string {
   const heightClass = `cb-hero--${data.height ?? 'medium'}`;
@@ -25,9 +25,15 @@ export function generateHeroHTML(data: HeroData): string {
     ? `\n        <a href="${escapeHtml(data.buttonLink || '#')}" class="cb-btn">${escapeHtml(data.buttonText)}</a>`
     : '';
 
-  const mediaPicture = data.image
-    ? `<picture class="cb-hero__picture">${data.mobileImage ? `\n            <source media="(max-width: 767px)" srcset="${escapeHtml(data.mobileImage)}">` : ''}\n            <img src="${escapeHtml(data.image)}" alt="${escapeHtml(data.title)}">\n          </picture>`
-    : renderImagePlaceholder(data.showText === false ? 'KV PC 滿版' : 'KV PC 圖片區', imageSpecs.desktop, 'dark');
+  const mediaPicture = data.image || data.mobileImage
+    ? `<picture class="cb-hero__picture">${data.mobileImage ? `\n            <source media="(max-width: 767px)" srcset="${escapeHtml(data.mobileImage)}">` : ''}\n            <img src="${escapeHtml(data.image || data.mobileImage)}" alt="${escapeHtml(data.title)}">\n          </picture>`
+    : renderResponsiveImagePlaceholder(
+      data.showText === false ? 'KV PC 滿版' : 'KV PC 圖片區',
+      imageSpecs.desktop,
+      data.showText === false ? 'KV M 滿版' : 'KV M 圖片區',
+      imageSpecs.mobile,
+      'dark'
+    );
 
   if (data.showText === false) {
     const linkedMedia = data.buttonLink && data.buttonLink !== '#'

@@ -15,3 +15,16 @@ export function renderImagePlaceholder(
             <span class="cb-image-placeholder__hint">請上傳指定尺寸圖檔</span>
           </span>`;
 }
+
+export function renderResponsiveImagePlaceholder(
+  desktopLabel: string,
+  desktopSpec: ImageSpec,
+  mobileLabel: string,
+  mobileSpec: ImageSpec,
+  tone: 'light' | 'dark' = 'light'
+) {
+  return `<span class="cb-responsive-placeholder" data-responsive-placeholder="true">
+            <span class="cb-responsive-placeholder--desktop">${renderImagePlaceholder(desktopLabel, desktopSpec, tone)}</span>
+            <span class="cb-responsive-placeholder--mobile">${renderImagePlaceholder(mobileLabel, mobileSpec, tone)}</span>
+          </span>`;
+}

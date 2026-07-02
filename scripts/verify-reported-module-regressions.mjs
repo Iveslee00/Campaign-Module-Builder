@@ -19,6 +19,7 @@ const productGridExporter = read('modules/exporters/productGridExporter.ts');
 const productCarouselExporter = read('modules/exporters/productCarouselExporter.ts');
 const bannerProductsExporter = read('modules/exporters/bannerProductsExporter.ts');
 const heroCarouselExporter = read('modules/exporters/heroCarouselExporter.ts');
+const faqExporter = read('modules/exporters/faqExporter.ts');
 const titleExporter = read('modules/exporters/titleExporter.ts');
 const productAdvancedExporter = read('modules/exporters/productAdvancedExporter.ts');
 const productPageBuilder = read('lib/productBuilder/productPageBuilder.ts');
@@ -28,10 +29,52 @@ const highRiskCss = read('modules/definitions/highRiskModuleDefinitions.ts');
 const packageJson = read('package.json');
 
 assert(
+  css.includes('.cb-product-steps--image-cards .cb-product-steps__grid { grid-template-columns: 1fr;') &&
+    css.includes('.cb-product-steps--image-cards .cb-product-steps__item {') &&
+    css.includes('.cb-product-steps--image-cards .cb-product-steps__media { margin: 0 0 10px;'),
+  'Mobile product step image-cards should render as stacked horizontal rows with image above text'
+);
+
+assert(
+  heroCarouselExporter.includes('renderResponsiveImagePlaceholder') &&
+    heroCarouselExporter.includes('KV 輪播 M 圖片區') &&
+    heroCarouselExporter.includes('KV 輪播 M 滿版') &&
+    css.includes('.cb-responsive-placeholder--mobile'),
+  'KV carousel missing-image placeholders should switch to mobile size labels on mobile canvas/preview/export'
+);
+
+assert(
+  css.includes('[data-nexora-render-mode="canvas"] .cb-kv__nav') &&
+    css.includes('[data-nexora-render-mode="canvas"] .cb-kv__dots') &&
+    css.includes('display: none;'),
+  'Canvas KV carousel controls should not render mispositioned inactive arrows'
+);
+
+assert(
+  css.includes('.cb-logo-wall__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 160px));') &&
+    css.includes('.cb-logo-wall__item { min-width: 0; width: 100%; }'),
+  'Mobile logo wall should render two logos per row'
+);
+
+assert(
   sharedModuleView.includes('initializePreviewCarousels') &&
     sharedModuleView.includes("querySelectorAll<HTMLElement>('.cb-kv')") &&
     sharedModuleView.includes("querySelectorAll<HTMLElement>('.cb-carousel')"),
   'Shared module preview should initialize KV and product carousels'
+);
+
+assert(
+  sharedModuleView.includes("runtimeMode === 'canvas'") &&
+    sharedModuleView.includes('return;') &&
+    sharedModuleView.includes('isInteractiveModule') &&
+    sharedModuleView.includes('預覽可互動') &&
+    sharedModuleView.includes('編輯畫布僅顯示版面，互動效果請至「預覽」查看。'),
+  'Canvas runtime should render interactive modules statically and show a preview interaction hint'
+);
+
+assert(
+  !/const interactiveModuleTypes = new Set<string>\(\[[\s\S]*'faq'[\s\S]*\]\);/.test(sharedModuleView),
+  'FAQ should stay static in canvas/preview and should not show the preview-interactive chip'
 );
 
 assert(
@@ -61,18 +104,25 @@ assert(
   sharedModuleView.includes('expandFaqDetailsForNonExport') &&
     sharedModuleView.includes('cb-faq__item--expanded') &&
     sharedModuleView.includes('data-nexora-static-faq="true"') &&
+    sharedModuleView.includes("runtimeMode === 'export' ? responsiveHtml : expandFaqDetailsForNonExport(responsiveHtml)") &&
     !sharedModuleView.includes('openFaqIndexesRef') &&
     !sharedModuleView.includes('restorePreviewFaqDetails') &&
     !sharedModuleView.includes("querySelectorAll<HTMLDetailsElement>('details.cb-faq__item')"),
-  'Builder and preview should render FAQ as static expanded content instead of native details'
+  'Canvas and preview should render FAQ static while export keeps native details behavior'
 );
 
 assert(
-  modulePreviewRenderer.includes('mode?: ModuleRenderMode') &&
-    modulePreviewRenderer.includes('mode =') &&
-    modulePreviewRenderer.includes('<SharedModuleView module={module} modules={modules} mode={mode} />') &&
-    previewModal.includes('mode="preview"'),
-  'Preview modal should pass preview mode through the shared module renderer'
+  faqExporter.includes('<details class="cb-faq__item">') &&
+    faqExporter.indexOf('<summary class="cb-faq__question">') < faqExporter.indexOf('<span class="cb-faq__signal"></span>'),
+  'FAQ details markup should keep summary before decorative content for stable native behavior'
+);
+
+assert(
+  modulePreviewRenderer.includes('runtimeMode?: ModuleRuntimeMode') &&
+    modulePreviewRenderer.includes("runtimeMode = 'canvas'") &&
+    modulePreviewRenderer.includes('<SharedModuleView module={module} modules={modules} runtimeMode={runtimeMode} />') &&
+    previewModal.includes('runtimeMode="preview"'),
+  'Preview modal should pass runtimeMode=preview through the shared module renderer while canvas defaults to runtimeMode=canvas'
 );
 
 assert(
@@ -83,14 +133,17 @@ assert(
 
 assert(
   previewCanvas.includes('CANVAS_INTERACTIVE_SELECTOR') &&
+    previewCanvas.includes('data-nexora-module-preview-surface="true"') &&
+    previewCanvas.includes("target.closest('[data-nexora-module-preview-surface=\"true\"]')") &&
     previewCanvas.includes("'.cb-kv__nav'") &&
     previewCanvas.includes("'.cb-kv__dot'") &&
     previewCanvas.includes("'.cb-carousel__btn'") &&
     previewCanvas.includes('handleCanvasInteractionCapture') &&
     previewCanvas.includes('onPointerDownCapture={handleCanvasInteractionCapture}') &&
     previewCanvas.includes('onClickCapture={handleCanvasInteractionCapture}') &&
-    previewCanvas.includes('event.stopPropagation();'),
-  'Builder canvas should isolate module interactive controls before selection or editor shell events'
+    previewCanvas.includes('event.preventDefault();') &&
+    previewCanvas.includes('此區塊含互動效果，實際操作請至「預覽」查看。'),
+  'Builder canvas should isolate module interactive controls, prevent native interaction, and show the preview guidance toast'
 );
 
 assert(

@@ -1,6 +1,6 @@
 # NEXORA Builder Module Development Standard
 
-更新日期：2026-07-01
+更新日期：2026-07-03
 
 這份文件是 NEXORA Builder 模組新增、修改、重構的硬性標準。任何動到模組相關檔案的工作，不管是新增或修改，都必須遵守本文件。
 
@@ -73,7 +73,7 @@
 - 有圖片欄位的高風險模組，缺圖時必須使用 `renderImagePlaceholder()` 顯示尺寸，並輸出 `data-image-width` / `data-image-height`。
 - 有圖片欄位的一般模組也不得輸出空 `src`。Logo、商品圖、文章圖、圖文區塊圖、Banner、KV、商品頁圖片在未上傳時都必須顯示尺寸 placeholder，不可出現瀏覽器缺圖 icon。
 - 圖片本身不可再壓上玻璃框線、玻璃面板、玻璃標籤或任何裝飾框。禁止在所有圖片、Logo、Banner、KV、商品圖、情境圖、單品主打圖上輸出類似 `glass-shell`、`glass-track`、`glass-panel`、`ambient-panel`、`floating-badge`、`__frame` 的覆蓋層；需要質感時只能放在文字卡、背景層或按鈕，不可壓在圖片視覺上。
-- 輪播模組在整頁 Export 與 Builder 單模組 Preview 都必須可操作。若互動 JS 只由整頁匯出插入，`SharedModuleView` 必須同步提供 preview-scoped 初始化，不可讓 Builder 畫布或專案卡預覽失效。
+- 互動模組必須遵守 runtimeMode 規則：Canvas 只做編輯排版與靜態顯示，不初始化模組互動 JS；Preview 與 Export 才可操作。FAQ 是例外，Canvas / Preview 固定靜態展開，Export 才保留原生開合，且 Canvas 不顯示「預覽可互動」提示。KV 輪播、商品輪播、Tabs、Accordion、Video 等互動模組在 Canvas 要顯示「預覽可互動」提示，點擊互動控制時提示使用者到預覽查看，不得用分散的 stopPropagation 當主要解法。
 - 可選文字欄位不得在空白時輸出預設字。例如標題區塊的副標沒有填寫時，不應輸出副標 DOM。
 
 目標架構：
@@ -83,7 +83,7 @@ Module Definition
   ↓
 Module Component
   ↓
-mode="builder" | "preview" | "export"
+runtimeMode="canvas" | "preview" | "export"
 ```
 
 ### 3. 資料結構只能有一份來源

@@ -70,6 +70,7 @@ const CANVAS_INTERACTIVE_SELECTOR = [
 
 const isCanvasInteractiveTarget = (target: EventTarget | null) => (
   target instanceof HTMLElement &&
+  Boolean(target.closest('[data-nexora-module-preview-surface="true"]')) &&
   Boolean(target.closest(CANVAS_INTERACTIVE_SELECTOR))
 );
 
@@ -93,6 +94,12 @@ interface SortableModuleProps {
 function SortableModule({ module, modules, isSelected, onSelect, onDelete, onDuplicate }: SortableModuleProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: module.id });
   const [hovered, setHovered] = React.useState(false);
+  const [interactionHintVisible, setInteractionHintVisible] = React.useState(false);
+  const hintTimerRef = React.useRef<number | null>(null);
+
+  React.useEffect(() => () => {
+    if (hintTimerRef.current) window.clearTimeout(hintTimerRef.current);
+  }, []);
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -109,7 +116,11 @@ function SortableModule({ module, modules, isSelected, onSelect, onDelete, onDup
 
   const handleCanvasInteractionCapture = (event: React.SyntheticEvent<HTMLDivElement>) => {
     if (!isCanvasInteractiveTarget(event.target)) return;
+    event.preventDefault();
     event.stopPropagation();
+    setInteractionHintVisible(true);
+    if (hintTimerRef.current) window.clearTimeout(hintTimerRef.current);
+    hintTimerRef.current = window.setTimeout(() => setInteractionHintVisible(false), 1800);
   };
 
   const handleCanvasModuleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -153,7 +164,12 @@ function SortableModule({ module, modules, isSelected, onSelect, onDelete, onDup
             <Trash2 size={13} />
           </button>
         </div>
-        <div className="select-none overflow-hidden">
+        {interactionHintVisible && (
+          <div className="pointer-events-none absolute bottom-3 left-1/2 z-20 -translate-x-1/2 rounded-full border border-slate-200 bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-lg">
+            此區塊含互動效果，實際操作請至「預覽」查看。
+          </div>
+        )}
+        <div className="select-none overflow-hidden" data-nexora-module-preview-surface="true">
           <ModulePreviewRenderer module={module} modules={modules} />
         </div>
       </div>

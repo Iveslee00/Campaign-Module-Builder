@@ -1,16 +1,17 @@
 import type { ModuleType, PageModule } from '@/types/modules';
 
-export type ModuleRenderMode = 'builder' | 'preview' | 'export';
+export type ModuleRuntimeMode = 'canvas' | 'preview' | 'export';
+export type ModuleRenderMode = ModuleRuntimeMode;
 
 export interface ModuleRenderContext {
   modules: PageModule[];
-  mode: ModuleRenderMode;
+  runtimeMode: ModuleRuntimeMode;
 }
 
 export interface ModuleViewProps {
   module: PageModule;
   modules?: PageModule[];
-  mode?: ModuleRenderMode;
+  runtimeMode?: ModuleRuntimeMode;
 }
 
 export interface ModuleRendererDefinition {

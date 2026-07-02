@@ -30,12 +30,14 @@ const rendererTypes = read('modules/renderers/types.ts');
 const sharedView = read('modules/renderers/SharedModuleView.tsx');
 const exportStylesBridge = read('components/editor/CampaignExportStyles.tsx');
 
-assert(rendererTypes.includes("export type ModuleRenderMode = 'builder' | 'preview' | 'export'"), 'Shared renderer should define builder/preview/export modes');
+assert(rendererTypes.includes("export type ModuleRuntimeMode = 'canvas' | 'preview' | 'export'"), 'Shared renderer should define canvas/preview/export runtime modes');
+assert(rendererTypes.includes('export type ModuleRenderMode = ModuleRuntimeMode'), 'Shared renderer should keep ModuleRenderMode alias for compatibility');
 assert(rendererTypes.includes('ModuleViewProps'), 'Shared renderer should define ModuleViewProps');
 assert(sharedView.includes('renderModuleExportHTML'), 'SharedModuleView should render through module registry/export HTML');
 assert(sharedView.includes('resolveLocalImageUrl'), 'SharedModuleView should resolve local-image refs before injecting preview HTML');
 assert(sharedView.includes('revokeResolvedLocalImageUrl'), 'SharedModuleView should revoke resolved local image object URLs');
 assert(sharedView.includes('dangerouslySetInnerHTML'), 'SharedModuleView should own the static markup bridge');
+assert(sharedView.includes('data-nexora-runtime-mode'), 'SharedModuleView should expose runtime mode for diagnostics');
 assert(sharedView.includes('data-nexora-render-mode'), 'SharedModuleView should expose render mode for diagnostics');
 
 assert(previewRenderer.includes('SharedModuleView'), 'ModulePreviewRenderer should use SharedModuleView');

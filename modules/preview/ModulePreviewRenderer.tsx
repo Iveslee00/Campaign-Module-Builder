@@ -3,12 +3,12 @@
 import type React from 'react';
 import { ModuleType, PageModule } from '@/types/modules';
 import { SharedModuleView } from '@/modules/renderers/SharedModuleView';
-import type { ModuleRenderMode } from '@/modules/renderers/types';
+import type { ModuleRuntimeMode } from '@/modules/renderers/types';
 
-type PreviewRegistryRenderer = (module: PageModule, modules: PageModule[], mode: ModuleRenderMode) => React.ReactNode;
+type PreviewRegistryRenderer = (module: PageModule, modules: PageModule[], runtimeMode: ModuleRuntimeMode) => React.ReactNode;
 
-const renderSharedPreview: PreviewRegistryRenderer = (module, modules, mode) => (
-  <SharedModuleView module={module} modules={modules} mode={mode} />
+const renderSharedPreview: PreviewRegistryRenderer = (module, modules, runtimeMode) => (
+  <SharedModuleView module={module} modules={modules} runtimeMode={runtimeMode} />
 );
 
 export const previewRegistry: Record<ModuleType, PreviewRegistryRenderer> = {
@@ -42,11 +42,11 @@ export const previewRegistry: Record<ModuleType, PreviewRegistryRenderer> = {
 export function ModulePreviewRenderer({
   module,
   modules = [],
-  mode = 'builder',
+  runtimeMode = 'canvas',
 }: {
   module: PageModule;
   modules?: PageModule[];
-  mode?: ModuleRenderMode;
+  runtimeMode?: ModuleRuntimeMode;
 }) {
-  return previewRegistry[module.type]?.(module, modules, mode) ?? null;
+  return previewRegistry[module.type]?.(module, modules, runtimeMode) ?? null;
 }

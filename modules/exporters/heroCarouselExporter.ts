@@ -1,7 +1,7 @@
 import { HeroCarouselData } from '@/types/modules';
 import { escapeHtml } from '@/lib/utils';
 import { getKvImageSpecs } from '@/lib/assets/imageSpecs';
-import { renderImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
+import { renderResponsiveImagePlaceholder } from '@/modules/definitions/imagePlaceholder';
 
 export function generateHeroCarouselHTML(data: HeroCarouselData): string {
   const bgOverride = data.backgroundColor ? ` style="background: ${escapeHtml(data.backgroundColor)}"` : '';
@@ -15,9 +15,15 @@ export function generateHeroCarouselHTML(data: HeroCarouselData): string {
       const textStyle = ` style="color: ${escapeHtml(s.textColor || '#ffffff')}"`;
       const textBgStyle = '';
       const align = s.alignment ?? 'left';
-      const imgEl = s.image
-        ? `\n        <picture class="cb-kv__picture">${s.mobileImage ? `\n          <source media="(max-width: 767px)" srcset="${escapeHtml(s.mobileImage)}">` : ''}\n          <img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title || '')}" class="cb-kv__bg">\n        </picture>`
-        : renderImagePlaceholder(showText ? 'KV 輪播 PC 圖片區' : 'KV 輪播 PC 滿版', imageSpecs.desktop, 'dark');
+      const imgEl = s.image || s.mobileImage
+        ? `\n        <picture class="cb-kv__picture">${s.mobileImage ? `\n          <source media="(max-width: 767px)" srcset="${escapeHtml(s.mobileImage)}">` : ''}\n          <img src="${escapeHtml(s.image || s.mobileImage)}" alt="${escapeHtml(s.title || '')}" class="cb-kv__bg">\n        </picture>`
+        : renderResponsiveImagePlaceholder(
+          showText ? 'KV 輪播 PC 圖片區' : 'KV 輪播 PC 滿版',
+          imageSpecs.desktop,
+          showText ? 'KV 輪播 M 圖片區' : 'KV 輪播 M 滿版',
+          imageSpecs.mobile,
+          'dark'
+        );
 
       const title = showText && s.title ? `          <h2 class="cb-kv__title"${titleStyle}>${escapeHtml(s.title)}</h2>` : '';
       const subtitle = showText && s.subtitle ? `          <p class="cb-kv__subtitle"${textStyle}>${escapeHtml(s.subtitle)}</p>` : '';

@@ -24,6 +24,18 @@ const MODULE_INTERACTIVE_SELECTOR = [
   '.cb-carousel__btn',
 ].join(', ');
 
+const interactiveModuleTypes = new Set<string>([
+  'hero-carousel',
+  'product-carousel',
+  'tabs',
+  'accordion',
+  'video',
+]);
+
+export function isInteractiveModule(moduleType: string) {
+  return interactiveModuleTypes.has(moduleType);
+}
+
 function getFirstSrcFromSrcset(srcset: string) {
   return srcset.split(',')[0]?.trim().split(/\s+/)[0] ?? '';
 }
@@ -230,14 +242,14 @@ function initializePreviewCarousels(root: HTMLElement) {
   return () => cleanups.forEach((cleanup) => cleanup());
 }
 
-export function SharedModuleView({ module, modules = [], mode = 'preview' }: ModuleViewProps) {
+export function SharedModuleView({ module, modules = [], runtimeMode = 'preview' }: ModuleViewProps) {
   const { isMobile } = useDevice();
   const rootRef = React.useRef<HTMLDivElement>(null);
   const exportHtml = React.useMemo(() => renderModuleExportHTML(module, { modules }), [module, modules]);
   const previewHtml = React.useMemo(() => {
     const responsiveHtml = isMobile ? forceMobilePictureSources(exportHtml) : exportHtml;
-    return mode === 'export' ? responsiveHtml : expandFaqDetailsForNonExport(responsiveHtml);
-  }, [exportHtml, isMobile, mode]);
+    return runtimeMode === 'export' ? responsiveHtml : expandFaqDetailsForNonExport(responsiveHtml);
+  }, [exportHtml, isMobile, runtimeMode]);
   const [html, setHtml] = React.useState(previewHtml);
 
   React.useEffect(() => {
@@ -262,6 +274,9 @@ export function SharedModuleView({ module, modules = [], mode = 'preview' }: Mod
   }, [previewHtml]);
 
   React.useEffect(() => {
+    if (runtimeMode === 'canvas') {
+      return;
+    }
     const root = rootRef.current;
     if (!root) return;
     let cleanup: (() => void) | undefined;
@@ -273,14 +288,14 @@ export function SharedModuleView({ module, modules = [], mode = 'preview' }: Mod
       window.cancelAnimationFrame(frame);
       cleanup?.();
     };
-  }, [html]);
+  }, [html, runtimeMode]);
 
   const getInteractivePreviewTarget = React.useCallback((target: HTMLElement | null) => (
     target?.closest(MODULE_INTERACTIVE_SELECTOR) ?? null
   ), []);
 
   const handlePreviewInteractionCapture = React.useCallback((event: React.SyntheticEvent<HTMLDivElement>) => {
-    if (mode !== 'builder') return;
+    if (runtimeMode !== 'canvas') return;
     const target = event.target as HTMLElement | null;
     const interactive = getInteractivePreviewTarget(target);
     if (interactive) {
@@ -289,18 +304,30 @@ export function SharedModuleView({ module, modules = [], mode = 'preview' }: Mod
       }
       event.stopPropagation();
     }
-  }, [getInteractivePreviewTarget, mode]);
+  }, [getInteractivePreviewTarget, runtimeMode]);
+
+  const showCanvasHint = runtimeMode === 'canvas' && isInteractiveModule(module.type);
 
   return (
-    <div
-      ref={rootRef}
-      className="cb-page"
-      data-nexora-module-view={module.type}
-      data-nexora-render-mode={mode}
-      style={{ background: 'transparent' }}
-      onPointerDownCapture={handlePreviewInteractionCapture}
-      onClickCapture={handlePreviewInteractionCapture}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    <div className="relative" data-nexora-runtime-mode={runtimeMode}>
+      {showCanvasHint && (
+        <div
+          className="absolute left-3 top-10 z-20 rounded-full border border-white/70 bg-white/90 px-2.5 py-1 text-[11px] font-bold text-slate-700 shadow-sm backdrop-blur"
+          title="編輯畫布僅顯示版面，互動效果請至「預覽」查看。"
+        >
+          預覽可互動
+        </div>
+      )}
+      <div
+        ref={rootRef}
+        className="cb-page"
+        data-nexora-module-view={module.type}
+        data-nexora-render-mode={runtimeMode}
+        style={{ background: 'transparent' }}
+        onPointerDownCapture={handlePreviewInteractionCapture}
+        onClickCapture={handlePreviewInteractionCapture}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    </div>
   );
 }
