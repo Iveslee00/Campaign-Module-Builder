@@ -183,9 +183,16 @@ export function SharedModuleView({ module, modules = [], mode = 'preview' }: Mod
   const handlePreviewClickCapture = React.useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     if (mode !== 'builder') return;
     const target = event.target as HTMLElement | null;
+    const interactive = target?.closest('summary, button, input, textarea, select, [role="button"]');
+    if (interactive) {
+      event.stopPropagation();
+      return;
+    }
+
     const link = target?.closest('a');
     if (link) {
       event.preventDefault();
+      event.stopPropagation();
     }
   }, [mode]);
 

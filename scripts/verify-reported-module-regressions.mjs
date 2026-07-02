@@ -38,6 +38,12 @@ assert(
 );
 
 assert(
+  sharedModuleView.includes("closest('summary, button, input, textarea, select, [role=\"button\"]')") &&
+    sharedModuleView.includes('event.stopPropagation();'),
+  'Builder shared preview should stop interactive controls from bubbling to module selection'
+);
+
+assert(
   !previewCanvas.includes('<div className="pointer-events-none select-none overflow-hidden">\\n          <ModulePreviewRenderer module={module} modules={modules} />') &&
     previewCanvas.includes('className="select-none overflow-hidden"'),
   'Builder canvas should not block pointer events for interactive module previews'
